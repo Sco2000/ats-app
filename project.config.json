@@ -22,7 +22,7 @@
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
-	"projectname": "TCMPP%20Boilerplate",
+	"projectname": "ats",
 	"scripts": {},
 	"permission": {
 		"scope.album": {
