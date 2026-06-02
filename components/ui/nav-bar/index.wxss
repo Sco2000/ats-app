@@ -5,7 +5,7 @@
 .osn-nav-bar {
   position: relative;
   z-index: 200;
-  background: #fff;
+  background: red;
 }
 
 .osn-nav-bar--transparent {

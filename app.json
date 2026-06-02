@@ -1,7 +1,11 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/index/index",
-    "pages/demo/index"
+    "pages/demo/index",
+    "pages/explorer/explorer",
+    "pages/favoris/favoris",
+    "pages/voyage/voyage"
   ],
   "style": "v2",
   "window": {

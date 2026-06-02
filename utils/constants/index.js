@@ -106,3 +106,39 @@ export const SUCCESS_MESSAGES = {
   DELETED: 'Deleted successfully.',
   SUBMITTED: 'Submitted successfully.',
 };
+
+// ============================================================================
+// MAIN NAVIGATION
+// ============================================================================
+
+/**
+ * Main app tabs used by the custom tab bar.
+ * @readonly
+ * @type {Array<{id: string, label: string, iconImage: string, url: string}>}
+ */
+export const MAIN_TABS = [
+  {
+    id: 'home',
+    label: 'Accueil',
+    iconImage: '/assets/icons/home.png',
+    url: '/pages/home/home',
+  },
+  {
+    id: 'explorer',
+    label: 'Explorer',
+    iconImage: '/assets/icons/explore.png',
+    url: '/pages/explorer/explorer',
+  },
+  {
+    id: 'favorites',
+    label: 'Favoris',
+    iconImage: '/assets/icons/favoris.png',
+    url: '/pages/favoris/favoris',
+  },
+  {
+    id: 'voyages',
+    label: 'Voyages',
+    iconImage: '/assets/icons/voyage.png',
+    url: '/pages/voyage/voyage',
+  },
+];

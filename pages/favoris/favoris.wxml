@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="content">
+    <view class="section-card">
+      <text class="section-title">Favoris</text>
+      <text class="section-text">Accédez rapidement aux éléments que vous avez ajoutés à vos favoris.</text>
+    </view>
+  </view>
+
+  <app-tab-bar
+    tabs="{{ tabs }}"
+    activeTab="{{ activeTab }}"
+  />
+</view>

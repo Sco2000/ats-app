@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="content">
+    <view class="section-card">
+      <text class="section-title">Accueil</text>
+      <text class="section-text">Retrouvez ici les informations principales et un accès rapide à vos fonctionnalités.</text>
+    </view>
+  </view>
+
+  <app-tab-bar
+    tabs="{{ tabs }}"
+    activeTab="{{ activeTab }}"
+  />
+</view>

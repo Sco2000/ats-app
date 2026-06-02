@@ -12,6 +12,7 @@ Centralized configuration values. No magic numbers or strings anywhere in the co
 | `HTTP_CONFIG` | `Object` | HTTP settings: `DEFAULT_TIMEOUT_MS` (30000), `SESSION_PREFIX`, tracking headers |
 | `ERROR_MESSAGES` | `Object` | User-facing error strings (English) |
 | `SUCCESS_MESSAGES` | `Object` | User-facing success strings (English) |
+| `MAIN_TABS` | `Array` | Main navigation configuration used by `app-tab-bar` |
 
 ## Adding a New Constant
 
