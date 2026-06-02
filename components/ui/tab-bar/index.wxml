@@ -1,15 +1,23 @@
-<view class="tab-bar">
-  <view
-    wx:for="{{ tabs }}"
-    wx:key="id"
-    class="tab-bar-item {{ activeTab === item.id ? 'tab-bar-item-active' : '' }}"
-    data-tab="{{ item.id }}"
-    bindtap="handleTap"
-  >
-    <text class="tab-bar-icon">{{ item.icon }}</text>
+<view class="page">
+  <text class="title">Page actuelle : {{ activeTab }}</text>
 
-    <text wx:if="{{ activeTab === item.id }}" class="tab-bar-label">
-      {{ item.label }}
-    </text>
+  <view>
+    <text>{{ currentTab.content }}</text>
+  </view>
+
+  <view class="tab-bar">
+    <view
+      wx:for="{{ tabs }}"
+      wx:key="id"
+      class="tab-bar-item {{ activeTab === item.id ? 'tab-bar-item-active' : '' }}"
+      data-tab="{{ item.id }}"
+      bindtap="handleTap"
+    >
+      <image class="tab-bar-icon" src="{{ item.icon }}" mode="aspectFit" />
+
+      <text wx:if="{{ activeTab === item.id }}" class="tab-bar-label">
+        {{ item.label }}
+      </text>
+    </view>
   </view>
 </view>

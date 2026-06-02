@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/explorer/index",
+    "pages/favorites/index",
+    "pages/reservations/index",
     "pages/demo/index"
   ],
   "style": "v2",
