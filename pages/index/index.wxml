@@ -4,9 +4,9 @@
 
   <app-nav-bar 
   title="Page d'Accueil" 
-  showBack="{{true}}"
+  showBack="{{false}}"
   logoSrc="/assets/images/logo.png"
-  showLogo="{{false}}"
+  showLogo="{{true}}"
   transparent ="{{false}}"
   />
 
