@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+  "app-button": "/components/ui/button/index"
+
+  }
 }

@@ -1,0 +1,66 @@
+.img-container {
+  position: relative;
+  width: 80%;
+  margin: 10rpx;
+  margin-top: 50rpx;
+  padding: 40rpx;
+
+  border-radius: 22rpx;
+  overflow: hidden;
+
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.destination-img {
+  width: 100%;
+  height: 200rpx;
+  display: block;
+  
+ 
+
+}
+.destination-info {
+  display: flex;
+  flex-direction: column;
+}
+destination-name {
+  font-size: 34rpx;
+  font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+
+.icon-favoris {
+  position: absolute;
+  top: 50rpx;
+  right: 10rpx;
+  z-index: 10;
+}
+.location-info {
+ display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+  
+
+}
+.destination-location {
+  font-size: 34rpx;
+  font-family: 'Times New Roman', Times, serif;
+  margin-right: 20rpx;
+  color: #000000;
+}
+.destination-price{
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  width: 100%;
+}
+
+.price {
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+

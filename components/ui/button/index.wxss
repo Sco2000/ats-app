@@ -24,22 +24,17 @@
 
 /* --- PRIMARY BUTTON --- */
 .osn-btn-primary {
-  width: 100%;
+  width: 50%;
   padding: 24rpx 0 !important;
   border: none;
-  border-radius: 16rpx;
-  background: var(--bs-primary, #085EBD);
+  border-radius: 40rpx !important;
+  background: #009B4E !important;
+  background-color: #009B4E !important;
   color: #fff;
   font-size: 28rpx;
   font-weight: 700;
-  letter-spacing: 0.02em;
   text-align: center;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease-out,
-              box-shadow 0.15s ease-out,
-              opacity 0.15s ease-out;
+  box-shadow: 0 4rpx 12rpx rgba(0, 155, 78, 0.25);
 }
 
 .osn-btn-primary--pressed {

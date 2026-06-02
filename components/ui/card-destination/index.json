@@ -1,0 +1,10 @@
+{ 
+  "component": true,
+  "usingComponents": {
+    "app-card": "/components/ui/card/index",
+    "osn-icon": "/components/ui/icons/base/index",
+    "osn-image": "/components/ui/image/index",
+    "osn-text": "/components/ui/typography/index",
+    "app-button": "/components/ui/button/index"
+  }
+}

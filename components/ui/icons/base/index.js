@@ -36,7 +36,7 @@ Component({
   },
 
   data: {
-    BASE_URL: '/assets/icons/global/',
+    BASE_URL: '/assets/images/icons/global/',
     CONTAINER: {},
   },
 

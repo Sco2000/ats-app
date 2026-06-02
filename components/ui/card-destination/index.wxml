@@ -1,0 +1,37 @@
+<app-card>
+  <view class="img-container">
+
+    <osn-image
+      class="destination-img"
+      src="/assets/images/img1.png"
+      mode="aspectFill"
+    /> 
+      <osn-icon
+        icon="Button"
+        width="60"
+        height="60"
+      />
+    </view>
+    <view class="destination-info">
+      <osn-text class="destination-name">Lac Rose</osn-text>
+    </view>
+    <view class="location-info">
+      <osn-icon
+        icon="Icon"
+        width="40"
+        height="40"
+      />
+    <osn-text class="destination-location">Lac Retba</osn-text>
+</view>
+    <view class="destination-price">
+      <osn-text class="price">15 000 FCFA</osn-text> 
+  <app-button
+  type="primary"
+  loading="{{ submitting }}"
+  bind:onPress="handleSubmit">
+  Details
+</app-button>
+    </view>
+
+ 
+</app-card>
