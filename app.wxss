@@ -480,3 +480,5 @@ scroll-view {
 .menu-tabs::-webkit-scrollbar {
   display: none;
 }
+
+

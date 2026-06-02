@@ -1,10 +1,27 @@
 <view class="osn-nav-bar {{ transparent ? 'osn-nav-bar--transparent' : '' }}" style="padding-top: {{ statusBarHeight }}px;">
   <view class="osn-nav-bar__content" style="height: {{ navHeight }}px;">
-    <view wx:if="{{ showBack }}" class="osn-nav-bar__back" bind:tap="goBack">
-      <text class="osn-nav-bar__back-icon">&#x2039;</text>
-    </view>
-    <view wx:if="{{ title }}" class="osn-nav-bar__title">
-      <text>{{ title }}</text>
-    </view>
+    
+    <!-- Cas 1 : Affichage du Logo via le composant existant -->
+    <block wx:if="{{ displayMode === 'logo' }}">
+      <osn-image
+        src="{{ logoSrc }}"
+        mode="aspectFit"
+        width="240rpx"
+        height="60rpx"
+       imageStyle="width: 150rpx; height: 125rpx;"
+        containerStyle="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center;"
+      />
+    </block>
+    
+    <!-- Cas 2 : Bouton retour et titre classiques -->
+    <block wx:else>
+      <view wx:if="{{ showBack }}" class="osn-nav-bar__back" style="background: transparent;"  hover-class="osn-nav-bar__back--hover" bind:tap="goBack">
+        <app-icon icon="arrow-left" width="45" height="45"  enableBg="{{false}}" />
+      </view>
+      <view style="margin-left: 5%;"  wx:if="{{ title }}" class="osn-nav-bar__title">
+        <text>{{ title }}</text>
+      </view>
+    </block>
+
   </view>
 </view>
