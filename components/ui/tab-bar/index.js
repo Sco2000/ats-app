@@ -29,6 +29,8 @@ const DEFAULT_TABS = [
   },
 ];
 
+const findTab = (tabs, id) => tabs.find((tab) => tab.id === id);
+
 Component({
   properties: {
     activeTab: {
@@ -60,16 +62,17 @@ Component({
 
   methods: {
     updateCurrentTab() {
-      const currentTab = this.properties.tabs.find((tab) => tab.id === this.properties.activeTab);
+      const { activeTab, tabs } = this.properties;
+      const currentTab = findTab(tabs, activeTab);
 
-      if (currentTab) {
+      if (currentTab && currentTab.id !== this.data.currentTab?.id) {
         this.setData({ currentTab });
       }
     },
 
     handleTap(e) {
       const tabId = e.currentTarget.dataset.tab;
-      const tab = this.properties.tabs.find((item) => item.id === tabId);
+      const tab = findTab(this.properties.tabs, tabId);
 
       if (!tab || tab.id === this.properties.activeTab) return;
 
