@@ -22,7 +22,7 @@
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
-	"projectname": "ats",
+	"projectname": "ats_app_groupe",
 	"scripts": {},
 	"permission": {
 		"scope.album": {
