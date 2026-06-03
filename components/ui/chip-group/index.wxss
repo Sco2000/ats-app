@@ -1,0 +1,42 @@
+.chip-scroll-wrap {
+    height: 92rpx;
+    overflow: hidden;
+    display: flex;
+}
+
+.chip-scroll {
+    white-space: nowrap;
+    height: 116rpx;
+}
+
+.chip-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    padding-right: 24rpx;
+    gap: 16rpx;
+}
+
+.chip {
+    padding: 16rpx 34rpx;
+    border-radius: 999rpx;
+    background: #ffffff;
+    border: 2rpx solid #dcded8;
+}
+
+.chip-active {
+    background: #0aa347;
+    border-color: #0aa347;
+    box-shadow: 0 10rpx 24rpx rgba(10, 163, 71, 0.2);
+}
+
+.chip-text {
+    font-size: 28rpx;
+    color: #303030;
+}
+
+.chip-text-active {
+    color: #ffffff;
+    font-weight: 600;
+}
