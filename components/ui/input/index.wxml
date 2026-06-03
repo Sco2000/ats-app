@@ -15,6 +15,7 @@
       placeholder-style="{{placeholderStyle}}"
       readonly="{{readonly}}"
       bindinput="onInput"
+    placeholder-style=""
     />
       <!-- bindinput="" -->
   </block>

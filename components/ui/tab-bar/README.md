@@ -2,69 +2,78 @@
 
 ## Purpose
 
-A tabbed navigation component that renders a horizontal row of tabs and shows/hides corresponding content panels. Each tab is defined as an object with a `key`, a `slotName` for the tab label, and a `contentSlot` for the tab's body content. Uses `multipleSlots` to support the dynamic named-slot pattern.
+`app-tab-bar` renders horizontal tab navigation from a list of tab items. Its responsibility is to display tabs, show the active state, and navigate to the selected tab URL.
+
+Each page owns its content. For example, `home`, `explorer`, `favoris`, and `voyage` each render their own content, then reuse the same component with a different `activeTab`.
 
 ## Properties
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `tabs` | `Array` | `[]` | Array of tab definitions. Each object should have `{ key, slotName, contentSlot }` where `key` is the unique identifier, `slotName` is the named slot for the tab header, and `contentSlot` is the named slot for the tab content panel. |
-| `default` | `String` | `''` | The `key` of the initially active tab. Falls back to the first tab's `key` if not specified. |
-| `containerClass` | `String` | `''` | CSS class(es) on the tabs header row wrapper. |
-| `itemContainerClass` | `String` | `''` | CSS class(es) applied to each tab item in the header. |
-| `activeItemContainerClass` | `String` | `''` | CSS class(es) applied to the currently active tab item in the header. |
+| `tabs` | `Array` | `[]` | Tab list. Each item uses `{ id, label, iconImage?, url? }`. |
+| `activeTab` | `String` | `''` | Id of the active tab. |
+| `navigationType` | `String` | `'redirectTo'` | Navigation method used when a tab has a `url`: `navigateTo`, `redirectTo`, `switchTab`, or `reLaunch`. |
+| `containerClass` | `String` | `''` | Extra CSS class for the tab row. |
+| `itemClass` | `String` | `''` | Extra CSS class for each tab item. |
+| `activeItemClass` | `String` | `''` | Extra CSS class applied only to the active tab item. |
+| `iconClass` | `String` | `''` | Extra CSS class for icons. |
+| `labelClass` | `String` | `''` | Extra CSS class for labels. |
 
-## Events
+## Event
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `changedActive` | `{ key }` | Fired when the user taps a tab. `key` is the selected tab's key. |
-
-## Slots
-
-| Slot | Description |
-|------|-------------|
-| `<tab.slotName>` | Named slot for each tab's header label (one per tab, matching the `slotName` in the `tabs` array). |
-| `<tab.contentSlot>` | Named slot for each tab's body content (one per tab, matching the `contentSlot` in the `tabs` array). |
+| `change` | `{ tab }` | Fired before navigation. Useful if a page wants to track the change. |
 
 ## Usage
 
+### WXML
+
 ```xml
-<!-- WXML -->
 <app-tab-bar
   tabs="{{ tabs }}"
-  default="overview"
-  activeItemContainerClass="tab-active"
-  bind:changedActive="onTabChange"
->
-  <!-- Tab headers -->
-  <view slot="tab-overview">Overview</view>
-  <view slot="tab-details">Details</view>
-
-  <!-- Tab content panels -->
-  <view slot="content-overview">
-    <text>Overview content goes here.</text>
-  </view>
-  <view slot="content-details">
-    <text>Details content goes here.</text>
-  </view>
-</app-tab-bar>
+  activeTab="{{ activeTab }}"
+/>
 ```
 
+### JS
+
 ```js
-// JS
+import { MAIN_TABS } from '../../utils/constants/index';
+
 Page({
   data: {
-    tabs: [
-      { key: 'overview', slotName: 'tab-overview', contentSlot: 'content-overview' },
-      { key: 'details', slotName: 'tab-details', contentSlot: 'content-details' }
-    ]
-  },
-  onTabChange(e) {
-    console.log('Active tab:', e.detail.key);
+    activeTab: 'home',
+    tabs: MAIN_TABS
   }
 });
 ```
+
+## Page Navigation
+
+URLs are centralized in `MAIN_TABS`:
+
+```js
+export const MAIN_TABS = [
+  { id: 'home', label: 'Accueil', iconImage: '/assets/icons/home.png', url: '/pages/home/home' },
+  { id: 'explorer', label: 'Explorer', iconImage: '/assets/icons/explore.png', url: '/pages/explorer/explorer' },
+  { id: 'favorites', label: 'Favoris', iconImage: '/assets/icons/favoris.png', url: '/pages/favoris/favoris' },
+  { id: 'voyages', label: 'Voyages', iconImage: '/assets/icons/voyage.png', url: '/pages/voyage/voyage' }
+];
+```
+
+Each page sets its active tab:
+
+```js
+Page({
+  data: {
+    activeTab: 'explorer',
+    tabs: MAIN_TABS
+  }
+});
+```
+
+### JSON
 
 ```json
 {
@@ -72,6 +81,22 @@ Page({
     "app-tab-bar": "/components/ui/tab-bar/index"
   }
 }
+```
+
+## Styling
+
+Two styling options are supported:
+
+- pass camelCase properties, for example `itemClass="home-tab-item"`;
+- use WeChat external classes, for example `item-class="home-tab-item"`.
+
+```xml
+<app-tab-bar
+  tabs="{{ tabs }}"
+  activeTab="{{ activeTab }}"
+  itemClass="home-tab-item"
+  activeItemClass="home-tab-item-active"
+/>
 ```
 
 ## See Also
