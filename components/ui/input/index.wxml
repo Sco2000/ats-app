@@ -12,6 +12,7 @@
       class="osn-input__field fs-8"
       value="{{value}}"
       placeholder="{{placeholder}}"
+      placeholder-style="{{placeholderStyle}}"
       readonly="{{readonly}}"
       bindinput="onInput"
     placeholder-style=""

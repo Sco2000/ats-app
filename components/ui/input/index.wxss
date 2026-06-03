@@ -13,6 +13,7 @@
   height: 68rpx;
   border: none;
   background: transparent;
+  padding-left: 70rpx;
   font-size: inherit;
   outline: none;
   width: 40ch; 
@@ -22,8 +23,8 @@
 }
 .osn-input__icon {
   position: absolute;
-  right: 0rpx;
-  top: 50%;
+  left: 0rpx;
+  top: 35%;
   transform: translateY(-50%);
   color: #b3b3b3;
   font-size: 54rpx;
