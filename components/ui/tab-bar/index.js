@@ -33,7 +33,7 @@ Component({
 
     navigationType: {
       type: String,
-      value: 'redirectTo',
+      value: 'switchTab',
     },
 
     containerClass: {
@@ -82,7 +82,21 @@ Component({
       const navigationType = this.properties.navigationType;
       const navigate = wx[navigationType] || wx.redirectTo;
 
-      navigate({ url });
+      navigate({
+        url,
+        success: () => {},
+        fail: (err) => {
+          if (navigationType !== 'redirectTo') {
+            console.warn('[TabBar] navigation failed, falling back to redirectTo:', err.errMsg);
+            wx.redirectTo({ url });
+          }
+        },
+      });
     },
   },
+  lifetimes:({
+    attached(){
+      console.log("le composant tab nar  est charge  dans ma page");
+    }
+  })
 });
