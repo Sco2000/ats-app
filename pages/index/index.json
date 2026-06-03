@@ -2,7 +2,7 @@
   "usingComponents": {
     "app-nav-bar": "/components/ui/nav-bar/index",
     "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
+    "app-icon": "/components/ui/icons/base/index",
     "app-button": "/components/ui/button/index",
     "app-modal": "/components/ui/modal/index",
     "app-typography": "/components/ui/typography/index",
