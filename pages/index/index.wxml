@@ -1,13 +1,29 @@
 
 
-<view class="navbar">
 
-  <app-nav-bar 
-  title="Page d'Accueil" 
-  showBack="{{false}}"
-  logoSrc="/assets/images/logo.png"
-  showLogo="{{true}}"
-  transparent ="{{false}}"
+<view class="page">
+  <view class="content">
+    <view class="navbar">
+      <app-nav-bar 
+        title="{{ pageTitle }}"
+        showBack="{{false}}"
+        logoSrc="/assets/images/logo.png"
+        showLogo="{{activeTab === 'home'}}"
+        transparent="{{false}}"
+      />
+    </view>
+  </view>
+
+  <view class="contenuePage">
+    <home-content wx:if="{{ activeTab === 'home' }}" />
+    <explorer-content wx:elif="{{ activeTab === 'explorer' }}" />
+    <favoris-content wx:elif="{{ activeTab === 'favorites' }}" />
+    <voyage-content wx:elif="{{ activeTab === 'voyages' }}" />
+  </view>
+
+  <app-tab-bar
+    tabs="{{ tabs }}"
+    activeTab="{{ activeTab }}"
+    bind:change="handleTabChange"
   />
-
 </view>

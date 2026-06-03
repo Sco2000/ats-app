@@ -1,8 +1,13 @@
 {
   "usingComponents": {
+    "app-tab-bar": "/components/ui/tab-bar/index",
     "app-nav-bar": "/components/ui/nav-bar/index",
+    "home-content": "/components/pageComponents/home-content/index",
+    "explorer-content": "/components/pageComponents/explorer-content/index",
+    "favoris-content": "/components/pageComponents/favoris-content/index",
+    "voyage-content": "/components/pageComponents/voyage-content/index",
     "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
+    "app-icon": "/components/ui/icons/base/index",
     "app-button": "/components/ui/button/index",
     "app-modal": "/components/ui/modal/index",
     "app-typography": "/components/ui/typography/index",

@@ -1,45 +1,25 @@
-// js
+import { MAIN_TABS } from '../../utils/constants/index';
+
+const TAB_TITLES = {
+  home: "Page d'Accueil",
+  explorer: 'Explorer les Destinations',
+  favorites: 'Mes Favoris',
+  voyages: 'Mes Voyages'
+};
+
 Page({
-
-  /**
-   * Initial data of the page
-   */
   data: {
-
+    activeTab: 'home',
+    tabs: MAIN_TABS,
+    pageTitle: TAB_TITLES.home
   },
 
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad() {
+  handleTabChange(e) {
+    const activeTab = e.detail.tab;
 
-  },
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady() {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow() {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide() {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload() {
-
-  },
-})
+    this.setData({
+      activeTab,
+      pageTitle: TAB_TITLES[activeTab] || TAB_TITLES.home
+    });
+  }
+});

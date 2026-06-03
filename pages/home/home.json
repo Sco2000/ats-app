@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "app-tab-bar":"/components/ui/tab-bar/index",
-     "app-nav-bar": "/components/ui/nav-bar/index",
-    "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
-  }
-}

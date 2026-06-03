@@ -1,0 +1,4 @@
+<view class="section-card">
+  <text class="section-title">Voyage</text>
+  <text class="section-text">Bienvenue sur la page d'Voyage.</text>
+</view>

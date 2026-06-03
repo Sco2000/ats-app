@@ -1,8 +1,17 @@
-/* wxss */
+.page{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+}
 .navbar{
 
  border-bottom: 1px solid #F3F4F6;
 
  width: 100%;
  height: 220rpx;
+}
+
+.contenuePage{
+    height: auto;
 }

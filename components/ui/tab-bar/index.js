@@ -63,19 +63,29 @@ Component({
   },
 
   methods: {
+    // handleTap(e) {
+    //   const tab = e.currentTarget.dataset.tab;
+    //   // const url = e.currentTarget.dataset.url;
+
+    //   if (!tab || tab === this.properties.activeTab) {
+    //     return;
+    //   }
+
+    //   this.triggerEvent('change', { tab });
+
+    //   // if (url) {
+    //   //   this.navigate(url);
+    //   // }
+    // },
+
     handleTap(e) {
       const tab = e.currentTarget.dataset.tab;
-      const url = e.currentTarget.dataset.url;
 
       if (!tab || tab === this.properties.activeTab) {
         return;
       }
 
       this.triggerEvent('change', { tab });
-
-      if (url) {
-        this.navigate(url);
-      }
     },
 
     navigate(url) {
