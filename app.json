@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/demo/index"
+    "pages/demo/index",
+    "components/ui/destination-card/index",
+    "components/ui/list-destination/index"
   ],
   "style": "v2",
   "window": {

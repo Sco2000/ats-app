@@ -1,0 +1,23 @@
+/* wxss */
+.menu-tabs {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.menu-tabs__item {
+  display: inline-block;
+  margin-right: 20rpx;
+  vertical-align: top;
+}
+
+.header-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.seeAll{
+  display: flex;
+  justify-content: space-between;
+}

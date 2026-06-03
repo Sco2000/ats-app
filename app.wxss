@@ -26,7 +26,7 @@
   --bs-white: #fff;
   --bs-gray: #F9F9F9;
   --bs-gray-dark: #EEEEEEB2;
-  --bs-primary: #085EBD;
+  --bs-primary: #01953E;
   --bs-secondary: #F16E00;
   --bs-success: #198754;
   --bs-info: #0077EA;

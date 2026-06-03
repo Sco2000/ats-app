@@ -4,6 +4,7 @@
     "app-button": "/components/ui/button/index",
     "app-modal": "/components/ui/modal/index",
     "app-typography": "/components/ui/typography/index",
-    "app-card": "/components/ui/card/index"
+    "app-card": "/components/ui/card/index",
+    "app-list-destination": "/components/ui/list-destination/index"
   }
 }

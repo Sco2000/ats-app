@@ -11,6 +11,38 @@ Page({
     isLoading: true,
     userName: '',
     showModal: false,
+    destinations: [
+      {
+        id: 1,
+        image: '/assets/images/img.jpg',
+        title: 'Lac Rose',
+        subtitle: 'Lac Retba',
+        price: '17 000 Fcfa',
+        buttonLabel: 'Details',
+        buttonClass: 'btn-details',
+        loading: false
+      },
+      {
+        id: 2,
+        image: '/assets/images/img.jpg',
+        title: 'Lac Rose',
+        subtitle: 'Lac Retba',
+        price: '17 000 Fcfa',
+        buttonLabel: 'Details',
+        buttonClass: 'btn-details',
+        loading: false
+      },
+      {
+        id: 3,
+        image: '/assets/images/img.jpg',
+        title: 'Lac Rose',
+        subtitle: 'Lac Retba',
+        price: '17 000 Fcfa',
+        buttonLabel: 'Details',
+        buttonClass: 'btn-details',
+        loading: false
+      }
+    ]
   },
 
   /**
@@ -67,5 +99,16 @@ Page({
    */
   handleCloseModal() {
     this.setData({ showModal: false });
+  },
+
+  /**
+   * Handle destination card press
+   */
+  handleCardPress() {
+    wx.showToast({
+      title: 'Carte cliquée !',
+      icon: 'success',
+      duration: 2000
+    });
   },
 });

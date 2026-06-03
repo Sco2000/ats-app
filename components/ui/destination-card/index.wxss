@@ -1,0 +1,48 @@
+/* wxss */
+
+.card-container {
+    position: relative;
+    width: 480rpx;
+    border-radius: 16rpx;
+    overflow: hidden;
+}
+
+.icon-heart {
+    position: absolute;
+    top: 45rpx;
+    right: 45rpx;
+    z-index: 10;
+}
+
+.button-wrapper {
+    width: auto;
+    flex-shrink: 0;
+    min-width: 140rpx;
+}
+
+.subtitle-row {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+}
+
+.price-button-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    white-space: nowrap;
+    gap: 16rpx;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 120rpx;
+}
+
+.btn-details {
+    padding: 8rpx 24rpx;
+    border-radius: 8rpx;
+    font-size: 16rpx;
+}
