@@ -1,4 +1,10 @@
 <view class="osn-input {{containerClass}}">
+  <block wx:if="{{icon && iconPosition === 'left'}}">
+    <view class="osn-input__icon " bind:tap="onIconTap">
+      <osn-icon icon="{{icon}}" height="{{height}}" width="{{width}}" />
+    </view>
+  </block>
+
   <block wx:if="{{type === 'date'}}">
     <picker mode="date" value="{{value}}" bind:change="onDateChange">
       <view class="osn-input__field fs-8 osn-input__field--picker {{readonly ? 'readonly' : ''}}">
@@ -8,10 +14,10 @@
   </block>
 
   <block wx:elif="{{type === 'text'}}">
-    <input
-      class="osn-input__field fs-8"
+    <input class="osn-input__field"
       value="{{value}}"
       placeholder="{{placeholder}}"
+      style="{{fieldStyle}}"
       placeholder-style="{{placeholderStyle}}"
       readonly="{{readonly}}"
       bindinput="onInput"
@@ -20,15 +26,13 @@
       <!-- bindinput="" -->
   </block>
 
-  <block wx:if="{{icon}}">
-    <picker mode="date" value="{{value}}" bind:change="onDateChange">
-      <view class="osn-input__icon" bind:tap="onIconTap">
-        <osn-icon icon="{{icon}}" height="30" width="30" />
-      </view>
-    </picker>
+  <block wx:if="{{icon && iconPosition === 'right'}}">
+    <view class="osn-input__icon " bind:tap="onIconTap">
+      <osn-icon icon="{{icon}}" height="{{height}}" width="{{width}}" />
+    </view>
   </block>
 </view>
 
 <view wx:if="{{showResults}}" class="osn-input__results {{resultClass}}">
-  <slot name="result"  />
+  <slot name="result" />
 </view>
