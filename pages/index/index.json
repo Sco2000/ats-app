@@ -5,7 +5,6 @@
     "app-modal": "/components/ui/modal/index",
     "app-typography": "/components/ui/typography/index",
     "app-card": "/components/ui/card/index",
-
     "app-input": "/components/ui/input/index"
   }
 }
