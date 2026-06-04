@@ -16,5 +16,5 @@
 }
 
 .osn-layout__content--with-tabbar {
-  padding-bottom: calc(176rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(192rpx + env(safe-area-inset-bottom));
 }

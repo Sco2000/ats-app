@@ -41,7 +41,6 @@ Component({
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
-            console.log(sysInfo);
 
       this.setData({
         statusBarHeight: sysInfo.statusBarHeight || 20,

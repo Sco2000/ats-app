@@ -1,23 +1,19 @@
 {
   "pages": [
-
     "pages/home/home",
     "pages/index/index",
     "pages/explorer/explorer",
     "pages/favoris/favoris",
     "pages/voyage/voyage"
-
-   
-
   ],
-
   "usingComponents": {
     "app-nav-bar": "/components/ui/nav-bar/index",
     "osn-image": "/components/ui/image/index",
     "app-icon": "/components/ui/icons/base/index",
-    "app-layout": "/components/ui/layout/index"
+    "app-layout": "/components/ui/layout/index",
+    "app-destination-card" : "/components/ui/destination-card/index",
+    "app-list-destination"  : "/components/ui/list-destination/index"
   },
-
 
   "style": "v2",
   "window": {

@@ -27,6 +27,10 @@ Component({
       type: String,
       value: 'primary', // 'primary' | 'secondary'
     },
+    buttonClass: {
+      type: String,
+      value: '',
+    },
   },
 
   data: {

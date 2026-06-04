@@ -9,7 +9,10 @@
   />
 
   <!-- Main Content Slot -->
-  <view class="osn-layout__content {{ showTabBar ? 'osn-layout__content--with-tabbar' : '' }}">
+  <view
+    class="osn-layout__content {{ showTabBar ? 'osn-layout__content--with-tabbar' : '' }}"
+    style="padding-top: {{ navContentOffset }}px;"
+  >
     <slot></slot>
   </view>
 

@@ -1,16 +1,22 @@
 .osn-tab-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
   width: 100%;
   box-sizing: border-box;
-  padding: 16rpx 24rpx;
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: transparent;
 }
 
 .osn-tab-bar__tabs {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 128rpx;
+  min-height: 128rpx;
   box-sizing: border-box;
-  padding: 16rpx 32rpx;
+  padding: 16rpx 24rpx;
   border: 1rpx solid #e5e7eb;
   border-radius: 999rpx;
   background: #ffffff;
@@ -28,7 +34,6 @@
   padding: 0 18rpx;
   border-radius: 999rpx;
   text-align: center;
-  cursor: pointer;
   color: #009b4d;
   transition: color 0.25s, background 0.25s;
 }
@@ -60,6 +65,5 @@
   font-size: 30rpx;
   font-weight: 700;
   line-height: 44rpx;
-  
   white-space: nowrap;
 }

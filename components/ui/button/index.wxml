@@ -1,7 +1,7 @@
 <button
   wx:if="{{ type == 'primary' }}"
   disabled="{{ disabled || loading }}"
-  class="osn-btn-primary {{ disabled || loading ? 'osn-btn-primary--disabled' : '' }} {{ pressed ? 'osn-btn-primary--pressed' : '' }}"
+  class="osn-btn-primary {{ buttonClass }} {{ disabled || loading ? 'osn-btn-primary--disabled' : '' }} {{ pressed ? 'osn-btn-primary--pressed' : '' }}"
   bind:tap="executionAction"
   bind:touchstart="onPressStart"
   bind:touchend="onPressEnd"
@@ -17,7 +17,7 @@
 <button
   wx:if="{{ type == 'secondary' }}"
   disabled="{{ disabled || loading }}"
-  class="osn-btn-secondary {{ disabled || loading ? 'osn-btn-secondary--disabled' : '' }} {{ pressed ? 'osn-btn-secondary--pressed' : '' }}"
+  class="osn-btn-secondary {{ disabled || loading ? 'osn-btn-secondary--disabled' : '' }} {{ pressed ? 'osn-btn-secondary--pressed' : '' }} {{ buttonClass }}"
   bind:tap="executionAction"
   bind:touchstart="onPressStart"
   bind:touchend="onPressEnd"
