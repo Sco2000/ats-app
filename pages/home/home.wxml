@@ -1,0 +1,12 @@
+<app-layout
+  title="Page d'Accueil"
+  showBack="{{false}}"
+  logoSrc="/assets/images/logo.png"
+  showLogo="{{true}}"
+  transparent="{{false}}"
+  activeTab="{{activeTab}}"
+>
+  <view class="content">
+    <!-- sen contenue yii fii boulen doff wakh liñoo sopekkkkkkkkkkk -->
+  </view>
+</app-layout>
