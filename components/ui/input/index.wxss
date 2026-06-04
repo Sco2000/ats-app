@@ -15,19 +15,19 @@
   background: transparent;
   font-size: inherit;
   outline: none;
-  width: 40ch; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+  width: 40ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .osn-input__icon {
-  position: absolute;
-  right: 0rpx;
-  top: 50%;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #b3b3b3;
   font-size: 54rpx;
 }
+
 .osn-input__results {
   width: 100%;
   z-index: 1001;
@@ -35,7 +35,7 @@
   top: 80rpx;
   background: #fff;
   border-radius: 0 0 20rpx 20rpx;
-  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.06);
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.06);
   overflow: hidden;
 }
 .osn-input__field--picker {

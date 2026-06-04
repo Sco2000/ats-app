@@ -7,6 +7,7 @@
     "pages/voyage/voyage"
   ],
   "usingComponents": {
+    "app-tab-bar":"/components/ui/tab-bar/index",
     "app-nav-bar": "/components/ui/nav-bar/index",
     "osn-image": "/components/ui/image/index",
     "app-icon": "/components/ui/icons/base/index",
@@ -21,7 +22,9 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "TCMPP Boilerplate",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "pageTransitionDuration": 0
+    
   },
   "permission": {
     "scope.camera": {

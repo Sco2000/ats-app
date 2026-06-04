@@ -5,8 +5,7 @@
         class="osn-tab-bar__tab item-class {{ itemClass }} {{ activeTab === item.id ? 'osn-tab-bar__tab--active active-item-class' : '' }} {{ activeTab === item.id ? activeItemClass : '' }}"
         data-tab="{{ item.id }}"
         data-url="{{ item.url }}"
-        bindtap="handleTap"
-      >
+        bindtap="handleTap"      >
         <image
           wx:if="{{ item.iconImage }}"
           class="osn-tab-bar__icon icon-class {{ iconClass }}"

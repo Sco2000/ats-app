@@ -1,31 +1,39 @@
 /**
  * Input Component
- * Text input with optional trailing icon, date picker mode, and search
- * results dropdown. Supports multiple slots for flexible layout.
+ * Flexible input field with optional icon, text styling, and result dropdown support.
+ * Supports left or right icon placement, placeholder styling, and optional date mode.
  *
  * @example
  * <app-input
  *   value="{{ query }}"
  *   placeholder="Search..."
  *   icon="search"
+ *   iconPosition="left"
+ *   fieldStyle="font-size: 28rpx;"
+ *   placeholderStyle="color: #999;"
  *   bind:input="onInput"
  *   bind:iconTap="onSearch"
  * />
  *
- * @property {string} value - Current input value
- * @property {string} placeholder - Placeholder text
- * @property {'text'|'number'|'idcard'|'digit'} type - Input type (default: 'text')
- * @property {boolean} readonly - Disable editing
- * @property {string} containerClass - Wrapper CSS class
- * @property {string} icon - Icon name for trailing action
- * @property {boolean} showResults - Show search results dropdown
- * @property {string} resultClass - Results dropdown CSS class
- * @property {Array} results - Search result items
+ * @property {string} value - Current input value.
+ * @property {string} placeholder - Placeholder text shown when the field is empty.
+ * @property {'text'|'date'} type - Input type, currently supports 'text' and optional 'date' mode.
+ * @property {boolean} readonly - Disable editing.
+ * @property {string} containerClass - Additional CSS class(es) on the outer wrapper.
+ * @property {string} fieldStyle - Inline style applied to the text input element.
+ * @property {string} placeholderStyle - Inline style applied to the placeholder text.
+ * @property {string} icon - Icon name passed to the internal `osn-icon` component.
+ * @property {string} iconPosition - Icon placement: 'left' or 'right' (default: 'right').
+ * @property {string} height - Icon height in rpx (default: '40').
+ * @property {string} width - Icon width in rpx (default: '40').
+ * @property {boolean} showResults - When true, renders the dropdown results panel.
+ * @property {string} resultClass - CSS class applied to the results dropdown.
+ * @property {Array} results - Result items for the dropdown slot.
  *
- * @fires input - On text input (detail: { value })
- * @fires iconTap - When trailing icon is tapped
- * @fires selectResult - When a search result is selected
- * @fires dateChanged - On date picker change (detail: { value })
+ * @fires input - Fired on every keystroke in text mode. Detail: { value }.
+ * @fires iconTap - Fired when the icon is tapped.
+ * @fires selectResult - Fired when a result item slot is selected.
+ * @fires dateChanged - Fired when the date picker value changes. Detail: { value }.
  */
 Component({
   options: {
@@ -38,7 +46,12 @@ Component({
     type: { type: String, value: 'text' },
     readonly: { type: Boolean, value: false },
     containerClass: String,
+    fieldStyle: String,
+    placeholderStyle: String,
     icon: String,
+    iconPosition: { type: String, value: 'right' },
+    height: { type: String, value: '40' },
+    width: { type: String, value: '40' },
     showResults: { type: Boolean, value: false },
     resultClass: String,
     results: { type: Array, value: [] }

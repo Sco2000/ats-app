@@ -7,6 +7,11 @@
     "app-card": "/components/ui/card/index",
     "app-list-destination": "/components/ui/list-destination/index",
     "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
+    "app-icon": "/components/ui/icons/base/index",
+    "app-button": "/components/ui/button/index",
+    "app-modal": "/components/ui/modal/index",
+    "app-typography": "/components/ui/typography/index",
+    "app-card": "/components/ui/card/index",
+    "app-input": "/components/ui/input/index"
   }
 }
