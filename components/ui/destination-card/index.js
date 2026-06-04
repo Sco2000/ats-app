@@ -13,6 +13,18 @@ Component({
         loading: false,
       },
     },
+    cardWidth: {
+      type: String,
+      value: '480rpx'
+    },
+    imageHeight: {
+      type: String,
+      value: '285rpx'
+    },
+    showDetailsButton: {
+      type: Boolean,
+      value: true
+    }
   },
   methods: {
     handleSubmit() {

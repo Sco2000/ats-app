@@ -14,12 +14,6 @@
     z-index: 10;
 }
 
-.button-wrapper {
-    width: auto;
-    flex-shrink: 0;
-    min-width: 140rpx;
-}
-
 .subtitle-row {
     display: flex;
     align-items: center;
@@ -33,6 +27,10 @@
     width: 100%;
     white-space: nowrap;
     gap: 16rpx;
+}
+
+.price-button-row.price-only {
+    justify-content: flex-start;
 }
 
 .button-container {

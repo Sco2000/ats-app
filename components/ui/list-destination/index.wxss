@@ -1,13 +1,33 @@
 /* wxss */
 .menu-tabs {
+  display: block;
   overflow-x: scroll;
+  overflow-y: hidden;
   white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menu-tabs__item {
   display: inline-block;
-  margin-right: 20rpx;
   vertical-align: top;
+  margin-right: 20rpx;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.grid-item {
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.vertical-list .menu-tabs__item {
+  display: block;
+  width: 100%;
+  margin-bottom: 20rpx;
 }
 
 .header-row{
