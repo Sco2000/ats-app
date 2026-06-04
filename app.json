@@ -25,7 +25,9 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "TCMPP Boilerplate",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "pageTransitionDuration": 0
+    
   },
   "permission": {
     "scope.camera": {
