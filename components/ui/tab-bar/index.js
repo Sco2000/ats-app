@@ -1,65 +1,102 @@
 /**
  * Tab Bar Component
- * Horizontal tab switcher with active state tracking and customizable styling.
- * Supports multiple slots for tab content panels.
+ * Horizontal tab switcher with a controlled active state.
  *
  * @example
  * <app-tab-bar
- *   tabs="{{ [{ key: 'info', label: 'Info' }, { key: 'reviews', label: 'Reviews' }] }}"
- *   default="info"
- *   bind:changedActive="onTabChange"
+ *   tabs="{{ tabs }}"
+ *   activeTab="{{ activeTab }}"
  * />
  *
- * @property {Array<{key: string, label: string}>} tabs - Tab items
- * @property {string} default - Initial active tab key
- * @property {string} containerClass - Tabs wrapper CSS class
- * @property {string} itemContainerClass - Each tab item CSS class
- * @property {string} activeItemContainerClass - Active tab item CSS class
+ * @property {Array<{id: string, label: string, iconImage?: string, url?: string}>} tabs - Tab items
+ * @property {string} activeTab - Currently active tab id
+ * @property {'navigateTo'|'redirectTo'|'switchTab'|'reLaunch'} navigationType - Navigation API used when a tab has a url
+ * @property {string} containerClass - Extra class for the tab list
+ * @property {string} itemClass - Extra class for each tab item
+ * @property {string} activeItemClass - Extra class for the active tab item
+ * @property {string} iconClass - Extra class for tab icons
+ * @property {string} labelClass - Extra class for tab labels
  *
- * @fires changedActive - On tab switch (detail: { key })
+ * @fires change - On tab switch (detail: { tab })
  */
 Component({
-  options: {
-    multipleSlots: true
-  },
   properties: {
+    activeTab: {
+      type: String,
+      value: '',
+    },
+
     tabs: {
       type: Array,
-      value: []
+      value: [],
     },
-    default: {
+
+    navigationType: {
       type: String,
-      value: ''
+      value: 'switchTab',
     },
-    containerClass: { // For the main tabs wrapper
+
+    containerClass: {
       type: String,
-      value: ''
+      value: '',
     },
-    itemContainerClass: { // For each tab item
+
+    itemClass: {
       type: String,
-      value: ''
+      value: '',
     },
-    activeItemContainerClass: { // For each active tab item
+
+    activeItemClass: {
       type: String,
-      value: ''
-    }
+      value: '',
+    },
+
+    iconClass: {
+      type: String,
+      value: '',
+    },
+
+    labelClass: {
+      type: String,
+      value: '',
+    },
   },
-  data: {
-    activeKey: ''
-  },
-  lifetimes: {
-    attached() {
-      const tabs = this.data.tabs;
-      this.setData({
-        activeKey: this.data.default || (tabs[0] ? tabs[0].key : '')
-      });
-    }
-  },
+
   methods: {
-    onTabClick(e) {
-      const key = e.currentTarget.dataset.key;
-      this.setData({ activeKey: key });
-      this.triggerEvent('changedActive', { key });
+    handleTap(e) {
+      const tab = e.currentTarget.dataset.tab;
+      const url = e.currentTarget.dataset.url;
+
+      if (!tab || tab === this.properties.activeTab) {
+        return;
+      }
+
+      this.triggerEvent('change', { tab });
+
+      if (url) {
+        this.navigate(url);
+      }
+    },
+
+    navigate(url) {
+      const navigationType = this.properties.navigationType;
+      const navigate = wx[navigationType] || wx.redirectTo;
+
+      navigate({
+        url,
+        success: () => {},
+        fail: (err) => {
+          if (navigationType !== 'redirectTo') {
+            console.warn('[TabBar] navigation failed, falling back to redirectTo:', err.errMsg);
+            wx.redirectTo({ url });
+          }
+        },
+      });
+    },
+  },
+  lifetimes:({
+    attached(){
+      console.log("le composant tab nar  est charge  dans ma page");
     }
-  }
+  })
 });

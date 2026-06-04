@@ -20,7 +20,10 @@
       style="{{fieldStyle}}"
       placeholder-style="{{placeholderStyle}}"
       readonly="{{readonly}}"
-      bindinput="onInput" />
+      bindinput="onInput"
+    placeholder-style=""
+    />
+      <!-- bindinput="" -->
   </block>
 
   <block wx:if="{{icon && iconPosition === 'right'}}">

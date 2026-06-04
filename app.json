@@ -1,15 +1,32 @@
 {
   "pages": [
+
+    "pages/home/home",
     "pages/index/index",
-    "pages/demo/index"
+    "pages/explorer/explorer",
+    "pages/favoris/favoris",
+    "pages/voyage/voyage"
+
+   
+
   ],
+
+  "usingComponents": {
+    "app-nav-bar": "/components/ui/nav-bar/index",
+    "osn-image": "/components/ui/image/index",
+    "app-icon": "/components/ui/icons/base/index"
+  },
+
+
   "style": "v2",
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "TCMPP Boilerplate",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "pageTransitionDuration": 0
+    
   },
   "permission": {
     "scope.camera": {
