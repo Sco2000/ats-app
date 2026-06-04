@@ -44,8 +44,8 @@ Component({
     attached() {
       this.setData({
         CONTAINER: {
-          HEIGHT: this.properties.height + 40,
-          WIDTH: this.properties.width + 40,
+          HEIGHT: this.properties.height,
+          WIDTH: this.properties.width,
         },
       });
     },

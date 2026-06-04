@@ -41,7 +41,6 @@ Component({
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
-            console.log(sysInfo);
 
       this.setData({
         statusBarHeight: sysInfo.statusBarHeight || 20,
@@ -54,6 +53,15 @@ Component({
       const pages = getCurrentPages();
       if (pages.length > 1) {
         wx.navigateBack();
+        return;
+      }
+
+      const app = getApp();
+      if (app && app.globalData.navHistory && app.globalData.navHistory.length > 0) {
+        const prevUrl = app.globalData.navHistory.pop();
+        wx.redirectTo({
+          url: prevUrl,
+        });
         return;
       }
 

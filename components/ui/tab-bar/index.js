@@ -79,6 +79,36 @@ Component({
     },
 
     navigate(url) {
+      const pages = getCurrentPages();
+      if (pages.length > 0) {
+        const currentPage = pages[pages.length - 1];
+        let currentUrl = '/' + currentPage.route;
+        
+        const options = currentPage.options || {};
+        const query = Object.keys(options)
+          .map(key => `${key}=${options[key]}`)
+          .join('&');
+        if (query) {
+          currentUrl += '?' + query;
+        }
+
+        const app = getApp();
+        if (app) {
+          if (!app.globalData.navHistory) {
+            app.globalData.navHistory = [];
+          }
+          
+          const lastHistory = app.globalData.navHistory[app.globalData.navHistory.length - 1];
+          if (lastHistory !== currentUrl) {
+            app.globalData.navHistory.push(currentUrl);
+          }
+
+          if (app.globalData.navHistory.length > 15) {
+            app.globalData.navHistory.shift();
+          }
+        }
+      }
+
       const navigationType = this.properties.navigationType;
       const navigate = wx[navigationType] || wx.redirectTo;
 

@@ -1,0 +1,25 @@
+<view class="osn-layout">
+  <!-- Nav Bar -->
+  <app-nav-bar 
+    title="{{ title }}" 
+    showBack="{{ showBack }}" 
+    transparent="{{ transparent }}" 
+    showLogo="{{ showLogo }}" 
+    logoSrc="{{ logoSrc }}" 
+  />
+
+  <!-- Main Content Slot -->
+  <view
+    class="osn-layout__content {{ showTabBar ? 'osn-layout__content--with-tabbar' : '' }}"
+    style="padding-top: {{ navContentOffset }}px;"
+  >
+    <slot></slot>
+  </view>
+
+  <!-- Bottom Tab Bar -->
+  <app-tab-bar 
+    wx:if="{{ showTabBar }}" 
+    tabs="{{ tabs }}" 
+    activeTab="{{ activeTab }}" 
+  />
+</view>

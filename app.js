@@ -20,6 +20,42 @@ const STATE_KEYS = {
   USER_NAME: 'user.name',
 };
 
+const DESTINATIONS = [
+  {
+    id: 1,
+    image: '/assets/images/img.jpg',
+    title: 'Lac Rose',
+    subtitle: 'Lac Retba',
+    price: '17 000 Fcfa',
+    buttonLabel: 'Details',
+    buttonClass: 'btn-details',
+    like: true,
+    loading: false,
+  },
+  {
+    id: 2,
+    image: '/assets/images/img.jpg',
+    title: 'Lac Rose',
+    subtitle: 'Lac Retba',
+    price: '17 000 Fcfa',
+    buttonLabel: 'Details',
+    buttonClass: 'btn-details',
+    like: true,
+    loading: false,
+  },
+  {
+    id: 3,
+    image: '/assets/images/img.jpg',
+    title: 'Lac Rose',
+    subtitle: 'Lac Retba',
+    price: '17 000 Fcfa',
+    buttonLabel: 'Details',
+    buttonClass: 'btn-details',
+    like: false,
+    loading: false,
+  },
+];
+
 /**
  * EventBus Event Names
  * Add your app-specific events here
@@ -235,5 +271,7 @@ App({
 
     /** Event names for convenience */
     EVENTS,
+
+    DESTINATIONS,
   },
 });

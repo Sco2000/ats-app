@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "app-destination-card": "/components/ui/destination-card/index",
+    "app-typography": "/components/ui/typography/index",
+    "osn-icon": "/components/ui/icons/base/index"
+  }
+}
