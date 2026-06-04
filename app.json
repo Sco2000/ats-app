@@ -1,24 +1,8 @@
 {
   "pages": [
-
-    "pages/home/home",
     "pages/index/index",
-    "pages/explorer/explorer",
-    "pages/favoris/favoris",
-    "pages/voyage/voyage"
-
-   
-
+    "pages/demo/index"
   ],
-
-  "usingComponents": {
-    "app-nav-bar": "/components/ui/nav-bar/index",
-    "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index",
-    "app-layout": "/components/ui/layout/index"
-  },
-
-
   "style": "v2",
   "window": {
     "backgroundTextStyle": "light",

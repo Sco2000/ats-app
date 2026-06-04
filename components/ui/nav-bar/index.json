@@ -1,7 +1,4 @@
 {
   "component": true,
-  "usingComponents": {
-    "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
-  }
+  "usingComponents": {}
 }

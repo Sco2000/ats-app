@@ -480,11 +480,3 @@ scroll-view {
 .menu-tabs::-webkit-scrollbar {
   display: none;
 }
-
-.navbar{
-
- border-bottom: 1px solid #F3F4F6;
-
- width: 100%;
- height: 220rpx;
-}
