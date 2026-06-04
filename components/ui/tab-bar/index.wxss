@@ -60,6 +60,6 @@
   font-size: 30rpx;
   font-weight: 700;
   line-height: 44rpx;
-  text-overflow: ellipsis;
+  
   white-space: nowrap;
 }

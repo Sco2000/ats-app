@@ -14,7 +14,8 @@
   "usingComponents": {
     "app-nav-bar": "/components/ui/nav-bar/index",
     "osn-image": "/components/ui/image/index",
-    "app-icon": "/components/ui/icons/base/index"
+    "app-icon": "/components/ui/icons/base/index",
+    "app-layout": "/components/ui/layout/index"
   },
 
 

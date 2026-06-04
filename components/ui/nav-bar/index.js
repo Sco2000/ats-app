@@ -57,6 +57,15 @@ Component({
         return;
       }
 
+      const app = getApp();
+      if (app && app.globalData.navHistory && app.globalData.navHistory.length > 0) {
+        const prevUrl = app.globalData.navHistory.pop();
+        wx.redirectTo({
+          url: prevUrl,
+        });
+        return;
+      }
+
       wx.reLaunch({
         url: '/pages/home/home',
       });
