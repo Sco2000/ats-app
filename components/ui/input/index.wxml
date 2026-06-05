@@ -18,10 +18,9 @@
       value="{{value}}"
       placeholder="{{placeholder}}"
       style="{{fieldStyle}}"
-      placeholder-style="{{placeholderStyle}}"
+      placeholderStyle="{{placeholderStyle}}"
       readonly="{{readonly}}"
       bindinput="onInput"
-    placeholder-style=""
     />
       <!-- bindinput="" -->
   </block>

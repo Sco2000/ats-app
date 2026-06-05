@@ -3,4 +3,7 @@
 .h-300rpx  { height: 300rpx !important; }
 .h-350rpx  { height: 350rpx !important; }
 .fs-0 {font-size: 26rpx !important;}
-.inp{background-color: rgb(236, 234, 234);}
+.inp{
+  background-color: rgb(236, 234, 234);
+  column-gap: 18rpx;
+}

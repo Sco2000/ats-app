@@ -19,13 +19,15 @@
       <view class=" h-50">
         <app-input
           placeholder="Où voulez-vous allez?"
+          fieldStyle="font-size: 30rpx;"
+          placeholderStyle="font-size: 32rpx; color: #999999;"
           icon="search"
           bind:input="onSearch"
           bind:iconTap="onIconTap"
           containerClass="h-100 border fs-0 p-1 br-25 inp"
           iconPosition= "left"
-          height="50"
-          width="50"
+          height="38"
+          width="38"
         />
       </view>
     </view>
