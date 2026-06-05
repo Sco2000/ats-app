@@ -11,6 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   background: #ffffff;
+  border-bottom: 0.5rpx solid rgb(227, 224, 224);
 }
 
 .osn-nav-bar--transparent {

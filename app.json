@@ -13,7 +13,9 @@
     "app-icon": "/components/ui/icons/base/index",
     "app-layout": "/components/ui/layout/index",
     "app-destination-card" : "/components/ui/destination-card/index",
-    "app-list-destination"  : "/components/ui/list-destination/index"
+    "app-list-destination"  : "/components/ui/list-destination/index",
+    "app-input"  : "/components/ui/input/index",
+    "app-chip-group"  : "/components/ui/chip-group/index"
   },
 
   "style": "v2",
