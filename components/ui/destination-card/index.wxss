@@ -44,8 +44,5 @@
     width: 120rpx;
 }
 
-.btn-details {
-    padding: 8rpx 24rpx;
-    border-radius: 8rpx;
-    font-size: 16rpx;
+.text {
 }

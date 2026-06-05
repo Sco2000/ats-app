@@ -1,5 +1,5 @@
 <view
-  class="osn-typography"
+  class="osn-typography {{containerClass}}"
   style="
     color: {{ computedColor }};
     font-weight: {{ computedWeight }};

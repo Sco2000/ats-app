@@ -28,6 +28,7 @@ Component({
   properties: {
     // Content (fallback when not using slot)
     message: { type: String, value: '' },
+    containerClass: { type: String, value: '' },
 
     // Full property names
     align:          { type: String, value: 'left' },

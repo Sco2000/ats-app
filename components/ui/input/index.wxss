@@ -2,7 +2,7 @@
   position: relative;
   border-radius: 16rpx;
   border: 2rpx solid #efefef;
-  background: #fafafa;
+  background: rgb(248, 247, 247);
   min-height: 68rpx;
   display: flex;
   align-items: center;

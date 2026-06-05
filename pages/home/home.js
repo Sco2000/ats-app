@@ -5,7 +5,14 @@ Page({
   data: {
     activeTab: 'home',
     tabs: MAIN_TABS,
-    destinations: app.globalData.DESTINATIONS
+    destinations: app.globalData.DESTINATIONS,
+    filters: [
+      { id: 'all', label: 'Tous' },
+      { id: 'dakar', label: 'Dakar' },
+      { id: 'saly', label: 'Saly' },
+      { id: 'sine-saloum', label: 'Sine Saloum' },
+    ],
+    activeFilter:'all'
   },
 
   handleCardPress() {
@@ -26,5 +33,11 @@ Page({
 
     this.setData({ destinations: updatedDestinations });
     app.globalData.DESTINATIONS = updatedDestinations;
+  },
+
+  handleFilterChange(event){
+    this.setData({
+      activeFilter:event.detail.id
+    })
   }
 });

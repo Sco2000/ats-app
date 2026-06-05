@@ -27,12 +27,12 @@
                 </app-typography>
             </view>
             
-           <view class="price-button-row {{ !(showDetailsButton && destination.buttonLabel) ? 'price-only' : '' }}">
-                <app-typography size="18" weight="700" color="#1C1C1C">
+           <view class="price-button-row d-flex  justify-content-between{{ !(showDetailsButton && destination.buttonLabel) ? 'price-only' : '' }}">
+                <app-typography containerClass="flex-1 " size="18" weight="700" color="#1C1C1C">
                     {{ destination.price }}
                 </app-typography>
-                <view class="button-container" wx:if="{{ showDetailsButton && destination.buttonLabel }}">
-                    <app-button button-class="btn-details" type="primary" loading="{{ destination.loading }}" bind:onPress="handleSubmit">
+                <view class="button-container flex-1" wx:if="{{ showDetailsButton && destination.buttonLabel }}">
+                    <app-button buttonClass="br-50 px-4" type="primary" loading="{{ destination.loading }}" bind:onPress="handleSubmit">
                         {{ destination.buttonLabel }}
                     </app-button>
                 </view>
