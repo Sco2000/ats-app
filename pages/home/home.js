@@ -11,6 +11,12 @@ Page({
       { id: 'dakar', label: 'Dakar' },
       { id: 'saly', label: 'Saly' },
       { id: 'sine-saloum', label: 'Sine Saloum' },
+      { id: 'saint-louis', label: 'Saint Louis' },
+      { id: 'lompoul', label: 'Lompoul' },
+      { id: 'experience-locale', label: 'Experience Locale' },
+
+
+
     ],
     activeFilter:'all'
   },
