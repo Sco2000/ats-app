@@ -6,33 +6,35 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content d-flex flex-column" show-scrollbar="{{false}}">
+  <scroll-view class="content d-flex flex-column" enhanced="{{true}}"  show-scrollbar="{{true}}">
     <view class="h-300rpx d-flex flex-column gap-4">
-      <view>
-        <app-typography color="black" line-height="1.4" weight="700" size="32">
-          Bonjour👋
-        </app-typography>
-        <app-typography color="black" line-height="1.4" size="24">
-          Explorons le Sénégal
-        </app-typography>
-      </view>
+
       <view class=" h-50">
+        <view class=" ">
+          <view class="home-greeting">Bonjour 👋</view>
+          <view class="home-subtitle">
+            Explorons le <text class="home-subtitle__highlight">Sénégal</text> !
+          </view>
+
+
         <app-input
-          placeholder="Où voulez-vous allez?"
-          icon="search"
-          bind:input="onSearch"
-          bind:iconTap="onIconTap"
-          containerClass="h-100 border fs-0 p-1 br-25 inp"
-          iconPosition= "left"
-          height="50"
-          width="50"
+        containerClass="search-input mt-4"
+        value="{{ query }}"
+        placeholder=" Où voulez-vous allez ?"
+        field-style="font-size: 28rpx;"
+        placeholder-style="font-size: 28rpx; color: #9CA3AF;"
+        icon="search"
+        bind:input="onInput"
+        bind:iconTap="onSearch"
+        iconPosition="left"
+
         />
+
+        </view>
       </view>
     </view>
     <view class=" h-300rpx d-flex border-bottom flex-column justify-content-center gap-3">
-        <app-typography size="18" weight="600" color="black">
-          Destinations populaire
-        </app-typography>
+        <view class="home-section-title">Destinations Populaires</view>
         <app-chip-group
           items="{{filters}}"
           activeId="{{activeFilter}}"
@@ -42,9 +44,7 @@
     <view class="d-flex flex-column gap-6">
       <view class="d-flex flex-column gap-3 mt-3">
         <view class="d-flex justify-content-between align-items-center mb-2">
-          <app-typography size="18" weight="600" color="black">
-            Destinations à la Une
-          </app-typography>
+          <view class="home-section-title">Destinations à la Une</view>
           <view class="d-flex align-items-center">
             <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
               voir tout
@@ -55,21 +55,25 @@
           <app-list-destination
             destinations="{{ destinations }}"
             layout="scroll"
-            cardWidth="500rpx"
-            imageHeight="300rpx"
+            cardWidth="480rpx"
+            imageHeight="288rpx"
+            cardPaddingClass="p-2"
+            containerClass="featured-destination-list"
             showDetailsButton="{{ true }}"
             bind:toggleLike="handleDestinationLike"
             bind:onCardPress="handleCardPress" />
       </view>
       <view class="d-flex flex-column gap-3">
-          <app-typography size="18" weight="600" color="black">
-            Recommandations
-          </app-typography>
+          <view class="home-section-title">Recommandations</view>
           <app-list-destination
           destinations="{{ destinations }}"
           layout="grid"
-          cardWidth="500rpx"
-          imageHeight="300rpx"
+          cardWidth="100%"
+          imageHeight="288rpx"
+          cardPaddingClass="p-2"
+          cardStyle="height: 560rpx !important; border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
+          cardContainerStyle="border-radius: 32rpx !important;"
+          imageRadius="32rpx"
           showDetailsButton="{{ false }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
