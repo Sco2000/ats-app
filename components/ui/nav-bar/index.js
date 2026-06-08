@@ -27,23 +27,27 @@ Component({
 
   data: {
     statusBarHeight: 0,
-    navHeight: 44,
+    navHeight: 84,
     displayMode: 'default',
   },
 
   observers: {
     'showLogo, logoSrc': function(showLogo, logoSrc) {
       const displayMode = (showLogo && logoSrc) ? 'logo' : 'default';
-      this.setData({ displayMode });
+      const navHeight = displayMode === 'logo' ? 84 : 54;
+      this.setData({ displayMode, navHeight });
     }
   },
 
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
+      const displayMode = (this.properties.showLogo && this.properties.logoSrc) ? 'logo' : 'default';
 
       this.setData({
         statusBarHeight: sysInfo.statusBarHeight || 20,
+        navHeight: displayMode === 'logo' ? 84 : 54,
+        displayMode,
       });
     },
   },

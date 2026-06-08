@@ -5,8 +5,6 @@
         <osn-image
           src="{{ logoSrc }}"
           mode="aspectFit"
-          width="240rpx"
-          height="60rpx"
           imageStyle="width: 150rpx; height: 125rpx;"
           containerStyle="display: flex; align-items: center; justify-content: center;"
         />

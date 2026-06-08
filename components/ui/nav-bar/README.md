@@ -41,7 +41,7 @@ None.
 ## Internal Behaviour
 
 - On `attached`, the component reads `wx.getSystemInfoSync().statusBarHeight` and applies it as top padding so the bar sits below the device status bar.
-- The fixed nav content height is `44px`.
+- The fixed nav content height is `44px` by default, and `64px` when the centered logo mode is active.
 
 ## See Also
 

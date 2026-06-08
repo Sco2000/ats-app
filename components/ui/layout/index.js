@@ -20,16 +20,17 @@ Component({
   },
 
   data: {
-    navContentOffset: 88
+    navContentOffset: 64
   },
 
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
       const statusBarHeight = sysInfo.statusBarHeight || 20;
+      const contentHeight = this.properties.showLogo ? 64 : 44;
 
       this.setData({
-        navContentOffset: statusBarHeight + 44
+        navContentOffset: statusBarHeight + contentHeight
       });
     }
   }

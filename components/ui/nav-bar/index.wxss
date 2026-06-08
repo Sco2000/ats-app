@@ -22,7 +22,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 24rpx;
+  padding: 32rpx 24rpx 48rpx 24rpx;
+    /* padding: 0 24rpx; */
+
   position: relative;
 }
 
