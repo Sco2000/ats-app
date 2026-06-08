@@ -68,8 +68,8 @@
           <app-list-destination
           destinations="{{ destinations }}"
           layout="grid"
-          cardWidth="500rpx"
-          imageHeight="300rpx"
+          cardWidth="100%"
+          imageHeight="235rpx"
           showDetailsButton="{{ false }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
