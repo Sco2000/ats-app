@@ -9,17 +9,17 @@
   <scroll-view class="content explorer-page" scroll-y="true" show-scrollbar="{{false}}">
     <view class="explorer-page__hero">
       <view class="explorer-page__search">
-        <app-input
-          value="{{ searchValue }}"
-          placeholder="Rechercher une destination..."
-          icon="search"
-          iconPosition="left"
-          height="36"
-          width="36"
-          containerClass="explorer-search-input"
-          fieldStyle="font-size: 28rpx; color: #1c1c1c;"
-          placeholderStyle="color: #a3adba;"
-          bind:input="onSearchInput"
+          <app-input
+            containerClass="p-1  mt-4 fs-4 br-full"
+            value="{{ query }}"
+            placeholder="Rechercher une destination..."
+            field-style="font-size: 25rpx; border-radius:50rpx;"
+            placeholder-style="font-size: 28rpx;"
+            icon="search"
+            bind:input="onInput"
+            bind:iconTap="onSearch"
+            iconPosition="left"
+
         />
       </view>
 

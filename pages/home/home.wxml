@@ -8,25 +8,29 @@
 >
   <scroll-view class="content d-flex flex-column" show-scrollbar="{{false}}">
     <view class="h-300rpx d-flex flex-column gap-4">
-      <view>
-        <app-typography color="black" line-height="1.4" weight="700" size="32">
-          Bonjour👋
-        </app-typography>
-        <app-typography color="black" line-height="1.4" size="24">
-          Explorons le Sénégal
-        </app-typography>
-      </view>
+
       <view class=" h-50">
+        <view class=" ">
+          <view class="fs-1 fw-bold ">Bonjour 👋 </view>
+          <view class="fs-3">
+            Explorons le <text class="text-warning fw-semibold ">Sénégal</text> !
+          </view>
+
+
         <app-input
-          placeholder="Où voulez-vous allez?"
-          icon="search"
-          bind:input="onSearch"
-          bind:iconTap="onIconTap"
-          containerClass="h-100 border fs-0 p-1 br-25 inp"
-          iconPosition= "left"
-          height="50"
-          width="50"
+        containerClass="p-1 br-35 mt-4 fs-4"
+        value="{{ query }}"
+        placeholder=" Où voulez-vous allez ?"
+        field-style="font-size: 25rpx;"
+        placeholder-style="font-size: 28rpx; ;"
+        icon="search"
+        bind:input="onInput"
+        bind:iconTap="onSearch"
+        iconPosition="left"
+
         />
+
+        </view>
       </view>
     </view>
     <view class=" h-300rpx d-flex border-bottom flex-column justify-content-center gap-3">
