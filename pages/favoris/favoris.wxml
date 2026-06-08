@@ -6,7 +6,33 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <view class="content">
-     <!-- sen contenue yii fii boulen doff -->
-  </view>
+  <scroll-view class="content favorites-page" scroll-y="true" show-scrollbar="{{false}}">
+    <view class="favorites-page__header">
+      <app-typography size="14" weight="500" color="#7A8094">
+        {{ resultsLabel }}
+      </app-typography>
+    </view>
+
+    <view wx:if="{{ favoriteDestinations.length }}">
+      <app-list-destination
+        destinations="{{ favoriteDestinations }}"
+        layout="grid"
+        columns="2"
+        cardWidth="100%"
+        imageHeight="235rpx"
+        showDetailsButton="{{ false }}"
+        bind:toggleLike="handleDestinationLike"
+        bind:onCardPress="handleCardPress"
+      />
+    </view>
+
+    <view wx:else class="favorites-page__empty">
+      <app-typography size="18" weight="600" color="#1C1C1C">
+        Aucun favori pour le moment
+      </app-typography>
+      <app-typography size="14" color="#7A8094">
+        Marquez une destination comme favorite depuis Home ou Explorer.
+      </app-typography>
+    </view>
+  </scroll-view>
 </app-layout>

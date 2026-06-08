@@ -3,7 +3,7 @@
 .card-container {
     position: relative;
     width: 480rpx;
-    border-radius: 16rpx;
+    border-radius: 40rpx;
     overflow: hidden;
 }
 

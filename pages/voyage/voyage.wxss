@@ -1,1 +1,133 @@
 @import "../shared-tab-page.wxss";
+
+.voyages-page {
+  padding: 24rpx 32rpx 0;
+  box-sizing: border-box;
+}
+
+.voyages-page__header {
+  margin-bottom: 24rpx;
+}
+
+.voyages-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+}
+
+.reservation-card {
+  width: 100%;
+}
+
+.reservation-card__shell {
+  padding: 22rpx 22rpx 0;
+  border-radius: 36rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 32rpx rgba(17, 24, 39, 0.10);
+  overflow: hidden;
+}
+
+.reservation-card__body {
+  display: flex;
+  gap: 20rpx;
+  align-items: flex-start;
+}
+
+.reservation-card__image-wrap {
+  width: 170rpx;
+  height: 170rpx;
+  flex: 0 0 170rpx;
+  border-radius: 32rpx;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.reservation-card__image-wrap image {
+  border-radius: 32rpx;
+}
+
+.reservation-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.reservation-card__title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 10rpx;
+}
+
+.reservation-card__status {
+  flex: 0 0 auto;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: #eaf8ef;
+}
+
+.reservation-card__status.done {
+  background: #f2f4f7;
+}
+
+.reservation-card__status-text {
+  display: block;
+  font-size: 24rpx;
+  line-height: 1.2;
+  color: #0aa347;
+}
+
+.reservation-card__status.done .reservation-card__status-text {
+  color: #667085;
+}
+
+.reservation-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  margin-bottom: 14rpx;
+}
+
+.reservation-card__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.reservation-card__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 2rpx;
+}
+
+.reservation-card__footer {
+  margin-top: 16rpx;
+  padding: 16rpx 0 18rpx;
+  border-top: 1rpx solid #eef0f3;
+}
+
+.reservation-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reservation-card__action-arrow {
+  color: #0aa347;
+  font-size: 34rpx;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.voyages-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 360rpx;
+  padding: 48rpx 24rpx 80rpx;
+  text-align: center;
+  color: #7a8094;
+}

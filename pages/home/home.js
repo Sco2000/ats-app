@@ -35,9 +35,15 @@ Page({
     app.globalData.DESTINATIONS = updatedDestinations;
   },
 
-  handleFilterChange(event){
+    handleFilterChange(event){
+      this.setData({
+        activeFilter:event.detail.id
+      })
+    },
+
+  onShow() {
     this.setData({
-      activeFilter:event.detail.id
-    })
+      destinations: app.globalData.DESTINATIONS,
+    });
   }
 });

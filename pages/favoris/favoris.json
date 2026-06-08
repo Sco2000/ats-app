@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "app-list-destination": "/components/ui/list-destination/index",
+    "app-typography": "/components/ui/typography/index"
+  }
 }

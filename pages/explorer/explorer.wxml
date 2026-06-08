@@ -6,8 +6,58 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <view class="content">
-  fallou
-     <!-- sen contenue yii fii boulen doff  -->
-  </view>
+  <scroll-view class="content explorer-page" scroll-y="true" show-scrollbar="{{false}}">
+    <view class="explorer-page__hero">
+      <view class="explorer-page__search">
+        <app-input
+          value="{{ searchValue }}"
+          placeholder="Rechercher une destination..."
+          icon="search"
+          iconPosition="left"
+          height="36"
+          width="36"
+          containerClass="explorer-search-input"
+          fieldStyle="font-size: 28rpx; color: #1c1c1c;"
+          placeholderStyle="color: #a3adba;"
+          bind:input="onSearchInput"
+        />
+      </view>
+
+      <view class="explorer-page__filters">
+        <app-chip-group
+          items="{{filters}}"
+          activeId="{{activeFilter}}"
+          bind:change="handleFilterChange"
+        />
+      </view>
+    </view>
+
+    <view class="explorer-page__results">
+      <app-typography size="14" weight="500" color="#7A8094">
+        {{ resultsLabel }}
+      </app-typography>
+    </view>
+
+    <view wx:if="{{ visibleDestinations.length }}">
+      <app-list-destination
+        destinations="{{ visibleDestinations }}"
+        layout="grid"
+        columns="2"
+        cardWidth="100%"
+        imageHeight="235rpx"
+        showDetailsButton="{{ false }}"
+        bind:toggleLike="handleDestinationLike"
+        bind:onCardPress="handleCardPress"
+      />
+    </view>
+
+    <view wx:else class="explorer-page__empty">
+      <app-typography size="18" weight="600" color="#1C1C1C">
+        Aucune destination trouvée
+      </app-typography>
+      <app-typography size="14" color="#7A8094">
+        Essayez un autre mot-clé ou un autre filtre.
+      </app-typography>
+    </view>
+  </scroll-view>
 </app-layout>
