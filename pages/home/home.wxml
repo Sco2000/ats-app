@@ -46,7 +46,7 @@
             Destinations à la Une
           </app-typography>
           <view class="d-flex align-items-center">
-            <app-typography size="14" weight="600" color="#01953E">
+            <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
               voir tout
             </app-typography>
             <app-icon icon="arrow" width="{{20}}" height="{{20}}" color="#01953E"/>

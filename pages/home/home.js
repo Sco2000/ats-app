@@ -12,7 +12,7 @@ Page({
       { id: 'saly', label: 'Saly' },
       { id: 'sine-saloum', label: 'Sine Saloum' },
     ],
-    activeFilter:'all'
+    activeFilter:'all',
   },
 
   handleCardPress() {
@@ -39,6 +39,15 @@ Page({
       this.setData({
         activeFilter:event.detail.id
       })
+    },
+    handleShowAll(){
+      wx.navigateTo(
+        {
+          url:
+          '/pages/explorer/explorer'
+        }
+      )
+     
     },
 
   onShow() {
