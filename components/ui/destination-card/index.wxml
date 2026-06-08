@@ -1,20 +1,22 @@
 <!-- wxml -->
-<view class="card-container" style="width: {{ cardWidth }};">
-    <app-card containerClass="br-45 box-shadow-sm p-3 gap-3">
-        <view>
-            <osn-image src="{{ destination.image }}" mode="aspectFill" imageStyle="width: 100%; height: {{ imageHeight }}; border-radius: 32rpx;"/>
+<view class="card-container" style="width: {{ cardWidth }}; {{ cardContainerStyle }}">
+    <app-card containerClass="br-45 box-shadow-sm {{ cardPaddingClass }} gap-3" containerStyle="{{ cardStyle }}">
+        <view class="image-container">
+            <osn-image src="{{ destination.image }}" mode="aspectFill" imageStyle="width: 100%; height: {{ imageHeight }}; border-radius: {{ imageRadius }};"/>
             <view class="icon-heart" catchtap="handleLikeTap">
-                <block wx:if="{{ isLiked }}">
-                    <osn-icon icon="heartRed" width="{{60}}" height="{{60}}"/>
-                </block>
-                <block wx:else>
-                    <osn-icon icon="heart" width="{{60}}" height="{{60}}"/>
-                </block>
+                <view class="icon-heart__inner">
+                    <block wx:if="{{ isLiked }}">
+                        <osn-icon icon="heartRed" width="{{34}}" height="{{32}}"/>
+                    </block>
+                    <block wx:else>
+                        <osn-icon icon="heart" width="{{34}}" height="{{32}}"/>
+                    </block>
+                </view>
             </view>
         </view>
 
         <view class="d-flex flex-column gap-2">
-            <app-typography size="18" weight="600" color="#1C1C1C">
+            <app-typography size="14" weight="600" color="#1C1C1C" lineHeight="35rpx">
                 {{ destination.title }}
             </app-typography>
 
@@ -22,17 +24,23 @@
                 <view >
                     <osn-icon icon="icon" width="{{30}}" height="{{30}}"/>
                 </view>
-                <app-typography size="18" font-weight="normal" color="#1C1C1C">
+                <app-typography size="14" weight="400" color="#4A5565" lineHeight="40rpx">
                     {{ destination.subtitle }}
                 </app-typography>
             </view>
             
            <view class="price-button-row d-flex  justify-content-between{{ !(showDetailsButton && destination.buttonLabel) ? 'price-only' : '' }}">
-                <app-typography containerClass="flex-1 " size="18" weight="700" color="#1C1C1C">
+                <app-typography containerClass="flex-1 " size="16" weight="700" color="#1C1C1C" lineHeight="48rpx">
                     {{ destination.price }}
                 </app-typography>
-                <view class="button-container flex-1" wx:if="{{ showDetailsButton && destination.buttonLabel }}">
-                    <app-button buttonClass="br-50 px-4" type="primary" loading="{{ destination.loading }}" bind:onPress="handleSubmit">
+                <view class="button-container" wx:if="{{ showDetailsButton && destination.buttonLabel }}">
+                    <app-button
+                        buttonClass="destination-details-button"
+                        buttonStyle="height: 68rpx !important; padding: 0 !important; border-radius: 60rpx !important; background: #01953e !important; font-size: 28rpx !important; font-weight: 600 !important; line-height: 68rpx !important; box-shadow: none !important; letter-spacing: 0 !important;"
+                        type="primary"
+                        loading="{{ destination.loading }}"
+                        bind:onPress="handleSubmit"
+                    >
                         {{ destination.buttonLabel }}
                     </app-button>
                 </view>

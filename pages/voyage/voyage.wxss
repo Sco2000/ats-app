@@ -20,10 +20,12 @@
 }
 
 .reservation-card__shell {
-  padding: 22rpx 22rpx 0;
-  border-radius: 36rpx;
+  min-height: 365rpx;
+  padding: 2rpx;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 32rpx !important;
   background: #ffffff;
-  box-shadow: 0 10rpx 32rpx rgba(17, 24, 39, 0.10);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -31,6 +33,7 @@
   display: flex;
   gap: 20rpx;
   align-items: flex-start;
+  padding: 22rpx;
 }
 
 .reservation-card__image-wrap {
@@ -103,9 +106,9 @@
 }
 
 .reservation-card__footer {
-  margin-top: 16rpx;
-  padding: 16rpx 0 18rpx;
-  border-top: 1rpx solid #eef0f3;
+  margin-top: 0;
+  padding: 18rpx 22rpx;
+  border-top: 2rpx solid #f3f4f6;
 }
 
 .reservation-card__action {

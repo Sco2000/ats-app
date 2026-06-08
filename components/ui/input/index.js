@@ -42,7 +42,6 @@ Component({
   properties: {
     value: String,
     placeholder: String,
-     placeholderStyle: String,
     type: { type: String, value: 'text' },
     readonly: { type: Boolean, value: false },
     containerClass: String,

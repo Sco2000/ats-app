@@ -31,6 +31,10 @@ Component({
       type: String,
       value: '',
     },
+    buttonStyle: {
+      type: String,
+      value: '',
+    },
   },
 
   data: {
