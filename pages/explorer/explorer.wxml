@@ -6,20 +6,20 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content explorer-page" scroll-y="true" show-scrollbar="{{false}}">
+  <scroll-view class="content explorer-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="explorer-page__hero">
       <view class="explorer-page__search">
-        <app-input
-          value="{{ searchValue }}"
-          placeholder="Rechercher une destination..."
-          icon="search"
-          iconPosition="left"
-          height="36"
-          width="36"
-          containerClass="explorer-search-input"
-          fieldStyle="font-size: 28rpx; color: #1c1c1c;"
-          placeholderStyle="color: #a3adba;"
-          bind:input="onSearchInput"
+          <app-input
+            containerClass="explore-search-input"
+            value="{{ query }}"
+            placeholder="Rechercher une destination..."
+            field-style="font-size: 28rpx;"
+            placeholder-style="font-size: 28rpx; color: #9CA3AF;"
+            icon="search"
+            bind:input="onInput"
+            bind:iconTap="onSearch"
+            iconPosition="left"
+
         />
       </view>
 
@@ -44,7 +44,11 @@
         layout="grid"
         columns="2"
         cardWidth="100%"
-        imageHeight="235rpx"
+        imageHeight="288rpx"
+        cardPaddingClass="p-2"
+        cardStyle="height: 560rpx !important; border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
+        cardContainerStyle="border-radius: 32rpx !important;"
+        imageRadius="32rpx"
         showDetailsButton="{{ false }}"
         bind:toggleLike="handleDestinationLike"
         bind:onCardPress="handleCardPress"

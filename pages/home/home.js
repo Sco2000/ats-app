@@ -11,8 +11,14 @@ Page({
       { id: 'dakar', label: 'Dakar' },
       { id: 'saly', label: 'Saly' },
       { id: 'sine-saloum', label: 'Sine Saloum' },
+      { id: 'saint-louis', label: 'Saint Louis' },
+      { id: 'lompoul', label: 'Lompoul' },
+      { id: 'experience-locale', label: 'Experience Locale' },
+
+
+
     ],
-    activeFilter:'all'
+    activeFilter:'all',
   },
 
   handleCardPress() {
@@ -39,6 +45,15 @@ Page({
       this.setData({
         activeFilter:event.detail.id
       })
+    },
+    handleShowAll(){
+      wx.navigateTo(
+        {
+          url:
+          '/pages/explorer/explorer'
+        }
+      )
+     
     },
 
   onShow() {

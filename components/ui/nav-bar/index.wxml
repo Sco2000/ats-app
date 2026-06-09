@@ -1,5 +1,5 @@
 <view class="osn-nav-bar {{ transparent ? 'osn-nav-bar--transparent' : '' }}" style="padding-top: {{ statusBarHeight }}px;">
-  <view class="osn-nav-bar__content" style="height: {{ navHeight }}px;">
+  <view class="osn-nav-bar__content">
     <block wx:if="{{ displayMode === 'logo' }}">
       <view class="osn-nav-bar__logo">
         <osn-image

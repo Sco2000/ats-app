@@ -13,6 +13,10 @@
 Component({
   properties: {
     containerClass: String,
+    containerStyle: {
+      type: String,
+      value: '',
+    },
   },
 
   data: {},

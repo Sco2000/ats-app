@@ -16,13 +16,6 @@
   width: 100%;
 }
 
-.explorer-search-input {
-  padding: 0 20rpx;
-  background: #f5f7fb;
-  border: 2rpx solid #ebeff4;
-  border-radius: 999rpx;
-}
-
 .explorer-page__filters {
   width: 100%;
 }
