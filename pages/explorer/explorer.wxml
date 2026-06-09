@@ -6,7 +6,7 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content explorer-page" scroll-y="true" show-scrollbar="{{false}}">
+  <scroll-view class="content explorer-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="explorer-page__hero">
       <view class="explorer-page__search">
           <app-input
