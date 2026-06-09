@@ -12,6 +12,7 @@ Component({
     transparent: { type: Boolean, value: false },
     showLogo: { type: Boolean, value: false },
     logoSrc: { type: String, value: '' },
+    showNavBorder: { type: Boolean, value: true },
 
     // Tab bar properties
     showTabBar: { type: Boolean, value: true },

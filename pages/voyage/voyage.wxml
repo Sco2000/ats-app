@@ -30,7 +30,7 @@
 
             <view class="reservation-card__content">
               <view class="reservation-card__title-row">
-                <app-typography size="14" weight="600" color="#1C1C1C" lineHeight="35rpx">
+                <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="45rpx">
                   {{ reservation.title }}
                 </app-typography>
 

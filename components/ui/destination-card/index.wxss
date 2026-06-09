@@ -12,6 +12,12 @@
     width: 100%;
 }
 
+.destination-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24rpx;
+}
+
 .icon-heart {
     position: absolute;
     top: 40rpx;
@@ -39,7 +45,17 @@
 .subtitle-row {
     display: flex;
     align-items: center;
-    gap: 16rpx;
+    gap: 12rpx;
+}
+
+.subtitle-icon-wrap {
+    width: 30rpx;
+    height: 30rpx;
+    flex: 0 0 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
 }
 
 .price-button-row {

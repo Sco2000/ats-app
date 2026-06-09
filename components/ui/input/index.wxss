@@ -1,6 +1,6 @@
 .osn-input {
   position: relative;
-  border-radius: 16rpx;
+  border-radius: 50rpx;
   border: 2rpx solid #efefef;
   background: rgb(248, 247, 247);
   min-height: 68rpx;
@@ -85,13 +85,14 @@
   width: 716rpx;
   max-width: 100%;
   min-height: 83rpx;
-  padding: 20rpx 32rpx 20rpx 88rpx;
+  padding: 20rpx 32rpx;
   border: 2rpx solid #e5e7eb;
   border-radius: 40rpx;
   background: #f9fafb;
   box-sizing: border-box;
   font-size: 28rpx;
   justify-content: flex-start;
+  margin-top: 10rpx;
 }
 
 .explore-search-input .osn-input__field {
@@ -105,5 +106,6 @@
 }
 
 .explore-search-input .osn-input__icon {
+  flex: 0 0 auto;
   margin-right: 16rpx;
 }

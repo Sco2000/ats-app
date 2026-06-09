@@ -23,6 +23,7 @@ Component({
     transparent: { type: Boolean, value: false },
     showLogo: { type: Boolean, value: false },
     logoSrc: { type: String, value: '' },
+    showBorder: { type: Boolean, value: true },
   },
 
   data: {
