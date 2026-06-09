@@ -6,7 +6,7 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content favorites-page" scroll-y="true" show-scrollbar="{{false}}">
+  <scroll-view class="content favorites-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="favorites-page__header">
       <app-typography size="14" weight="500" color="#7A8094">
         {{ resultsLabel }}
@@ -19,7 +19,11 @@
         layout="grid"
         columns="2"
         cardWidth="100%"
-        imageHeight="235rpx"
+        imageHeight="288rpx"
+        cardPaddingClass="p-2"
+        cardStyle="height: 560rpx !important; border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
+        cardContainerStyle="border-radius: 32rpx !important;"
+        imageRadius="32rpx"
         showDetailsButton="{{ false }}"
         bind:toggleLike="handleDestinationLike"
         bind:onCardPress="handleCardPress"

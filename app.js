@@ -39,7 +39,7 @@ const DESTINATIONS = [
     image: '/assets/images/img.jpg',
     title: 'Gorée',
     subtitle: 'Île de Gorée',
-    price: '197 000 FCFA',
+    price: '28 500 FCFA',
     buttonLabel: 'Details',
     buttonClass: 'btn-details',
     like: true,

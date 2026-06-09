@@ -7,11 +7,11 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 200;
+  z-index: 300;
   width: 100%;
   box-sizing: border-box;
   background: #ffffff;
-  border-bottom: 0.5rpx solid rgb(227, 224, 224);
+  border-bottom: 2rpx solid #f3f4f6;
 }
 
 .osn-nav-bar--transparent {
@@ -22,7 +22,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 24rpx;
+  height: 130rpx;
+  padding: 32rpx;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -35,7 +37,7 @@
 
 .osn-nav-bar__back {
   position: absolute;
-  left: 24rpx;
+  left: 32rpx;
   top: 50%;
   width: 72rpx;
   height: 72rpx;
@@ -43,7 +45,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.05);
+  background: transparent;
   transition: background 0.15s ease-out;
   transform: translateY(-50%);
 }
@@ -63,7 +65,7 @@
 .osn-nav-bar__title {
   font-size: 32rpx;
   font-weight: 700;
-  color: #333;
+  color: #1c1c1c;
   text-align: center;
 }
 

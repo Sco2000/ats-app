@@ -5,6 +5,14 @@
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.menu-tabs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 
 .menu-tabs__item {
@@ -13,10 +21,23 @@
   margin-right: 20rpx;
 }
 
+.featured-destination-list {
+  width: 100%;
+  height: 592rpx;
+}
+
+.featured-destination-list .menu-tabs__item {
+  margin-right: 32rpx;
+}
+
 .grid-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20rpx;
+}
+
+.recommendation-destination-grid {
+  gap: 32rpx;
 }
 
 .grid-item {

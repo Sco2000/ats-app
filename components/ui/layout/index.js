@@ -29,7 +29,7 @@ Component({
       const statusBarHeight = sysInfo.statusBarHeight || 20;
 
       this.setData({
-        navContentOffset: statusBarHeight + 44
+        navContentOffset: statusBarHeight + 65
       });
     }
   }
