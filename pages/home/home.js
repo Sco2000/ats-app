@@ -21,8 +21,13 @@ Page({
     activeFilter:'all',
   },
 
-  handleCardPress() {
-    // Placeholder for future destination details navigation.
+  handleCardPress(event) {
+    const destination = event.detail && event.detail.destination;
+    const destinationId = destination && destination.id ? destination.id : '';
+
+    wx.navigateTo({
+      url: `/pages/booking/booking${destinationId ? `?destinationId=${destinationId}` : ''}`,
+    });
   },
 
   handleDestinationLike(event) {

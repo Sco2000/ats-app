@@ -71,7 +71,9 @@ Component({
     },
 
     handleSubmit() {
-      this.triggerEvent('onCardPress');
+      this.triggerEvent('onCardPress', {
+        destination: this.properties.destination,
+      });
     },
   },
 });
