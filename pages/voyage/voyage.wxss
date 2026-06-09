@@ -20,13 +20,20 @@
 }
 
 .reservation-card__shell {
-  min-height: 365rpx;
   padding: 2rpx;
   border: 2rpx solid #e5e7eb;
   border-radius: 32rpx !important;
   background: #ffffff;
   box-shadow: none;
   overflow: hidden;
+}
+
+.reservation-card__shell--with-action {
+  min-height: 365rpx;
+}
+
+.reservation-card__shell--compact {
+  min-height: 0;
 }
 
 .reservation-card__body {
@@ -37,9 +44,9 @@
 }
 
 .reservation-card__image-wrap {
-  width: 170rpx;
-  height: 170rpx;
-  flex: 0 0 170rpx;
+  width: 192rpx;
+  height: 192rpx;
+  flex: 0 0 192rpx;
   border-radius: 32rpx;
   overflow: hidden;
   background: #f3f4f6;

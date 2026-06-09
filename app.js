@@ -144,7 +144,7 @@ const RESERVATIONS = [
   },
   {
     id: 2,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/ile.png',
     title: 'Île de Gorée',
     subtitle: 'Île de Gorée',
     dateLabel: '8 Fév 2026',
@@ -158,7 +158,7 @@ const RESERVATIONS = [
   },
   {
     id: 3,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/bord.png',
     title: 'Bord de mer',
     subtitle: 'Île de Ngor',
     dateLabel: '22 Mars 2026',
@@ -172,7 +172,7 @@ const RESERVATIONS = [
   },
   {
     id: 4,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/ranch.png',
     title: 'Ranch de Bandia',
     subtitle: 'Bandia',
     dateLabel: '28 Fév 2026',

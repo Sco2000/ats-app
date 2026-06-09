@@ -6,7 +6,7 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content favorites-page" scroll-y="true" show-scrollbar="{{false}}">
+  <scroll-view class="content favorites-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="favorites-page__header">
       <app-typography size="14" weight="500" color="#7A8094">
         {{ resultsLabel }}

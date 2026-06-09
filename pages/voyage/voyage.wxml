@@ -6,7 +6,7 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content voyages-page" scroll-y="true" show-scrollbar="{{false}}">
+  <scroll-view class="content voyages-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="voyages-page__header">
       <app-typography size="14" weight="500" color="#7A8094">
         {{ resultsLabel }}
@@ -16,8 +16,8 @@
     <view wx:if="{{ reservations.length }}" class="voyages-page__list">
       <view wx:for="{{ reservations }}" wx:key="id" wx:for-item="reservation" class="reservation-card">
         <app-card
-          containerClass="reservation-card__shell"
-          containerStyle="border-radius: 32rpx !important;"
+          containerClass="reservation-card__shell {{ reservation.showAction ? 'reservation-card__shell--with-action' : 'reservation-card__shell--compact' }}"
+          containerStyle="border-radius: 32rpx !important; gap: 0 !important;"
         >
           <view class="reservation-card__body">
             <view class="reservation-card__image-wrap">
@@ -41,21 +41,23 @@
 
               <view class="reservation-card__meta">
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="Icon" width="{{16}}" height="{{16}}" />
-                  <app-typography size="14" weight="400" color="#4A5565" lineHeight="40rpx">
+
+                  <app-icon icon="localisation" width="{{20}}" height="{{20}}" />
+                  <app-typography size="14" color="#667085">
+
                     {{ reservation.subtitle }}
                   </app-typography>
                 </view>
 
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="Icon" width="{{16}}" height="{{16}}" />
+                  <app-icon icon="calendrier" width="{{20}}" height="{{20}}" />
                   <app-typography size="14" color="#667085">
                     {{ reservation.dateLabel }}
                   </app-typography>
                 </view>
 
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="Icon" width="{{16}}" height="{{16}}" />
+                  <app-icon icon="users" width="{{20}}" height="{{20}}" />
                   <app-typography size="14" color="#667085">
                     {{ reservation.travelersLabel }}
                   </app-typography>
