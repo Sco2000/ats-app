@@ -36,30 +36,74 @@
     transform: translateY(4rpx);
 }
 
+.destination-card-body {
+    display: flex;
+    flex-direction: column;
+    width: 416rpx;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.destination-title {
+    width: 416rpx;
+    height: 35rpx;
+    overflow: hidden;
+}
+
 .subtitle-row {
     display: flex;
     align-items: center;
-    gap: 16rpx;
+    width: 416rpx;
+    min-height: 72rpx;
+    gap: 12rpx;
+    opacity: 1;
+}
+
+.subtitle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30rpx;
+    width: 30rpx;
+    height: 40rpx;
+}
+
+.destination-subtitle {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .price-button-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 416rpx;
+    height: 68rpx;
     white-space: nowrap;
     gap: 16rpx;
+    opacity: 1;
 }
 
 .price-button-row.price-only {
     justify-content: flex-start;
 }
 
+.destination-price {
+    flex: 0 0 192rpx;
+    width: 192rpx;
+    min-width: 0;
+    height: 48rpx;
+    overflow: hidden;
+}
+
 .button-container {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     flex: 0 0 176rpx;
     width: 176rpx;
+    height: 68rpx;
 }
 
 .text {

@@ -35,7 +35,7 @@
   --bs-light: #E1E1E1;
   --bs-dark: #000;
   --bs-border-color: #dee2e6;
-  --bs-font-sans-serif: 'Panchang', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   --bs-font-monospace: Helvetica Neue LT Std, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace, Comic Sans MS;
   --bs-gradient: linear-gradient(
@@ -50,8 +50,18 @@
    ========================================================================== */
 
 @font-face {
-  font-family: 'Panchang';
-  src: url('./assets/fonts/Panchang-Regular.ttf');
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter-VariableFont_opsz,wght.ttf');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf');
+  font-weight: 100 900;
+  font-style: italic;
   font-display: swap;
 }
 
