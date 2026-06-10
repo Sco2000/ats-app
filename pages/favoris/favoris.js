@@ -41,11 +41,19 @@ Page({
   handleCardPress(event) {
     const { destination } = event.detail || {};
 
-    if (!destination || !destination.id) {
+    if (!destination || !destination.id || this._openingDestinationDetail) {
       return;
     }
 
-    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`);
+    this._openingDestinationDetail = true;
+    const releaseNavigation = () => {
+      setTimeout(() => {
+        this._openingDestinationDetail = false;
+      }, 500);
+    };
+
+    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
+      .then(releaseNavigation, releaseNavigation);
   },
 
   handleDestinationLike(event) {

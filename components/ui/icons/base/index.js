@@ -53,5 +53,12 @@ Component({
     },
   },
 
-  methods: {},
+  methods: {
+    handleTap() {
+      this.triggerEvent('iconTap', {}, {
+        bubbles: true,
+        composed: true,
+      });
+    },
+  },
 });

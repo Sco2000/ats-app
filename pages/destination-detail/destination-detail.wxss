@@ -21,7 +21,7 @@ page {
 }
 
 .destination-detail-page__inner {
-  padding: 32rpx 0 190rpx;
+  padding: 32rpx 0 230rpx;
   box-sizing: border-box;
 }
 
@@ -37,6 +37,7 @@ page {
   position: relative;
   width: 100%;
   height: 776rpx;
+  display: block;
   border-radius: 40rpx;
   overflow: hidden;
   background: #f3f4f6;
@@ -84,10 +85,6 @@ page {
   display: flex;
   align-items: center;
   gap: 4rpx;
-}
-
-.detail-star {
-  color: #fad700;
 }
 
 .detail-rating-score {
@@ -156,6 +153,7 @@ page {
 .detail-gallery__full {
   width: 100%;
   height: 384rpx;
+  display: block;
   border-radius: 28rpx;
   overflow: hidden;
   background: #f3f4f6;
@@ -176,6 +174,7 @@ page {
 .detail-gallery__grid-item {
   width: calc((100% - 24rpx) / 2);
   height: 254rpx;
+  display: block;
   border-radius: 24rpx;
   overflow: hidden;
   background: #f3f4f6;
@@ -190,11 +189,13 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24rpx;
-  padding: 26rpx 32rpx calc(26rpx + env(safe-area-inset-bottom));
+  gap: 20rpx;
+  min-height: 180rpx;
+  padding: 34rpx 32rpx calc(34rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
   background: #ffffff;
-  box-shadow: 0 -16rpx 32rpx rgba(16, 24, 40, 0.08);
+  border-top: 1rpx solid #f3f4f6;
+  box-shadow: 0 -50rpx 100rpx -24rpx rgba(0, 0, 0, 0.25);
 }
 
 .detail-booking-price {
@@ -211,6 +212,7 @@ page {
   align-items: baseline;
   margin-top: 4rpx;
   white-space: nowrap;
+  width: 100%;
 }
 
 .detail-booking-amount {
@@ -222,8 +224,9 @@ page {
 }
 
 .detail-booking-button {
-  width: 264rpx;
-  flex: 0 0 264rpx;
+  width: 267rpx;
+  height: 112rpx;
+  flex: 0 0 267rpx;
 }
 
 .destination-detail-page--empty {

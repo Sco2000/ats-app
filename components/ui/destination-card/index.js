@@ -54,6 +54,15 @@ Component({
   },
   methods: {
     emitCardPress() {
+      if (this._pressLocked) {
+        return;
+      }
+
+      this._pressLocked = true;
+      setTimeout(() => {
+        this._pressLocked = false;
+      }, 500);
+
       this.triggerEvent('onCardPress', {
         destination: this.properties.destination,
       }, {
@@ -65,8 +74,6 @@ Component({
     handleCardTap() {
       this.emitCardPress();
     },
-
-    stopTap() {},
 
     handleLikeTap() {
       console.log('[DestinationCard] heart tapped', this.properties.destination);

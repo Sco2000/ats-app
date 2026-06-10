@@ -2,7 +2,13 @@
 <view class="card-container" style="width: {{ cardWidth }}; {{ cardContainerStyle }}" bindtap="handleCardTap">
     <app-card containerClass="br-45 box-shadow-sm {{ cardPaddingClass }} gap-3" containerStyle="{{ cardStyle }}">
         <view class="image-container">
-            <osn-image src="{{ destination.image }}" mode="aspectFill" imageStyle="width: 100%; height: {{ imageHeight }}; border-radius: {{ imageRadius }};"/>
+            <osn-image
+                src="{{ destination.image }}"
+                mode="aspectFill"
+                containerStyle="width: 100%; height: {{ imageHeight }}; display: block;"
+                imageStyle="width: 100%; height: {{ imageHeight }}; border-radius: {{ imageRadius }};"
+                bind:imageTap="handleCardTap"
+            />
             <view class="icon-heart" catchtap="handleLikeTap">
                 <view class="icon-heart__inner">
                     <block wx:if="{{ isLiked }}">
@@ -33,7 +39,7 @@
                 <app-typography containerClass="flex-1 " size="16" weight="700" color="#1C1C1C" lineHeight="48rpx">
                     {{ destination.price }}
                 </app-typography>
-                <view class="button-container" wx:if="{{ showDetailsButton && destination.buttonLabel }}" catchtap="stopTap">
+                <view class="button-container" wx:if="{{ showDetailsButton && destination.buttonLabel }}">
                     <app-button
                         buttonClass="destination-details-button"
                         buttonStyle="height: 68rpx !important; padding: 0 !important; border-radius: 60rpx !important; background: #01953e !important; font-size: 28rpx !important; font-weight: 600 !important; line-height: 68rpx !important; box-shadow: none !important; letter-spacing: 0 !important;"

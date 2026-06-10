@@ -105,6 +105,15 @@ Page({
   },
 
   handleBack() {
+    if (this._backLocked) {
+      return;
+    }
+
+    this._backLocked = true;
+    setTimeout(() => {
+      this._backLocked = false;
+    }, 500);
+
     const pages = getCurrentPages();
 
     if (pages.length > 1) {
@@ -120,9 +129,14 @@ Page({
   handleToggleLike() {
     const { destination, isLiked } = this.data;
 
-    if (!destination) {
+    if (!destination || this._likeLocked) {
       return;
     }
+
+    this._likeLocked = true;
+    setTimeout(() => {
+      this._likeLocked = false;
+    }, 300);
 
     const nextLiked = !isLiked;
     const updatedDestinations = (app.globalData.DESTINATIONS || []).map((item) => (
