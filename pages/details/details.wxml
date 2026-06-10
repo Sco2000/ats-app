@@ -1,0 +1,150 @@
+<scroll-view class="page-scroll" scroll-y="true" enhanced="true">
+
+  <!-- ===== HERO IMAGE ===== -->
+  <view class="hero-wrapper">
+    <osn-image
+      src="{{destination.heroImage}}"
+      mode="aspectFill"
+      containerClass="hero-container"
+      imageClass="hero-img"
+      overlayClass="hero-overlay">
+
+      <view slot="overlay" class="header-buttons">
+        <!-- Bouton retour -->
+        <view class="round-btn" bind:tap="handleBackTap">
+          <view class="btn-icon">
+            <app-typography message="←" fontSize="36rpx" colour="#1A1A1A" lineHeight="1" />
+          </view>
+        </view>
+        <!-- Bouton favori -->
+        <view class="round-btn" bind:tap="handleLikeTap">
+          <view class="btn-icon {{destination.isLiked ? 'liked' : ''}}">
+            <app-typography message="{{destination.isLiked ? '♥' : '♡'}}" fontSize="36rpx" colour="{{destination.isLiked ? '#E53935' : '#1A1A1A'}}" lineHeight="1" />
+          </view>
+        </view>
+      </view>
+
+    </osn-image>
+  </view>
+
+  <!-- ===== CONTENU ===== -->
+  <view class="content-card">
+
+    <!-- Titre -->
+    <view class="destination-title">
+      <app-typography message="{{destination.title}}" fontSize="52rpx" fontWeight="700" colour="#1A1A1A" />
+    </view>
+
+    <!-- Rating -->
+    <view class="rating-row">
+      <view class="stars">
+        <app-typography message="★★★★★" fontSize="34rpx" colour="#F5A623" />
+      </view>
+      <view class="rating-value">
+        <app-typography message="{{destination.rating}}" fontSize="30rpx" fontWeight="700" colour="#1A1A1A" />
+      </view>
+      <view class="rating-count">
+        <app-typography message="({{destination.reviewsCount}} avis)" fontSize="26rpx" colour="#8A8A8A" />
+      </view>
+    </view>
+
+    <!-- Lieu & durée -->
+    <view class="meta-row">
+      <view class="meta-item">
+        <view class="meta-icon-pin">
+          <app-typography message="📍" fontSize="26rpx" />
+        </view>
+        <view class="meta-text">
+          <app-typography message="{{destination.location}}" fontSize="26rpx" colour="#555555" />
+        </view>
+      </view>
+      <view class="meta-item">
+        <view class="meta-icon-clock">
+          <app-typography message="🕐" fontSize="26rpx" />
+        </view>
+        <view class="meta-text">
+          <app-typography message="{{destination.duration}}" fontSize="26rpx" colour="#555555" />
+        </view>
+      </view>
+    </view>
+
+    <!-- Séparateur -->
+    <view class="divider"></view>
+
+    <!-- À propos -->
+    <view class="section-title">
+      <app-typography message="À Propos de Cette Expérience" fontSize="38rpx" fontWeight="700" colour="#1A1A1A" />
+    </view>
+    <view class="description-text">
+      <app-typography message="{{destination.description}}" fontSize="28rpx" colour="#555555" lineHeight="1.7" />
+    </view>
+
+    <!-- Tag catégorie -->
+    <view class="category-tag">
+      <view class="category-label">
+        <app-typography message="Catégorie: {{destination.category}}" fontSize="26rpx" fontWeight="500" colour="#9A7B4F" />
+      </view>
+    </view>
+
+    <!-- Séparateur -->
+    <view class="divider"></view>
+
+    <!-- Galerie Photos -->
+    <view class="section-title">
+      <app-typography message="Galerie Photos" fontSize="38rpx" fontWeight="700" colour="#1A1A1A" />
+    </view>
+
+    <view class="gallery-wrapper">
+      <block wx:for="{{galleryRows}}" wx:key="index">
+
+        <!-- 1 photo pleine largeur (grand format) -->
+        <view wx:if="{{item.type === 'single'}}" class="gallery-row">
+          <image
+            class="gallery-img-full"
+            src="{{item.photos[0]}}"
+            mode="aspectFill"
+            lazy-load="true" />
+        </view>
+
+        <!-- 2 photos côte à côte -->
+        <view wx:else class="gallery-row gallery-row-double">
+          <image
+            class="gallery-img-half"
+            src="{{item.photos[0]}}"
+            mode="aspectFill"
+            lazy-load="true" />
+          <image
+            wx:if="{{item.photos[1]}}"
+            class="gallery-img-half"
+            src="{{item.photos[1]}}"
+            mode="aspectFill"
+            lazy-load="true" />
+        </view>
+
+      </block>
+    </view>
+
+    <!-- Espace pour la navbar fixe -->
+    <view class="bottom-spacer"></view>
+
+  </view>
+
+</scroll-view>
+
+<!-- ===== NAVBAR FIXE EN BAS ===== -->
+<view class="navbar">
+  <view class="navbar-left">
+    <view class="navbar-label">
+      <app-typography message="À partir de" fontSize="24rpx" colour="#9A9A9A" />
+    </view>
+    <view class="navbar-price-row">
+      <view class="navbar-price">
+        <app-typography message="{{destination.price}} {{destination.currency}}" fontSize="46rpx" fontWeight="800" colour="#1A1A1A" />
+      </view>
+      <view class="navbar-per">
+        <app-typography message=" /pers" fontSize="26rpx" colour="#9A9A9A" />
+      </view>
+    </view>
+  </view>
+  <app-button bindtap="goToReservation" buttonClass="btn-reserver">Réserver</app-button>
+</view>

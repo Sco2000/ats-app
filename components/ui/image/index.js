@@ -54,7 +54,8 @@
 Component({
   options: {
     virtualHost: true,
-    multipleSlots: true
+    multipleSlots: true,
+    styleIsolation: 'apply-shared'
   },
 
   properties: {
