@@ -1,0 +1,128 @@
+<app-layout
+  title=""
+  showBack="{{false}}"
+  transparent="{{true}}"
+  showLogo="{{false}}"
+  showTabBar="{{false}}"
+  activeTab="{{ activeTab }}"
+>
+  <view class="content reservation-details-page">
+    <view class="reservation-details-page__sheet">
+      <view class="reservation-details-page__top-bar">
+        <text class="header-title">Détails de la Réservation</text>
+        <view class="reservation-details-page__close" bindtap="goBack">
+          <image class="reservation-details-page__close-icon" src="/assets/icons/croix.png" mode="aspectFit" />
+        </view>
+      </view>
+
+      <scroll-view class="reservation-details-page__scroll" scroll-y="true" show-scrollbar="false" enable-flex="true">
+        <view class="reservation-details-page__hero-image">
+          <osn-image
+            src="{{ reservation.image }}"
+            mode="aspectFill"
+            imageStyle="width: 100%; height: 100%; border-radius: 22rpx;"
+          />
+        </view>
+
+        <view class="reservation-details-page__hero-body">
+          <view class="reservation-details-page__hero-title-row">
+            <text class="dest-name">{{ reservation.title }}</text>
+            <view class="reservation-details-page__status-pill {{ reservation.status }}">
+              <text class="badge-text">{{ reservation.statusLabel }}</text>
+            </view>
+          </view>
+
+          <view class="reservation-details-page__reference-box">
+            <text class="field-label">Référence de réservation</text>
+            <text class="ref-value">{{ reservation.reference }}</text>
+          </view>
+        </view>
+
+        <view class="reservation-details-page__info-group">
+          <view class="reservation-details-page__info-card">
+            <view class="reservation-details-page__info-row">
+              <app-icon icon="Icon" width="28" height="28" enableBg="{{false}}" bgColor="transparent" />
+              <view class="reservation-details-page__info-text">
+                <text class="field-label">Destination</text>
+                <text class="field-value">{{ reservation.subtitle }}</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="reservation-details-page__info-card">
+            <view class="reservation-details-page__info-row">
+              <image class="reservation-details-page__info-icon" src="/assets/icons/voyage.png" mode="aspectFit" />
+              <view class="reservation-details-page__info-text">
+                <text class="field-label">Date du voyage</text>
+                <text class="field-value">{{ reservation.dateLabel }}</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="reservation-details-page__info-card">
+            <view class="reservation-details-page__info-row">
+              <image class="reservation-details-page__info-icon reservation-details-page__info-icon--green" src="/assets/icons/profil.png" mode="aspectFit" />
+              <view class="reservation-details-page__info-text">
+                <text class="field-label">Nombre de voyageurs</text>
+                <text class="field-value">{{ reservation.travelersLabel }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="reservation-details-page__summary">
+          <text class="total-label">Montant total</text>
+          <text class="total-amount">{{ reservation.price }}</text>
+        </view>
+
+        <app-card containerClass="reservation-details-page__support-card">
+          <text class="help-title">Besoin d'aide ?</text>
+
+          <view
+            class="{{ focusedSupportAction === 'phone' ? 'reservation-details-page__support-action is-focused' : 'reservation-details-page__support-action' }}"
+            bindtap="toggleSupportAction"
+            data-id="phone"
+            hover-class="reservation-details-page__support-action--hover"
+            hover-stay-time="120"
+          >
+            <view class="support-action__left">
+              <image class="reservation-details-page__support-icon reservation-details-page__support-icon--green" src="/assets/icons/telephone.png" mode="aspectFit" />
+              <text class="help-text">Appeler le support</text>
+            </view>
+          </view>
+
+          <view
+            class="{{ focusedSupportAction === 'email' ? 'reservation-details-page__support-action reservation-details-page__support-action--last is-focused' : 'reservation-details-page__support-action reservation-details-page__support-action--last' }}"
+            bindtap="toggleSupportAction"
+            data-id="email"
+            hover-class="reservation-details-page__support-action--hover"
+            hover-stay-time="120"
+          >
+            <view class="support-action__left">
+              <image class="reservation-details-page__support-icon reservation-details-page__support-icon--green" src="/assets/icons/email.png" mode="aspectFit" />
+              <text class="help-text">Envoyer un email</text>
+            </view>
+          </view>
+        </app-card>
+
+        <view wx:if="{{ reservation.status === 'done' }}" class="reservation-details-page__actions">
+          <app-button type="primary" bind:onPress="noop" buttonClass="reservation-details-page__button reservation-details-page__button--primary reservation-details-page__button--again">
+            <text class="btn-primary-label">Réserver à nouveau</text>
+          </app-button>
+        </view>
+
+        <view wx:else class="reservation-details-page__actions">
+          <app-button type="primary" bind:onPress="noop" buttonClass="reservation-details-page__button reservation-details-page__button--primary">
+            <view class="reservation-details-page__button-inner">
+              <image class="reservation-details-page__download-icon reservation-details-page__download-icon--white" src="/assets/icons/telecharger.png" mode="aspectFit" />
+              <text class="btn-primary-label">Télécharger le billet</text>
+            </view>
+          </app-button>
+          <app-button type="secondary" bind:onPress="noop" buttonClass="reservation-details-page__button reservation-details-page__button--danger">
+            <text class="btn-cancel-label">Annuler la réservation</text>
+          </app-button>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</app-layout>

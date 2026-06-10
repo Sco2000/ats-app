@@ -30,4 +30,15 @@ Page({
       resultsLabel: `${total} réservation${total > 1 ? 's' : ''}`,
     });
   },
+
+  openReservationDetails(event) {
+    const { id } = event.currentTarget.dataset;
+    if (!id) {
+      return;
+    }
+
+    wx.navigateTo({
+      url: `/pages/reservation-details/reservation-details?id=${id}`,
+    });
+  },
 });

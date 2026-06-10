@@ -14,7 +14,7 @@
     </view>
 
     <view wx:if="{{ reservations.length }}" class="voyages-page__list">
-      <view wx:for="{{ reservations }}" wx:key="id" wx:for-item="reservation" class="reservation-card">
+      <view wx:for="{{ reservations }}" wx:key="id" wx:for-item="reservation" class="reservation-card" data-id="{{ reservation.id }}" data-status="{{ reservation.status }}" bindtap="openReservationDetails">
         <app-card containerClass="reservation-card__shell">
           <view class="reservation-card__body">
             <view class="reservation-card__image-wrap">
