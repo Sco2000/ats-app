@@ -1,0 +1,169 @@
+<app-layout
+  title="Date & Voyageurs"
+  showBack="{{true}}"
+  showLogo="{{false}}"
+  transparent="{{false}}"
+  showTabBar="{{false}}"
+>
+  <scroll-view
+    class="booking-scroll"
+    scroll-y="{{true}}"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+  >
+  <view class="booking-page">
+    <view class="booking-container">
+      <view class="booking-section">
+        <view class="booking-section-title">
+          <view class="booking-title-icon booking-title-icon--calendar"></view>
+          <app-typography fontSize="35rpx" weight="600" color="#111827" lineHeight="54rpx">
+            Choisir une Date
+          </app-typography>
+        </view>
+
+        <view class="date-grid">
+          <view
+            wx:for="{{ dates }}"
+            wx:key="date"
+            wx:for-item="dateItem"
+            data-index="{{ index }}"
+            class="date-card {{ selectedDate === index ? 'date-card--active' : '' }}"
+            bindtap="selectDate"
+          >
+            <app-typography fontSize="21rpx" color="#6B7280" align="center" lineHeight="30rpx">
+              {{ dateItem.day }}
+            </app-typography>
+            <app-typography fontSize="42rpx" weight="700" color="#111827" align="center" lineHeight="50rpx">
+              {{ dateItem.date }}
+            </app-typography>
+            <app-typography fontSize="21rpx" color="#6B7280" align="center" lineHeight="30rpx">
+              {{ dateItem.month }}
+            </app-typography>
+          </view>
+        </view>
+
+        <app-typography containerClass="more-dates" fontSize="27rpx" weight="600" color="#16A34A" align="center" lineHeight="38rpx">
+          Voir Plus de Dates
+        </app-typography>
+      </view>
+
+      <view class="booking-section booking-section--travelers">
+        <view class="booking-section-title travelers-section-title">
+          <view class="travelers-icon">
+            <view class="travelers-icon__head travelers-icon__head--main"></view>
+            <view class="travelers-icon__head travelers-icon__head--side"></view>
+            <view class="travelers-icon__body travelers-icon__body--main"></view>
+            <view class="travelers-icon__body travelers-icon__body--side"></view>
+          </view>
+          <app-typography fontSize="35rpx" weight="600" color="#111827" lineHeight="54rpx">
+            Nombre de Voyageurs
+          </app-typography>
+        </view>
+
+        <app-card containerClass="traveler-card">
+          <view class="traveler-copy">
+            <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
+              Adultes
+            </app-typography>
+            <app-typography fontSize="27rpx" color="#7A8599" lineHeight="38rpx">
+              13 ans et +
+            </app-typography>
+          </view>
+          <view class="traveler-controls">
+            <view class="counter-btn-wrap">
+              <view class="counter-btn counter-btn--minus {{ adults <= 1 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseAdult">
+                <text>-</text>
+              </view>
+            </view>
+            <app-typography containerClass="counter-value" fontSize="31rpx" weight="600" color="#111827" align="center" lineHeight="44rpx">
+              {{ adults }}
+            </app-typography>
+            <view class="counter-btn-wrap">
+              <view class="counter-btn counter-btn--plus" bindtap="increaseAdult">
+                <text>+</text>
+              </view>
+            </view>
+          </view>
+        </app-card>
+
+        <app-card containerClass="traveler-card">
+          <view class="traveler-copy">
+            <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
+              Enfants
+            </app-typography>
+            <app-typography fontSize="27rpx" color="#7A8599" lineHeight="38rpx">
+              2-12 ans (-50%)
+            </app-typography>
+          </view>
+          <view class="traveler-controls">
+            <view class="counter-btn-wrap">
+              <view class="counter-btn counter-btn--minus {{ children <= 0 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseChild">
+                <text>-</text>
+              </view>
+            </view>
+            <app-typography containerClass="counter-value" fontSize="31rpx" weight="600" color="#111827" align="center" lineHeight="44rpx">
+              {{ children }}
+            </app-typography>
+            <view class="counter-btn-wrap">
+              <view class="counter-btn counter-btn--plus" bindtap="increaseChild">
+                <text>+</text>
+              </view>
+            </view>
+          </view>
+        </app-card>
+      </view>
+
+      <app-card containerClass="price-card">
+        <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="40rpx">
+          Détail du Prix
+        </app-typography>
+        <view class="price-line">
+          <app-typography fontSize="23rpx" color="#6B7280" lineHeight="34rpx">
+            {{ adultLine }}
+          </app-typography>
+          <app-typography fontSize="23rpx" color="#6B7280" lineHeight="34rpx" align="right">
+            {{ adultSubtotal }}
+          </app-typography>
+        </view>
+        <view wx:if="{{ childrenLine }}" class="price-line">
+          <app-typography fontSize="23rpx" color="#6B7280" lineHeight="34rpx">
+            {{ childrenLine }}
+          </app-typography>
+          <app-typography fontSize="23rpx" color="#6B7280" lineHeight="34rpx" align="right">
+            {{ childrenSubtotal }}
+          </app-typography>
+        </view>
+        <view class="price-divider"></view>
+        <view class="price-total-row">
+          <app-typography fontSize="25rpx" weight="600" color="#111827" lineHeight="56rpx">
+            Total
+          </app-typography>
+          <app-typography fontSize="50rpx" weight="700" color="#16A34A" lineHeight="58rpx" align="right">
+            {{ totalPrice }}
+          </app-typography>
+        </view>
+      </app-card>
+
+      <app-button
+        type="primary"
+        buttonClass="booking-reserve-button"
+        buttonStyle="{{ continueButtonStyle }}"
+        bind:onPress="handleReserve"
+      >
+        Continuer au Paiement
+      </app-button>
+
+      <app-typography
+        wx:if="{{ !canContinue }}"
+        containerClass="booking-date-helper"
+        fontSize="29rpx"
+        color="#6B7280"
+        align="center"
+        lineHeight="40rpx"
+      >
+        Veuillez sélectionner une date pour continuer
+      </app-typography>
+    </view>
+  </view>
+  </scroll-view>
+</app-layout>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "app-layout": "/components/ui/layout/index",
+    "app-button": "/components/ui/button/index",
+    "app-card": "/components/ui/card/index",
+    "app-typography": "/components/ui/typography/index"
+  }
+}
