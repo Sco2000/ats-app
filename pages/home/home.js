@@ -1,4 +1,5 @@
 import { MAIN_TABS } from '../../utils/constants/index';
+import { navigateTo } from '../../utils/helpers/navigation';
 
 const app = getApp();
 Page({
@@ -21,8 +22,14 @@ Page({
     activeFilter:'all',
   },
 
-  handleCardPress() {
-    // Placeholder for future destination details navigation.
+  handleCardPress(event) {
+    const { destination } = event.detail || {};
+
+    if (!destination || !destination.id) {
+      return;
+    }
+
+    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`);
   },
 
   handleDestinationLike(event) {

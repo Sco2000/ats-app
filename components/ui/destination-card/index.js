@@ -53,6 +53,21 @@ Component({
     }
   },
   methods: {
+    emitCardPress() {
+      this.triggerEvent('onCardPress', {
+        destination: this.properties.destination,
+      }, {
+        bubbles: true,
+        composed: true,
+      });
+    },
+
+    handleCardTap() {
+      this.emitCardPress();
+    },
+
+    stopTap() {},
+
     handleLikeTap() {
       console.log('[DestinationCard] heart tapped', this.properties.destination);
 
@@ -71,7 +86,7 @@ Component({
     },
 
     handleSubmit() {
-      this.triggerEvent('onCardPress');
+      this.emitCardPress();
     },
   },
 });

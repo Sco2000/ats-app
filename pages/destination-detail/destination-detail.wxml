@@ -1,0 +1,217 @@
+<view class="destination-detail-page" wx:if="{{ hasDestination }}">
+  <scroll-view
+    class="destination-detail-page__scroll"
+    scroll-y="{{true}}"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+  >
+    <view class="destination-detail-page__inner" style="padding-top: {{ pageTopOffset }}px;">
+      <view class="detail-hero-container">
+        <view class="detail-hero">
+          <osn-image
+            src="{{ destination.heroImage }}"
+            mode="aspectFill"
+            imageStyle="width: 100%; height: 100%; border-radius: 40rpx;"
+          />
+
+          <view class="detail-floating-button detail-floating-button--back" catchtap="handleBack">
+            <app-icon
+              icon="arrow-left"
+              width="{{40}}"
+              height="{{40}}"
+              enableBg="{{false}}"
+              containerStyle="padding: 0 !important;"
+            />
+          </view>
+
+          <view class="detail-floating-button detail-floating-button--favorite" catchtap="handleToggleLike">
+            <app-icon
+              icon="{{ isLiked ? 'heartRed' : 'heart' }}"
+              width="{{38}}"
+              height="{{36}}"
+              enableBg="{{false}}"
+              containerStyle="padding: 0 !important; transform: translateY(2rpx);"
+            />
+          </view>
+        </view>
+      </view>
+
+      <view class="detail-content">
+        <app-typography containerClass="detail-title" fontSize="48rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
+          {{ destination.title }}
+        </app-typography>
+
+        <view class="detail-rating-row">
+          <app-typography containerClass="detail-stars" fontSize="32rpx" weight="700" color="#FAD700" lineHeight="36rpx">
+            <text wx:for="{{ stars }}" wx:key="*this" class="detail-star">★</text>
+          </app-typography>
+
+          <app-typography containerClass="detail-rating-score" fontSize="30rpx" weight="700" color="#1C1C1C" lineHeight="38rpx">
+            {{ destination.rating }}
+          </app-typography>
+
+          <app-typography containerClass="detail-rating-count" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+            {{ destination.reviewLabel }}
+          </app-typography>
+        </view>
+
+        <view class="detail-meta-row">
+          <view class="detail-meta-item">
+            <app-icon
+              icon="localisation"
+              width="{{28}}"
+              height="{{28}}"
+              enableBg="{{false}}"
+              containerStyle="padding: 0 !important;"
+            />
+            <app-typography containerClass="detail-meta-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+              {{ destination.subtitle }}
+            </app-typography>
+          </view>
+
+          <view class="detail-meta-item">
+            <app-icon
+              icon="calendrier"
+              width="{{28}}"
+              height="{{28}}"
+              enableBg="{{false}}"
+              containerStyle="padding: 0 !important;"
+            />
+            <app-typography containerClass="detail-meta-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+              {{ destination.duration }}
+            </app-typography>
+          </view>
+        </view>
+
+        <view class="detail-section">
+          <app-typography containerClass="detail-section-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+            À Propos de Cette Expérience
+          </app-typography>
+
+          <app-typography containerClass="detail-description" fontSize="34rpx" weight="400" color="#667085" lineHeight="52rpx">
+            {{ destination.description }}
+          </app-typography>
+        </view>
+
+        <view class="detail-category-pill">
+          <app-typography containerClass="detail-category-text" fontSize="28rpx" weight="500" color="#1C1C1C" lineHeight="40rpx">
+            Catégorie: {{ destination.category }}
+          </app-typography>
+        </view>
+
+        <view class="detail-section detail-section--gallery">
+          <app-typography containerClass="detail-section-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+            Galerie Photos
+          </app-typography>
+
+          <view wx:if="{{ destination.galleryMode === 'single' }}" class="detail-gallery detail-gallery--single">
+            <view
+              class="detail-gallery__full"
+              data-index="{{0}}"
+              bindtap="handlePreviewGallery"
+            >
+              <osn-image
+                src="{{ destination.mainGalleryImage }}"
+                mode="aspectFill"
+                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
+              />
+            </view>
+          </view>
+
+          <view wx:elif="{{ destination.galleryMode === 'double' }}" class="detail-gallery detail-gallery--double">
+            <view
+              wx:for="{{ destination.gallery }}"
+              wx:key="*this"
+              class="detail-gallery__full"
+              data-index="{{index}}"
+              bindtap="handlePreviewGallery"
+            >
+              <osn-image
+                src="{{ item }}"
+                mode="aspectFill"
+                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
+              />
+            </view>
+          </view>
+
+          <view wx:else class="detail-gallery detail-gallery--mosaic">
+            <view
+              class="detail-gallery__full"
+              data-index="{{0}}"
+              bindtap="handlePreviewGallery"
+            >
+              <osn-image
+                src="{{ destination.mainGalleryImage }}"
+                mode="aspectFill"
+                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
+              />
+            </view>
+
+            <view class="detail-gallery__grid">
+              <view
+                wx:for="{{ destination.remainingGalleryImages }}"
+                wx:key="*this"
+                class="detail-gallery__grid-item"
+                data-index="{{index + 1}}"
+                bindtap="handlePreviewGallery"
+              >
+                <osn-image
+                  src="{{ item }}"
+                  mode="aspectFill"
+                  imageStyle="width: 100%; height: 100%; border-radius: 24rpx;"
+                />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="detail-booking-bar">
+    <view class="detail-booking-price">
+      <app-typography containerClass="detail-booking-label" fontSize="28rpx" weight="400" color="#667085" lineHeight="34rpx">
+        À partir de
+      </app-typography>
+
+      <view class="detail-booking-price-line">
+        <app-typography containerClass="detail-booking-amount" fontSize="48rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
+          {{ destination.price }}
+        </app-typography>
+        <app-typography containerClass="detail-booking-unit" fontSize="24rpx" weight="400" color="#667085" lineHeight="32rpx">
+          /pers
+        </app-typography>
+      </view>
+    </view>
+
+    <view class="detail-booking-button">
+      <app-button
+        type="primary"
+        buttonStyle="height: 96rpx !important; border-radius: 24rpx !important; background: #01953e !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 96rpx !important; box-shadow: 0 12rpx 24rpx rgba(1, 149, 62, 0.22) !important;"
+        bind:onPress="handleReserve"
+      >
+        <app-typography fontSize="32rpx" weight="700" color="#FFFFFF" lineHeight="96rpx" align="center">
+          Réserver
+        </app-typography>
+      </app-button>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="destination-detail-page destination-detail-page--empty">
+  <view class="detail-empty-card">
+    <app-typography containerClass="detail-empty-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+      Destination introuvable
+    </app-typography>
+
+    <app-typography containerClass="detail-empty-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+      Retournez à l'accueil pour choisir une destination disponible.
+    </app-typography>
+
+    <view class="detail-empty-button" bindtap="handleBack">
+      <app-typography fontSize="28rpx" weight="700" color="#FFFFFF" lineHeight="40rpx">
+        Retour
+      </app-typography>
+    </view>
+  </view>
+</view>

@@ -3,6 +3,7 @@
     "pages/home/home",
     "pages/index/index",
     "pages/explorer/explorer",
+    "pages/destination-detail/destination-detail",
     "pages/favoris/favoris",
     "pages/voyage/voyage"
   ],
