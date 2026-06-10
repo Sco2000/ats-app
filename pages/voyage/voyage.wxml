@@ -24,6 +24,7 @@
               <osn-image
                 src="{{ reservation.image }}"
                 mode="aspectFill"
+                containerStyle="width: 100%; height: 100%; display: block;"
                 imageStyle="width: 100%; height: 100%; border-radius: 26rpx;"
               />
             </view>

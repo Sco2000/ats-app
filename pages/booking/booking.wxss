@@ -19,27 +19,23 @@
 
 .booking-container {
   width: 100%;
-  padding: 38rpx 46rpx 62rpx;
+  padding: 40rpx 38rpx 260rpx;
   box-sizing: border-box;
   background: #ffffff;
 }
 
 .booking-section {
-  margin-bottom: 46rpx;
+  margin-bottom: 68rpx;
 }
 
 .booking-section--travelers {
-  margin-bottom: 23rpx;
+  margin-bottom: 48rpx;
 }
 
 .booking-section-title {
   display: flex;
   align-items: center;
-  margin-bottom: 31rpx;
-  color: #111827;
-  font-size: 35rpx;
-  font-weight: 600;
-  line-height: 54rpx;
+  margin-bottom: 28rpx;
 }
 
 .booking-title-icon {
@@ -135,14 +131,14 @@
 
 .date-card {
   width: 31.3%;
-  height: 154rpx;
+  height: 180rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15rpx;
+  margin-bottom: 20rpx;
   border: 2rpx solid #e5e7eb;
-  border-radius: 31rpx;
+  border-radius: 32rpx;
   background: #ffffff;
   box-sizing: border-box;
 }
@@ -173,7 +169,7 @@
 }
 
 .more-dates {
-  margin-top: 16rpx;
+  margin-top: 28rpx;
   color: #16a34a;
   font-size: 27rpx;
   font-weight: 600;
@@ -183,15 +179,15 @@
 
 .traveler-card {
   width: 100%;
-  height: 150rpx;
+  height: 154rpx;
   display: flex !important;
   flex-direction: row !important;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 31rpx;
-  padding: 0 31rpx !important;
+  margin-bottom: 24rpx;
+  padding: 0 32rpx !important;
   border: 2rpx solid #e5e7eb !important;
-  border-radius: 38rpx !important;
+  border-radius: 32rpx !important;
   background: #ffffff !important;
   box-sizing: border-box;
   gap: 0 !important;
@@ -223,30 +219,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex: 0 0 188rpx;
-  width: 188rpx;
+  flex: 0 0 206rpx;
+  width: 206rpx;
 }
 
 .counter-btn-wrap {
-  width: 54rpx;
-  height: 54rpx;
+  width: 80rpx;
+  height: 80rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 54rpx;
+  flex: 0 0 80rpx;
 }
 
 .counter-btn {
-  width: 54rpx;
-  height: 54rpx;
+  width: 80rpx;
+  height: 80rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   box-sizing: border-box;
-  font-size: 34rpx;
-  font-weight: 600;
-  line-height: 1;
 }
 
 .counter-btn--minus {
@@ -266,10 +259,10 @@
 }
 
 .counter-value {
-  width: 28rpx;
-  min-width: 28rpx;
-  margin: 0 26rpx;
-  flex: 0 0 28rpx;
+  width: 42rpx;
+  min-width: 42rpx;
+  margin: 0 10rpx;
+  flex: 0 0 42rpx;
   color: #111827;
   font-size: 31rpx;
   font-weight: 600;
@@ -279,10 +272,10 @@
 
 .price-card {
   width: 100%;
-  min-height: 208rpx;
-  padding: 31rpx !important;
+  min-height: 296rpx;
+  padding: 38rpx 42rpx 34rpx !important;
   border: 0 !important;
-  border-radius: 31rpx !important;
+  border-radius: 28rpx !important;
   background: #f5e9da !important;
   box-sizing: border-box;
   margin-bottom: 38rpx;
@@ -303,7 +296,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20rpx;
-  margin-top: 20rpx;
+  margin-top: 28rpx;
   color: #6b7280;
   font-size: 23rpx;
   line-height: 34rpx;
@@ -311,7 +304,7 @@
 
 .price-divider {
   height: 2rpx;
-  margin: 18rpx 0 14rpx;
+  margin: 18rpx 0 12rpx;
   background: rgba(107, 114, 128, 0.18);
 }
 
@@ -338,6 +331,18 @@
   width: 100% !important;
 }
 
+.booking-payment-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  padding: 32rpx 38rpx calc(28rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: #ffffff;
+  border-top: 1rpx solid #f3f4f6;
+}
+
 .booking-date-helper {
-  margin-top: 20rpx;
+  margin-top: 24rpx;
 }

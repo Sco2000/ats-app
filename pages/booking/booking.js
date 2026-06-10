@@ -1,10 +1,14 @@
 const app = getApp();
 
-const DISABLED_BUTTON_STYLE = 'height: 92rpx !important; padding: 0 !important; border-radius: 46rpx !important; background: #7DCAA0 !important; background-color: #7DCAA0 !important; color: #FFFFFF !important; font-size: 31rpx !important; font-weight: 700 !important; line-height: 92rpx !important; box-shadow: 0 14rpx 28rpx rgba(22, 163, 74, 0.12) !important;';
-const ACTIVE_BUTTON_STYLE = 'height: 92rpx !important; padding: 0 !important; border-radius: 46rpx !important; background: #16A34A !important; background-color: #16A34A !important; color: #FFFFFF !important; font-size: 31rpx !important; font-weight: 700 !important; line-height: 92rpx !important; box-shadow: 0 14rpx 28rpx rgba(22, 163, 74, 0.18) !important;';
+const DISABLED_BUTTON_STYLE = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #95CFA5 !important; background-color: #95CFA5 !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.12) !important;';
+const ACTIVE_BUTTON_STYLE = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #16A34A !important; background-color: #16A34A !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.18) !important;';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
+}
+
+function parsePrice(price) {
+  return Number(String(price || '').replace(/[^\d]/g, '')) || 15000;
 }
 
 Page({
@@ -43,10 +47,11 @@ Page({
       : [];
     const destinationId = Number(options.destinationId);
     const destination = destinations.find((item) => item.id === destinationId) || null;
+    const basePrice = destination ? parsePrice(destination.price) : 15000;
 
     this.setData({
       destination,
-      basePrice: 15000,
+      basePrice,
     }, () => {
       this.updatePrice();
     });
@@ -120,5 +125,5 @@ Page({
       icon: 'success',
       duration: 1800,
     });
-  },
+  }
 });

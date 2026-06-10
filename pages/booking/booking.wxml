@@ -30,13 +30,13 @@
             class="date-card {{ selectedDate === index ? 'date-card--active' : '' }}"
             bindtap="selectDate"
           >
-            <app-typography fontSize="21rpx" color="#6B7280" align="center" lineHeight="30rpx">
+            <app-typography fontSize="24rpx" color="#667085" align="center" lineHeight="34rpx">
               {{ dateItem.day }}
             </app-typography>
-            <app-typography fontSize="42rpx" weight="700" color="#111827" align="center" lineHeight="50rpx">
+            <app-typography fontSize="40rpx" weight="700" color="#1C1C1C" align="center" lineHeight="48rpx">
               {{ dateItem.date }}
             </app-typography>
-            <app-typography fontSize="21rpx" color="#6B7280" align="center" lineHeight="30rpx">
+            <app-typography fontSize="24rpx" color="#667085" align="center" lineHeight="34rpx">
               {{ dateItem.month }}
             </app-typography>
           </view>
@@ -72,7 +72,9 @@
           <view class="traveler-controls">
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--minus {{ adults <= 1 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseAdult">
-                <text>-</text>
+                <app-typography fontSize="36rpx" weight="500" color="#667085" lineHeight="40rpx" align="center">
+                  -
+                </app-typography>
               </view>
             </view>
             <app-typography containerClass="counter-value" fontSize="31rpx" weight="600" color="#111827" align="center" lineHeight="44rpx">
@@ -80,7 +82,9 @@
             </app-typography>
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--plus" bindtap="increaseAdult">
-                <text>+</text>
+                <app-typography fontSize="36rpx" weight="500" color="#FFFFFF" lineHeight="40rpx" align="center">
+                  +
+                </app-typography>
               </view>
             </view>
           </view>
@@ -98,7 +102,9 @@
           <view class="traveler-controls">
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--minus {{ children <= 0 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseChild">
-                <text>-</text>
+                <app-typography fontSize="36rpx" weight="500" color="#667085" lineHeight="40rpx" align="center">
+                  -
+                </app-typography>
               </view>
             </view>
             <app-typography containerClass="counter-value" fontSize="31rpx" weight="600" color="#111827" align="center" lineHeight="44rpx">
@@ -106,7 +112,9 @@
             </app-typography>
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--plus" bindtap="increaseChild">
-                <text>+</text>
+                <app-typography fontSize="36rpx" weight="500" color="#FFFFFF" lineHeight="40rpx" align="center">
+                  +
+                </app-typography>
               </view>
             </view>
           </view>
@@ -144,26 +152,31 @@
         </view>
       </app-card>
 
-      <app-button
-        type="primary"
-        buttonClass="booking-reserve-button"
-        buttonStyle="{{ continueButtonStyle }}"
-        bind:onPress="handleReserve"
-      >
-        Continuer au Paiement
-      </app-button>
-
-      <app-typography
-        wx:if="{{ !canContinue }}"
-        containerClass="booking-date-helper"
-        fontSize="29rpx"
-        color="#6B7280"
-        align="center"
-        lineHeight="40rpx"
-      >
-        Veuillez sélectionner une date pour continuer
-      </app-typography>
     </view>
   </view>
   </scroll-view>
+
+  <view class="booking-payment-footer">
+    <app-button
+      type="primary"
+      buttonClass="booking-reserve-button"
+      buttonStyle="{{ continueButtonStyle }}"
+      bind:onPress="handleReserve"
+    >
+      <app-typography fontSize="32rpx" weight="700" color="#FFFFFF" lineHeight="40rpx" align="center">
+        Continuer au Paiement
+      </app-typography>
+    </app-button>
+
+    <app-typography
+      wx:if="{{ !canContinue }}"
+      containerClass="booking-date-helper"
+      fontSize="28rpx"
+      color="#667085"
+      align="center"
+      lineHeight="38rpx"
+    >
+      Veuillez sélectionner une date pour continuer
+    </app-typography>
+  </view>
 </app-layout>

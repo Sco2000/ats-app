@@ -142,7 +142,7 @@ const DESTINATIONS = [
 const RESERVATIONS = [
   {
     id: 1,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/lac.png',
     title: 'Lac Rose',
     subtitle: 'Lac Retba',
     dateLabel: '15 Mars 2026',

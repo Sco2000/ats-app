@@ -157,9 +157,19 @@ Page({
   },
 
   handleReserve() {
-    wx.showToast({
-      title: 'Réservation bientôt disponible',
-      icon: 'none',
+    const { destination } = this.data;
+
+    if (!destination || !destination.id || this._bookingLocked) {
+      return;
+    }
+
+    this._bookingLocked = true;
+    setTimeout(() => {
+      this._bookingLocked = false;
+    }, 500);
+
+    wx.navigateTo({
+      url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
   },
 
