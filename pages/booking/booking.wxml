@@ -5,6 +5,12 @@
   transparent="{{false}}"
   showTabBar="{{false}}"
 >
+  <scroll-view
+    class="booking-scroll"
+    scroll-y="{{true}}"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+  >
   <view class="booking-page">
     <view class="booking-container">
       <view class="booking-section">
@@ -159,4 +165,5 @@
       </app-typography>
     </view>
   </view>
+  </scroll-view>
 </app-layout>
