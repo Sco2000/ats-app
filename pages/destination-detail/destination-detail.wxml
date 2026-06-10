@@ -202,10 +202,10 @@
     <view class="detail-booking-button">
       <app-button
         type="primary"
-        buttonStyle="height: 112rpx !important; border-radius: 32rpx !important; background: #01953e !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 112rpx !important; box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1) !important;"
+        buttonStyle="height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 32rpx !important; background: #01953e !important; font-size: 32rpx !important; font-weight: 600 !important; line-height: 48rpx !important; box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1) !important;"
         bind:onPress="handleReserve"
       >
-        <app-typography fontSize="32rpx" weight="700" color="#FFFFFF" lineHeight="112rpx" align="center">
+        <app-typography containerClass="detail-booking-button-label" fontSize="32rpx" weight="600" color="#FFFFFF" lineHeight="48rpx" align="center">
           Réserver
         </app-typography>
       </app-button>

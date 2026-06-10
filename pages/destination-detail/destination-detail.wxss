@@ -229,6 +229,15 @@ page {
   flex: 0 0 267rpx;
 }
 
+.detail-booking-button-label {
+  width: 140rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+
 .destination-detail-page--empty {
   display: flex;
   align-items: center;
