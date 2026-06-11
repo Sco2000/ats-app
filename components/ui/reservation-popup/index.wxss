@@ -124,6 +124,7 @@
   font-weight: 600;
   line-height: 22rpx;
   color: #ffffff;
+  text-align: center;
 }
 
 .btn-cancel-label {
@@ -145,8 +146,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18rpx 20rpx;
-  border-bottom: 1rpx solid #e5e7eb;
+  padding: 32rpx 0rpx 24rpx 0rpx;
+  border-bottom: none;
   flex-shrink: 0 !important;
 }
 
@@ -177,7 +178,7 @@
 
 .reservation-popup__scroll-content {
   width: 100%;
-  padding: 40rpx 32rpx 48rpx 32rpx;
+  padding: 16rpx 32rpx 48rpx 32rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -254,9 +255,9 @@
   justify-content: center;
   width: 100%;
   min-height: auto;
-  padding: 24rpx 32rpx;
-  border-radius: 20rpx;
-  background: #f8efdf;
+  padding: 32rpx 32rpx;
+  border-radius: 24rpx;
+  background: #F8EFE4;
   box-sizing: border-box;
   margin-bottom: 0;
 }
@@ -292,10 +293,10 @@
   display: flex;
   align-items: center;
   min-height: auto;
-  padding: 24rpx 32rpx;
+  padding: 24rpx 24rpx;
   margin-bottom: 0;
   border: 0;
-  border-radius: 20rpx;
+  border-radius: 24rpx;
   background: #f9fafb;
   box-shadow: none;
   box-sizing: border-box;

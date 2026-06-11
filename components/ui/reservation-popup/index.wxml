@@ -55,7 +55,7 @@
             containerClass="badge-text"
             size="14"
             weight="600"
-            color="#009B43"
+            color="{{ reservation.status === 'done' ? '#6B7280' : '#009B43' }}"
           >
             {{ reservation.statusLabel }}
           </app-typography>
@@ -96,7 +96,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -120,7 +120,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -144,7 +144,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -229,14 +229,17 @@
 
       <view wx:if="{{ reservation.status === 'done' }}" class="reservation-popup__actions">
         <app-button type="primary" bind:onPress="handleBookAgain" buttonClass="reservation-popup__button reservation-popup__button--primary reservation-popup__button--again">
-          <app-typography
-            containerClass="btn-primary-label"
-            size="15"
-            weight="700"
-            color="#ffffff"
-          >
-            Réserver à nouveau
-          </app-typography>
+          <view class="reservation-popup__button-inner">
+            <app-typography
+              containerClass="btn-primary-label"
+              size="15"
+              weight="700"
+              color="#ffffff"
+              align="center"
+            >
+              Réserver à nouveau
+            </app-typography>
+          </view>
         </app-button>
       </view>
 
