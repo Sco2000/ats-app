@@ -1,0 +1,136 @@
+<app-layout
+  title="Paiement"
+  showBack="{{true}}"
+  showLogo="{{false}}"
+  transparent="{{false}}"
+  showTabBar="{{false}}"
+>
+  <scroll-view
+    scroll-y="true"
+    class="d-flex flex-column w-100"
+    style=" flex: 1; min-height: 0; background: #ffffff"
+  >
+    <!-- 1. En-tête de la page -->
+    <!-- Corps de la page -->
+    <view class="d-flex flex-column gap-3 p-3" style="flex: 1">
+      <!-- 2. Résumé de la Réservation (Carte Verte) -->
+      <app-card containerClass="bg-success border-0 p-3 text-white br-30" 
+      containerStyle="background: linear-gradient(180deg, #02943f 0%, #028137 100%);"
+        >
+        <view class="d-flex flex-column gap-2">
+          <app-typography
+            message="Votre Réservation"
+            fontSize="24rpx"
+            colour="#ffffff" />
+          <app-typography
+            message="Lac Rose"
+            fontSize="36rpx"
+            fontWeight="bold"
+            colour="#ffffff" />
+          <view class="d-flex justify-content-between mt-2">
+            <view class="d-flex flex-column">
+              <app-typography
+                message="Catégorie"
+                fontSize="20rpx"
+                colour="#E0E0E0" />
+              <app-typography
+                message="Dakar"
+                fontSize="28rpx"
+                fontWeight="bold"
+                colour="#ffffff" />
+            </view>
+            <view class="d-flex flex-column">
+              <app-typography
+                message="Durée"
+                fontSize="20rpx"
+                colour="#E0E0E0" />
+              <app-typography
+                message="Demi-journée"
+                fontSize="28rpx"
+                fontWeight="bold"
+                colour="#ffffff" />
+            </view>
+          </view>
+          <!-- Séparateur blanc transparent -->
+          <view class="border-top border-white opacity-25 my-2">
+          </view>
+          <view class="d-flex justify-content-between align-items-center">
+            <app-typography
+              message="Montant Total"
+              fontSize="24rpx"
+              colour="#E0E0E0" />
+            <app-typography
+              message="30 000 FCFA"
+              fontSize="36rpx"
+              fontWeight="bold"
+              colour="#ffffff" />
+          </view>
+        </view>
+      </app-card>
+      <!-- 4. Bloc Sécurisé (Fond bleu) -->
+      <app-card containerClass="br-30 p-3 " containerStyle="background-color: #e3f2fd ">
+        <view class="d-flex gap-2">
+          <osn-icon
+            icon="Vector"
+            width="30"
+            height="30" />
+          <view class="d-flex flex-column flex-1">
+            <app-typography
+              message="Paiement Sécurisé"
+              fontSize="26rpx"
+              fontWeight="bold"
+              colour="#085EBD" />
+            <app-typography
+              message="Toutes les transactions sont cryptées et traitées de manière sécurisée via la super-app Max It. Vos informations de paiement ne sont jamais stockées."
+              fontSize="22rpx"
+              colour="#085EBD" />
+          </view>
+        </view>
+      </app-card>
+     <!-- 5. Pied de page (Conditions) conforme à l'image -->
+<view class="mx-auto mt-2" style="width: 350px; max-width: 100%; text-align: center;">
+  <app-typography
+    fontSize="22rpx"
+    colour="#888888"
+    lineHeight="34rpx"
+  >
+    <!-- Ligne 1 -->
+    <view>En finalisant cette réservation, vous acceptez nos</view>
+    
+    <!-- Ligne 2 -->
+    <view>
+      <text style="color: #FAD700; font-weight: 500;">Conditions d'Utilisation</text> et notre
+    </view>
+    
+    <!-- Ligne 3 -->
+    <view>
+      <text style="color: #FAD700; font-weight: 500;">Politique d'Annulation</text>. Remboursement complet
+    </view>
+    
+    <!-- Ligne 4 -->
+    <view>disponible jusqu'à 24h avant le voyage.</view>
+  </app-typography>
+</view>
+
+    </view>
+  </scroll-view>
+  <view class="py-3 bg-white w-100 d-flex justify-content-center border-top">
+    <view style="width: 75%;">
+      <app-button
+        type="primary"
+        bind:onPress="payer"
+        buttonStyle="weight: 200, height: 100rpx"
+      >
+        <app-typography
+          fontSize="32rpx"
+          weight="500"
+          color="#FFFFFF"
+          lineHeight="40rpx"
+          align="center"
+        >
+          Payer {{ price || '30 000 FCFA' }}
+        </app-typography>
+      </app-button>
+    </view>
+  </view>
+</app-layout>

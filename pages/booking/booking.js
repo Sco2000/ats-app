@@ -120,10 +120,8 @@ Page({
       return;
     }
 
-    wx.showToast({
-      title: 'Paiement à venir',
-      icon: 'success',
-      duration: 1800,
+    wx.navigateTo({
+      url: '/pages/paiement/index'
     });
   }
 });
