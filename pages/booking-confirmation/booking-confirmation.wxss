@@ -1,0 +1,45 @@
+page{
+    height: 1754rpx;
+    min-height: 1560rpx;
+    background: linear-gradient(
+    to bottom,
+    #F5E9DA,
+    #FFFFFF
+  );
+}
+.pt-6 { padding-top: 128rpx !important; }
+
+.up{
+   height: 1124rpx; 
+   padding: 64rpx;
+}
+
+.rt{
+    height: 676rpx;
+}
+
+.icon-container{
+    height: 320rpx;
+    width: 256rpx;
+}
+
+.down{
+    height: 630rpx;
+    padding: 40rpx;
+    gap: 24rpx;
+}
+
+.content{
+    height: 256rpx;
+    width: 256rpx;
+    border-radius: 100%;
+}
+
+.bor{
+    border: solid black;
+}
+
+.h-20  { height: 20% !important; }
+.h-30  { height: 30% !important; }
+.br-32  { border-radius: 32rpx !important; }
+.p-40  { padding: 40rpx !important; }

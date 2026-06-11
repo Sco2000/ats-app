@@ -27,7 +27,7 @@
   --bs-gray: #F9F9F9;
   --bs-gray-dark: #EEEEEEB2;
   --bs-primary: #01953E;
-  --bs-secondary: #F16E00;
+  --bs-secondary: #FAD700;
   --bs-success: #198754;
   --bs-info: #0077EA;
   --bs-warning: #ffc107;
@@ -35,6 +35,7 @@
   --bs-light: #E1E1E1;
   --bs-dark: #000;
   --bs-border-color: #dee2e6;
+  --bs-cyan-bleu: #F3F4F6;
   --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   --bs-font-monospace: Helvetica Neue LT Std, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace, Comic Sans MS;
@@ -376,6 +377,7 @@ page {
 .bg-danger      { background-color: var(--bs-danger) !important; }
 .bg-warning     { background-color: var(--bs-warning) !important; }
 .bg-info        { background-color: var(--bs-info) !important; }
+.bg-cyan-bleu { background-color: var(--bs-cyan-bleu) !important; }
 .bg-white       { background-color: #fff !important; }
 .bg-dark        { background-color: var(--bs-dark) !important; }
 .bg-light       { background-color: var(--bs-light) !important; }

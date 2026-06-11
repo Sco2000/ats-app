@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+    "pages/booking-confirmation/booking-confirmation",
     "pages/home/home",
     "pages/index/index",
     "pages/explorer/explorer",
@@ -18,7 +18,8 @@
     "app-destination-card": "/components/ui/destination-card/index",
     "app-list-destination": "/components/ui/list-destination/index",
     "app-input": "/components/ui/input/index",
-    "app-chip-group": "/components/ui/chip-group/index"
+    "app-chip-group": "/components/ui/chip-group/index",
+    "app-typography": "/components/ui/typography/index"
   },
   "style": "v2",
   "window": {

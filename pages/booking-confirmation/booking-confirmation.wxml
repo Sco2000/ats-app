@@ -1,0 +1,94 @@
+<!-- wxml -->
+<view class="pt-6">
+    <view class="up d-flex flex-column align-items-center">
+        <view class="icon-container">
+            <view class="content bg-secondary d-flex justify-content-center align-items-center">
+                <app-icon
+                        icon="confirmation"
+                        width="{{128}}"
+                        height="{{128}}"
+                        enableBg="{{false}}"
+                        containerStyle="padding: 0 !important;"
+                        bind:iconTap="handleBack"
+                />
+            </view>
+        </view>
+        
+        <view class="rt w-100">
+            <view class="h-20 d-flex flex-column align-items-center">
+                <app-typography containerClass="    " fontSize="60rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
+                    Réservation
+                </app-typography>
+                <app-typography containerClass="detail-title" fontSize="60rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
+                    Confirmée !
+                </app-typography>
+            </view>
+            <view class="h-30 ">
+                <app-typography containerClass="text-center " fontSize="36rpx" color="#4A5565" lineHeight="58.5rpx">
+                    Votre aventure commence
+                    maintenant ! Préparez-vous pour
+                    une expérience inoubliable.
+                </app-typography>
+            </view>
+            <view class="bg-white br-32 h-50 d-flex flex-column align-items-center p-40 gap-1">
+                <app-typography containerClass="" fontSize="48rpx" color="#6A7282" lineHeight="40rpx">
+                    Référence de Réservation
+                </app-typography>
+                <app-typography containerClass="text-secondary" fontSize="48rpx" weight="700" lineHeight="64rpx">
+                    ATS39ZY3C6
+                </app-typography>
+                <app-typography containerClass="detail-title" fontSize="36rpx" color="#6A7282" lineHeight="24rpx">
+                    Confirmation envoyée par email
+                </app-typography>
+            </view>
+        </view>
+
+    </view>
+
+    <view class="down d-flex flex-column">
+        <view class="bg-secondary br-32 d-flex gap-1 justify-content-center align-items-center h-25">
+            <app-icon
+                    icon="download"
+                    width="{{40}}"
+                    height="{{40}}"
+                    enableBg="{{false}}"
+                    containerStyle="padding: 0 !important;"
+                    bind:iconTap="handleBack"
+            />
+            <app-typography containerClass="" fontSize="40rpx" weight="600" color="#1C1C1C" lineHeight="48rpx">
+                Télécharger le reçu
+            </app-typography>
+        </view>
+        <view class="bg-white bor border-secondary br-32 d-flex gap-1 justify-content-center align-items-center h-25">
+            <app-icon
+                        icon="chat"
+                        width="{{40}}"
+                        height="{{40}}"
+                        enableBg="{{false}}"
+                        containerStyle="padding: 0 !important;"
+                        bind:iconTap="handleBack"
+            />
+            <app-typography containerClass="" fontSize="40rpx" weight="600" color="#FAD700" lineHeight="48rpx">
+                Contacter par Whatsapp
+            </app-typography>
+        </view>
+        <view class="bg-cyan-bleu br-32 gap-1 d-flex justify-content-center align-items-center h-25">
+            <app-icon
+                        icon="home"
+                        width="{{40}}"
+                        height="{{40}}"
+                        enableBg="{{false}}"
+                        containerStyle="padding: 0 !important;"
+                        bind:iconTap="handleBack"
+            />
+            <app-typography containerClass="detail-title" fontSize="40rpx" weight="600" color="#1C1C1C" lineHeight="48rpx">
+                Retour à l'accueil
+            </app-typography>
+        </view>
+        <view class="d-flex justify-content-center align-items-center h-25">
+            <app-typography containerClass="p-1" fontSize="24rpx" color="#6A7282" lineHeight="39rpx">
+                Besoin d'aide ? Notre équipe de support est disponible 24h/24 et 7j/7 pour vous assister avec votre réservation.
+            </app-typography>
+        </view>
+    </view>
+</view>
