@@ -1,0 +1,552 @@
+.reservation-popup__modal-container {
+  position: fixed !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 90vh !important;
+  border-radius: 32rpx 32rpx 0 0 !important;
+  margin: 0 !important;
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.15) !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+}
+
+.reservation-popup .osn-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: 9999 !important;
+}
+
+.reservation-popup .osn-modal-container {
+  position: fixed !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 90vh !important;
+  border-radius: 32rpx 32rpx 0 0 !important;
+  margin: 0 !important;
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.15) !important;
+  transform: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  z-index: 10000 !important;
+}
+
+.reservation-popup .osn-modal-body {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.reservation-popup .osn-modal-body > view {
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: stretch !important;
+}
+
+.reservation-popup .osn-modal-body .app-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: stretch !important;
+}
+
+.reservation-popup .osn-modal-body .app-button {
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: center !important;
+  text-align: center !important;
+}
+
+.reservation-popup .osn-modal-body .reservation-popup__actions {
+  width: 100% !important;
+  align-self: stretch !important;
+}
+
+.reservation-popup .osn-modal-body .reservation-popup__button {
+  align-self: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: center !important;
+}
+
+.reservation-popup .osn-modal-body .reservation-popup__button--danger {
+  align-self: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+.reservation-popup__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 0;
+  padding: 0 20rpx 20rpx;
+  width: 100%;
+}
+
+.reservation-popup__button,
+.reservation-popup__button.osn-btn-primary,
+.reservation-popup__button.osn-btn-secondary {
+  min-height: 52rpx !important;
+  padding: 0 !important;
+  border-radius: 12rpx !important;
+  box-shadow: none !important;
+  letter-spacing: 0 !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: center !important;
+}
+
+.reservation-popup__button--primary,
+.reservation-popup__button--primary.osn-btn-primary {
+  background: #008c3a !important;
+  border: 0 !important;
+}
+
+.btn-primary-label {
+  display: block;
+  font-size: 16rpx;
+  font-weight: 600;
+  line-height: 22rpx;
+  color: #ffffff;
+}
+
+.btn-cancel-label {
+  display: block;
+  font-size: 15rpx;
+  font-weight: 600;
+  line-height: 22rpx;
+  color: #ff1f2d;
+  text-align: center;
+}
+
+.reservation-popup__button--danger,
+.reservation-popup__button--danger.osn-btn-secondary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: center !important;
+  margin: 0 auto !important;
+  background: #ffffff !important;
+  border: 2rpx solid #ff1f2d !important;
+  color: #e53e3e !important;
+}
+
+.reservation-popup__modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18rpx 20rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+  flex-shrink: 0 !important;
+}
+
+.header-title {
+  display: block;
+  font-size: 18rpx;
+  font-weight: 600;
+  line-height: 26rpx;
+  color: #111111;
+}
+
+.reservation-popup__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  margin-left: 12rpx;
+}
+
+.reservation-popup__close-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.reservation-popup__scroll-content {
+  width: 100%;
+  padding: 12rpx 20rpx 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.reservation-popup__hero-image {
+  width: 100%;
+  height: 220rpx; /* augmenté pour meilleure correspondance Figma */
+  overflow: hidden;
+  background: #f3f4f6;
+  border-radius: 24rpx; /* harmonisé avec l'image (24rpx) */
+  border: 0;
+  margin-bottom: 24rpx;
+}
+
+.reservation-popup__hero-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  padding: 0;
+}
+
+.reservation-popup__hero-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10rpx;
+  margin-bottom: 12rpx;
+}
+
+.dest-name {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.reservation-popup__status-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 70rpx;
+  height: 30rpx;
+  padding: 0 10rpx;
+  border-radius: 999rpx;
+  background: #d9f9e6;
+  box-sizing: border-box;
+}
+
+.reservation-popup__status-pill.done {
+  background: #f2f4f7;
+}
+
+.reservation-popup__status-pill.done .badge-text {
+  color: #6b7280;
+}
+
+.badge-text {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.reservation-popup__reference-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 82rpx;
+  padding: 16rpx 16rpx;
+  border-radius: 12rpx;
+  background: #f4eadb;
+  box-sizing: border-box;
+  margin-bottom: 26rpx;
+}
+
+.field-label {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.ref-value {
+  display: block;
+  margin-top: 6rpx;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: 0.5rpx;
+  color: inherit;
+}
+
+.reservation-popup__info-group {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  margin-top: 32rpx;
+  padding-bottom: 0;
+}
+
+.reservation-popup__info-card {
+  display: flex;
+  align-items: center;
+  min-height: 68rpx;
+  padding: 12rpx 16rpx;
+  margin-bottom: 12rpx;
+  border: 0;
+  border-radius: 12rpx;
+  background: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(16, 24, 40, 0.06);
+  box-sizing: border-box;
+}
+
+.reservation-popup__info-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10rpx;
+}
+
+.reservation-popup__info-icon,
+.reservation-popup__support-icon,
+.reservation-popup__download-icon {
+  width: 20rpx;
+  height: 20rpx;
+  flex-shrink: 0;
+}
+
+.reservation-popup__info-icon--green,
+.reservation-popup__support-icon--green {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(96%) saturate(1445%)
+    hue-rotate(107deg) brightness(92%) contrast(91%);
+}
+
+.reservation-popup__download-icon--white {
+  filter: brightness(0) invert(1);
+}
+
+.reservation-popup__info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-value {
+  display: block;
+  margin-top: 2rpx;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.reservation-popup__divider {
+  height: 1rpx;
+  width: calc(100% + 40rpx);
+  background: #e5e7eb;
+  margin: 12rpx -20rpx 12rpx;
+  border: 0;
+}
+
+.reservation-popup__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rpx;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: 0;
+}
+
+.total-label {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.total-amount {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: right;
+}
+
+.reservation-popup__support-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10rpx !important;
+  width: 100%;
+  padding: 14rpx 12rpx;
+  border: 0 !important;
+  border-radius: 12rpx !important;
+  background: #f8fafb;
+  box-shadow: none;
+  box-sizing: border-box;
+  align-self: stretch !important;
+  margin-bottom: 14rpx;
+}
+
+.help-title {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin-bottom: 10rpx;
+}
+
+.reservation-popup__support-action {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 14rpx;
+  width: 100%;
+  border: 1rpx solid #e9eef2;
+  border-radius: 10rpx;
+  background: #ffffff;
+  box-shadow: none;
+  box-sizing: border-box;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
+}
+
+.support-action__left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 10rpx;
+}
+
+.help-text {
+  display: block;
+  font-size: inherit; /* controlled by <app-typography> */
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.reservation-popup__support-action:hover,
+.reservation-popup__support-action:active,
+.reservation-popup__support-action--hover,
+.reservation-popup__support-action.is-focused {
+  border-color: #18a84a;
+  background: #ffffff;
+  transform: translateY(-1rpx);
+}
+
+.reservation-popup__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 14rpx;
+  padding: 0;
+  width: 100%;
+  padding-top: 14rpx;
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.reservation-popup__button,
+.reservation-popup__button.osn-btn-primary,
+.reservation-popup__button.osn-btn-secondary {
+  min-height: 52rpx !important;
+  padding: 0 !important;
+  border-radius: 14rpx !important;
+  box-shadow: none !important;
+  letter-spacing: 0 !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: center !important;
+}
+
+.reservation-popup__button--primary,
+.reservation-popup__button--primary.osn-btn-primary {
+  background: #009b43 !important;
+  border: 0 !important;
+}
+
+.reservation-popup__button--danger,
+.reservation-popup__button--danger.osn-btn-secondary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: center !important;
+  margin: 0 auto !important;
+  background: #ffffff !important;
+  border: 2rpx solid #ff1f2d !important;
+  color: #e53e3e !important;
+}
+
+.reservation-popup__button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52rpx;
+  gap: 8rpx;
+}
+
+.reservation-popup__button-inner {
+  width: 100%;
+  padding: 0 14rpx;
+  box-sizing: border-box;
+}
+
+.btn-primary-label {
+  display: block;
+  font-size: 15rpx;
+  font-weight: 600;
+  line-height: 22rpx;
+  color: #ffffff;
+}
+
+.btn-cancel-label {
+  display: block;
+  font-size: 15rpx;
+  font-weight: 600;
+  line-height: 22rpx;
+  color: #ff1f2d;
+  text-align: center;
+}
+
+.reservation-popup__scroll-content {
+  width: 100%;
+  padding: 12rpx 20rpx 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.reservation-popup__actions-primary .reservation-popup__button--primary,
+.reservation-popup__actions-danger .reservation-popup__button--danger {
+  width: 100%;
+  max-width: 100%;
+}

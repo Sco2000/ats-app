@@ -19,7 +19,7 @@
                 imageHeight="{{ imageHeight }}"
                 showDetailsButton="{{ showDetailsButton }}"
                 bind:toggleLike="handleToggleLike"
-                bind:onCardPress="handleCardPress" />
+                bind:onCardPress="handleCardPress"/>
         </view>
     </view>
 

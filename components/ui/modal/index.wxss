@@ -27,6 +27,8 @@
   width: 100%;
   box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.15);
   animation: osnSlideUp 0.35s ease-out both;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 @keyframes osnSlideUp {
@@ -54,6 +56,7 @@
   background: #e5e7eb;
   border-radius: 4rpx;
   margin: 16rpx auto 8rpx;
+  flex-shrink: 0;
 }
 
 .osn-modal-header {
@@ -61,14 +64,31 @@
   font-weight: 700;
   font-size: 30rpx;
   border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
 }
 
 .osn-modal-body {
   padding: 32rpx;
   font-size: 26rpx;
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.osn-modal-body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.osn-modal-body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .osn-modal-footer {
   padding: 24rpx 32rpx;
   border-top: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
 }

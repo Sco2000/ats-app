@@ -27,7 +27,12 @@
  * @property {'sm'|'md'|'lg'|'full'} size - Dialog width preset (default: 'md')
  * @property {number} blur - Backdrop blur in px (default: 6)
  * @property {string} containerClass - Dialog wrapper CSS class
+ * @property {string} containerStyle - Additional inline styles for the dialog wrapper
+ * @property {string} headerStyle - Additional inline styles for the header slot wrapper
+ * @property {string} bodyStyle - Additional inline styles for the content slot wrapper
+ * @property {string} footerStyle - Additional inline styles for the footer slot wrapper
  * @property {string} overlayClass - Backdrop CSS class
+ * @property {boolean} showHandle - Show bottom-sheet drag handle (default: true)
  * @property {boolean} backdropClosable - Close on backdrop tap (default: true)
  * @property {boolean} hasHeader - Enable header slot
  * @property {boolean} hasContent - Enable content slot
@@ -45,11 +50,16 @@ Component({
     visible: { type: Boolean, value: false },
     overlayColor: { type: String, value: '#000' },
     overlayOpacity: { type: Number, value: 0.5 },
-    placement: { type: String, value: 'center' }, // 'center' | 'bottom'
-    size: { type: String, value: 'md' }, // 'sm', 'md', 'lg', 'full'
+    placement: { type: String, value: 'center' },
+    size: { type: String, value: 'md' },
     blur: { type: Number, value: 6 },
     containerClass: String,
+    containerStyle: { type: String, value: '' },
+    headerStyle: { type: String, value: '' },
+    bodyStyle: { type: String, value: '' },
+    footerStyle: { type: String, value: '' },
     overlayClass: String,
+    showHandle: { type: Boolean, value: true },
     backdropClosable: { type: Boolean, value: true },
     hasHeader: { type: Boolean, value: false },
     hasContent: { type: Boolean, value: false },
@@ -87,8 +97,15 @@ Component({
     },
 
     computeStyle() {
-      const { placement, size } = this.properties;
+      const { placement, size, fullscreen } = this.properties;
       const isAtBottom = placement === 'bottom';
+
+      if (fullscreen) {
+        this.setData({
+          computedStyle: `width: 100vw !important; height: 100vh !important; align-self: center !important; border-radius: 0 !important; box-shadow: none !important; transform: none !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;`,
+        });
+        return;
+      }
 
       let justify = isAtBottom ? 'flex-end' : 'center';
       let width = '80%';

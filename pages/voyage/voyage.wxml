@@ -91,4 +91,13 @@
       </app-typography>
     </view>
   </scroll-view>
+
+  <reservation-popup
+    visible="{{showReservationPopup}}"
+    reservationId="{{selectedReservationId}}"
+    bind:close="handlePopupClose"
+    bind:bookAgain="handleBookAgain"
+    bind:downloadTicket="handleDownloadTicket"
+    bind:cancelReservation="handleCancelReservation"
+  />
 </app-layout>

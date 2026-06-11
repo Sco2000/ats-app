@@ -8,6 +8,8 @@ Page({
     tabs: MAIN_TABS,
     reservations: [],
     resultsLabel: '15 réservations',
+    showReservationPopup: false,
+    selectedReservationId: ''
   },
 
   onLoad() {
@@ -37,8 +39,33 @@ Page({
       return;
     }
 
-    wx.navigateTo({
-      url: `/pages/reservation-details/reservation-details?id=${id}`,
+    this.setData({
+      showReservationPopup: true,
+      selectedReservationId: id
     });
   },
+
+  handlePopupClose() {
+    this.setData({
+      showReservationPopup: false,
+      selectedReservationId: ''
+    });
+  },
+
+  handleBookAgain(event) {
+    const { reservation } = event.detail;
+    console.log('Book again:', reservation);
+    this.handlePopupClose();
+  },
+
+  handleDownloadTicket(event) {
+    const { reservation } = event.detail;
+    console.log('Download ticket:', reservation);
+  },
+
+  handleCancelReservation(event) {
+    const { reservation } = event.detail;
+    console.log('Cancel reservation:', reservation);
+    this.handlePopupClose();
+  }
 });

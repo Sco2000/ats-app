@@ -1,0 +1,273 @@
+<app-modal
+  visible="{{ visible }}"
+  placement="bottom"
+  size="lg"
+  overlayColor="#000000"
+  overlayOpacity="{{1}}"
+  blur="{{0}}"
+  backdropClosable="{{true}}"
+  showHandle="{{false}}"
+  hasHeader="{{true}}"
+  hasContent="{{true}}"
+  containerClass="reservation-popup__modal-container"
+  containerStyle="width: 88% !important; height: 80vh !important; max-height: 1180rpx !important; border-radius: 34rpx 34rpx 0 0 !important; box-shadow: none !important; overflow: hidden !important; background: #ffffff !important;"
+  headerStyle="padding: 0 !important; border-bottom: 0 !important;"
+  bodyStyle="padding: 0 !important; overflow-y: auto !important; min-height: 0 !important;"
+  bind:close="handleClose"
+>
+  <view slot="header" class="reservation-popup__modal-header">
+    <app-typography
+      containerClass="header-title"
+      size="17"
+      weight="800"
+      color="#111111"
+    >
+      Détails de la Réservation
+    </app-typography>
+
+    <view class="reservation-popup__close" bindtap="handleClose">
+      <image class="reservation-popup__close-icon" src="/assets/icons/croix.png" mode="aspectFit" />
+    </view>
+  </view>
+
+  <view slot="content" class="reservation-popup__scroll-content">
+    <block wx:if="{{ reservation }}">
+      <view class="reservation-popup__hero-image">
+        <osn-image
+          src="{{ reservation.image }}"
+          mode="aspectFill"
+          imageStyle="width: 100%; height: 100%; border-radius: 24rpx;"
+        />
+      </view>
+
+      <view class="reservation-popup__hero-title-row">
+        <app-typography
+          containerClass="dest-name"
+          size="22"
+          weight="800"
+          color="#111111"
+        >
+          {{ reservation.title }}
+        </app-typography>
+
+        <view class="reservation-popup__status-pill {{ reservation.status }}">
+          <app-typography
+            containerClass="badge-text"
+            size="11"
+            weight="600"
+            color="#009B43"
+          >
+            {{ reservation.statusLabel }}
+          </app-typography>
+        </view>
+      </view>
+
+      <view class="reservation-popup__reference-box">
+        <app-typography
+          containerClass="field-label"
+          size="12"
+          weight="400"
+          color="#6B7280"
+        >
+          Référence de réservation
+        </app-typography>
+        <app-typography
+          containerClass="ref-value"
+          size="19"
+          weight="800"
+          color="#111111"
+        >
+          {{ reservation.reference }}
+        </app-typography>
+      </view>
+
+      <view class="reservation-popup__info-group">
+        <view class="reservation-popup__info-card">
+          <view class="reservation-popup__info-row">
+            <image class="reservation-popup__info-icon" src="/assets/icons/global/Icon.png" mode="aspectFit" />
+            <view class="reservation-popup__info-text">
+              <app-typography
+                containerClass="field-label"
+                size="12"
+                weight="400"
+                color="#667085"
+              >
+                Destination
+              </app-typography>
+              <app-typography
+                containerClass="field-value"
+                size="15"
+                weight="600"
+                color="#111111"
+              >
+                {{ reservation.subtitle }}
+              </app-typography>
+            </view>
+          </view>
+        </view>
+
+        <view class="reservation-popup__info-card">
+          <view class="reservation-popup__info-row">
+            <image class="reservation-popup__info-icon" src="/assets/icons/voyage.png" mode="aspectFit" />
+            <view class="reservation-popup__info-text">
+              <app-typography
+                containerClass="field-label"
+                size="12"
+                weight="400"
+                color="#667085"
+              >
+                Date du voyage
+              </app-typography>
+              <app-typography
+                containerClass="field-value"
+                size="15"
+                weight="600"
+                color="#111111"
+              >
+                {{ reservation.dateLabel }}
+              </app-typography>
+            </view>
+          </view>
+        </view>
+
+        <view class="reservation-popup__info-card">
+          <view class="reservation-popup__info-row">
+            <image class="reservation-popup__info-icon reservation-popup__icon--green" src="/assets/icons/profil.png" mode="aspectFit" />
+            <view class="reservation-popup__info-text">
+              <app-typography
+                containerClass="field-label"
+                size="12"
+                weight="400"
+                color="#667085"
+              >
+                Nombre de voyageurs
+              </app-typography>
+              <app-typography
+                containerClass="field-value"
+                size="15"
+                weight="600"
+                color="#111111"
+              >
+                {{ reservation.travelersLabel }}
+              </app-typography>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="reservation-popup__divider"></view>
+
+      <view class="reservation-popup__summary">
+        <app-typography
+          containerClass="total-label"
+          size="15"
+          weight="500"
+          color="#475467"
+        >
+          Montant total
+        </app-typography>
+        <app-typography
+          containerClass="total-amount"
+          size="22"
+          weight="800"
+          color="#009B43"
+        >
+          {{ reservation.price }}
+        </app-typography>
+      </view>
+
+      <app-card containerClass="reservation-popup__support-card">
+        <app-typography
+          containerClass="help-title"
+          size="14"
+          weight="700"
+          color="#111111"
+        >
+          Besoin d'aide ?
+        </app-typography>
+
+        <view
+          class="{{ focusedSupportAction === 'phone' ? 'reservation-popup__support-action is-focused' : 'reservation-popup__support-action' }}"
+          bindtap="toggleSupportAction"
+          data-id="phone"
+          hover-class="reservation-popup__support-action--hover"
+          hover-stay-time="120"
+        >
+          <view class="support-action__left">
+            <image class="reservation-popup__support-icon" src="/assets/icons/telephone.png" mode="aspectFit" />
+            <app-typography
+              containerClass="help-text"
+              size="14"
+              weight="500"
+              color="#111111"
+            >
+              Appeler le support
+            </app-typography>
+          </view>
+        </view>
+
+        <view
+          class="{{ focusedSupportAction === 'email' ? 'reservation-popup__support-action reservation-popup__support-action--last is-focused' : 'reservation-popup__support-action reservation-popup__support-action--last' }}"
+          bindtap="toggleSupportAction"
+          data-id="email"
+          hover-class="reservation-popup__support-action--hover"
+          hover-stay-time="120"
+        >
+          <view class="support-action__left">
+            <image class="reservation-popup__support-icon" src="/assets/icons/email.png" mode="aspectFit" />
+            <app-typography
+              containerClass="help-text"
+              size="14"
+              weight="500"
+              color="#111111"
+            >
+              Envoyer un email
+            </app-typography>
+          </view>
+        </view>
+      </app-card>
+
+      <view wx:if="{{ reservation.status === 'done' }}" class="reservation-popup__actions">
+        <app-button type="primary" bind:onPress="handleBookAgain" buttonClass="reservation-popup__button reservation-popup__button--primary reservation-popup__button--again">
+          <app-typography
+            containerClass="btn-primary-label"
+            size="15"
+            weight="700"
+            color="#ffffff"
+          >
+            Réserver à nouveau
+          </app-typography>
+        </app-button>
+      </view>
+
+      <view wx:if="{{ reservation.status !== 'done' }}" class="reservation-popup__actions">
+        <app-button type="primary" bind:onPress="handleDownloadTicket" buttonClass="reservation-popup__button reservation-popup__button--primary">
+          <view class="reservation-popup__button-inner">
+            <image class="reservation-popup__download-icon" src="/assets/icons/telecharger.png" mode="aspectFit" />
+            <app-typography
+              containerClass="btn-primary-label"
+              size="15"
+              weight="700"
+              color="#ffffff"
+            >
+              Télécharger le billet
+            </app-typography>
+          </view>
+        </app-button>
+
+        <app-button type="secondary" bind:onPress="handleCancelReservation" buttonClass="reservation-popup__button reservation-popup__button--danger">
+          <view class="reservation-popup__button-inner reservation-popup__button-inner--danger">
+            <app-typography
+              containerClass="btn-cancel-label"
+              size="15"
+              weight="600"
+              color="#FF1F2D"
+            >
+              Annuler la réservation
+            </app-typography>
+          </view>
+        </app-button>
+      </view>
+    </block>
+  </view>
+</app-modal>

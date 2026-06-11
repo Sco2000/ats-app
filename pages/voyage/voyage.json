@@ -3,6 +3,7 @@
     "app-card": "/components/ui/card/index",
     "app-icon": "/components/ui/icons/base/index",
     "app-typography": "/components/ui/typography/index",
-    "osn-image": "/components/ui/image/index"
+    "osn-image": "/components/ui/image/index",
+    "reservation-popup": "/components/ui/reservation-popup/index"
   }
 }

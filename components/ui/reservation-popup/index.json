@@ -1,0 +1,12 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "app-modal": "/components/ui/modal/index",
+    "osn-image": "/components/ui/image/index",
+    "app-icon": "/components/ui/icons/base/index",
+    "app-typography": "/components/ui/typography/index",
+    "app-card": "/components/ui/card/index",
+    "app-button": "/components/ui/button/index"
+  }
+}
