@@ -1,6 +1,9 @@
 const app = getApp();
 
 Component({
+  options: {
+    styleIsolation: 'apply-shared'
+  },
   properties: {
     visible: {
       type: Boolean,

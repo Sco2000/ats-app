@@ -14,6 +14,9 @@
  * @fires onPress - When button is tapped (only if not disabled/loading)
  */
 Component({
+  options: {
+    styleIsolation: 'apply-shared'
+  },
   properties: {
     disabled: {
       type: Boolean,
@@ -28,6 +31,10 @@ Component({
       value: 'primary', // 'primary' | 'secondary'
     },
     buttonClass: {
+      type: String,
+      value: '',
+    },
+    buttonStyle: {
       type: String,
       value: '',
     },

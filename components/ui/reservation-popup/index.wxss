@@ -5,8 +5,8 @@
   right: 32rpx !important;
   bottom: 32rpx !important;
   width: calc(100% - 64rpx) !important;
-  height: 65vh !important;
-  max-height: 65vh !important;
+  height: 74vh !important;
+  max-height: 74vh !important;
   border-radius: 40rpx !important;
   margin: 0 !important;
   box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15) !important;
@@ -35,8 +35,8 @@
   right: 32rpx !important;
   bottom: 32rpx !important;
   width: calc(100% - 64rpx) !important;
-  height: 65vh !important;
-  max-height: 65vh !important;
+  height: 74vh !important;
+  max-height: 74vh !important;
   border-radius: 40rpx !important;
   margin: 0 !important;
   box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15) !important;
@@ -116,8 +116,7 @@
 
 .reservation-popup__button--primary,
 .reservation-popup__button--primary.osn-btn-primary {
-  background: #009b43 !important;
-  border: 0 !important;
+  --bs-primary: #009b43;
 }
 
 .btn-primary-label {
@@ -137,16 +136,9 @@
 
 .reservation-popup__button--danger,
 .reservation-popup__button--danger.osn-btn-secondary {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  align-self: center !important;
-  margin: 0 auto !important;
-  background: #ffffff !important;
-  border: 2rpx solid #ff1f2d !important;
-  color: #e53e3e !important;
+  --bs-dark: #ff1f2d;
+  border: 3rpx solid #ff1f2d !important;
+  color: #ff1f2d !important;
 }
 
 .reservation-popup__modal-header {
@@ -185,7 +177,7 @@
 
 .reservation-popup__scroll-content {
   width: 100%;
-  padding: 32rpx 24rpx;
+  padding: 40rpx 32rpx 48rpx 32rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -261,10 +253,10 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  min-height: 80rpx;
-  padding: 16rpx 24rpx;
-  border-radius: 16rpx;
-  background: #f4eadb;
+  min-height: auto;
+  padding: 24rpx 32rpx;
+  border-radius: 20rpx;
+  background: #f8efdf;
   box-sizing: border-box;
   margin-bottom: 0;
 }
@@ -300,11 +292,11 @@
   display: flex;
   align-items: center;
   min-height: auto;
-  padding: 16rpx 24rpx;
+  padding: 24rpx 32rpx;
   margin-bottom: 0;
   border: 0;
-  border-radius: 16rpx;
-  background: #fafafa;
+  border-radius: 20rpx;
+  background: #f9fafb;
   box-shadow: none;
   box-sizing: border-box;
 }
@@ -313,7 +305,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 10rpx;
+  gap: 24rpx;
 }
 
 .reservation-popup__info-icon,
@@ -389,10 +381,10 @@
   flex-direction: column !important;
   gap: 16rpx !important;
   width: 100%;
-  padding: 24rpx;
+  padding: 24rpx 24rpx;
   border: 0 !important;
-  border-radius: 16rpx !important;
-  background: #fafafa;
+  border-radius: 24rpx !important;
+  background: #f8f9fa !important;
   box-shadow: none;
   box-sizing: border-box;
   align-self: stretch !important;
@@ -411,10 +403,10 @@
 .reservation-popup__support-action {
   display: flex;
   align-items: center;
-  padding: 24rpx;
+  padding: 20rpx 28rpx;
   width: 100%;
-  border: 1rpx solid #e9eef2;
-  border-radius: 16rpx;
+  border: 1rpx solid #f0f0f0 !important;
+  border-radius: 999rpx;
   background: #ffffff;
   box-shadow: none;
   box-sizing: border-box;
@@ -428,7 +420,7 @@
   align-items: center;
   flex: 1;
   min-width: 0;
-  gap: 10rpx;
+  gap: 24rpx;
 }
 
 .help-text {
@@ -453,10 +445,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16rpx;
-  margin-top: 8rpx;
+  gap: 20rpx;
+  margin-top: 16rpx;
   padding: 0;
   width: 100%;
+}
+
+.reservation-popup__button-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 16rpx;
 }
 
 .reservation-popup__button,
@@ -471,68 +473,20 @@
   width: 100% !important;
   max-width: 100% !important;
   align-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .reservation-popup__button--primary,
 .reservation-popup__button--primary.osn-btn-primary {
-  background: #009b43 !important;
-  border: 0 !important;
+  --bs-primary: #009b43;
 }
 
 .reservation-popup__button--danger,
 .reservation-popup__button--danger.osn-btn-secondary {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  align-self: center !important;
-  margin: 0 auto !important;
-  background: #ffffff !important;
-  border: 2rpx solid #ff1f2d !important;
-  color: #e53e3e !important;
+  --bs-dark: #ff1f2d;
+  border: 3rpx solid #ff1f2d !important;
+  color: #ff1f2d !important;
 }
 
-.reservation-popup__button-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 52rpx;
-  gap: 8rpx;
-}
-
-.reservation-popup__button-inner {
-  width: 100%;
-  padding: 0 14rpx;
-  box-sizing: border-box;
-}
-
-.btn-primary-label {
-  display: block;
-  font-weight: 600;
-  line-height: 22rpx;
-  color: #ffffff;
-}
-
-.btn-cancel-label {
-  display: block;
-  font-weight: 600;
-  line-height: 22rpx;
-  color: #ff1f2d;
-  text-align: center;
-}
-
-.reservation-popup__scroll-content {
-  width: 100%;
-  padding: 32rpx 24rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 24rpx;
-}
-
-.reservation-popup__actions-primary .reservation-popup__button--primary,
-.reservation-popup__actions-danger .reservation-popup__button--danger {
-  width: 100%;
-  max-width: 100%;
-}

@@ -10,7 +10,7 @@
   hasHeader="{{true}}"
   hasContent="{{true}}"
   containerClass="reservation-popup__modal-container"
-  containerStyle="width: calc(100% - 64rpx) !important; bottom: 32rpx !important; margin: 0 32rpx !important; height: 65vh !important; max-height: 65vh !important; border-radius: 40rpx !important; box-shadow: none !important; overflow: hidden !important; background: #ffffff !important;"
+  containerStyle="width: calc(100% - 64rpx) !important; bottom: 32rpx !important; margin: 0 32rpx !important; height: 74vh !important; max-height: 74vh !important; border-radius: 40rpx !important; box-shadow: none !important; overflow: hidden !important; background: #ffffff !important;"
   headerStyle="padding: 0 !important; border-bottom: 0 !important;"
   bodyStyle="padding: 0 !important; overflow-y: auto !important; min-height: 0 !important;"
   bind:close="handleClose"
@@ -36,14 +36,14 @@
         <osn-image
           src="{{ reservation.image }}"
           mode="aspectFill"
-          imageStyle="width: 100%; height: 280rpx; border-radius: 24rpx;"
+          imageStyle="width: 100%; height: 380rpx; border-radius: 32rpx;"
         />
       </view>
 
       <view class="reservation-popup__hero-title-row">
         <app-typography
           containerClass="dest-name"
-          size="20"
+          size="22"
           weight="800"
           color="#111111"
         >
@@ -84,7 +84,7 @@
       <view class="reservation-popup__info-group">
         <view class="reservation-popup__info-card">
           <view class="reservation-popup__info-row">
-            <image class="reservation-popup__info-icon" src="/assets/icons/global/Icon.png" mode="aspectFit" />
+            <image class="reservation-popup__info-icon reservation-popup__info-icon--green" src="/assets/icons/global/Icon.png" mode="aspectFit" />
             <view class="reservation-popup__info-text">
               <app-typography
                 containerClass="field-label"
@@ -108,7 +108,7 @@
 
         <view class="reservation-popup__info-card">
           <view class="reservation-popup__info-row">
-            <image class="reservation-popup__info-icon" src="/assets/icons/voyage.png" mode="aspectFit" />
+            <image class="reservation-popup__info-icon reservation-popup__info-icon--green" src="/assets/icons/voyage.png" mode="aspectFit" />
             <view class="reservation-popup__info-text">
               <app-typography
                 containerClass="field-label"
@@ -132,7 +132,7 @@
 
         <view class="reservation-popup__info-card">
           <view class="reservation-popup__info-row">
-            <image class="reservation-popup__info-icon reservation-popup__icon--green" src="/assets/icons/profil.png" mode="aspectFit" />
+            <image class="reservation-popup__info-icon reservation-popup__info-icon--green" src="/assets/icons/profil.png" mode="aspectFit" />
             <view class="reservation-popup__info-text">
               <app-typography
                 containerClass="field-label"
@@ -194,7 +194,7 @@
           hover-stay-time="120"
         >
           <view class="support-action__left">
-            <image class="reservation-popup__support-icon" src="/assets/icons/telephone.png" mode="aspectFit" />
+            <image class="reservation-popup__support-icon reservation-popup__support-icon--green" src="/assets/icons/telephone.png" mode="aspectFit" />
             <app-typography
               containerClass="help-text"
               size="14"
@@ -214,7 +214,7 @@
           hover-stay-time="120"
         >
           <view class="support-action__left">
-            <image class="reservation-popup__support-icon" src="/assets/icons/email.png" mode="aspectFit" />
+            <image class="reservation-popup__support-icon reservation-popup__support-icon--green" src="/assets/icons/email.png" mode="aspectFit" />
             <app-typography
               containerClass="help-text"
               size="14"
@@ -243,7 +243,7 @@
       <view wx:if="{{ reservation.status !== 'done' }}" class="reservation-popup__actions">
         <app-button type="primary" bind:onPress="handleDownloadTicket" buttonClass="reservation-popup__button reservation-popup__button--primary">
           <view class="reservation-popup__button-inner">
-            <image class="reservation-popup__download-icon" src="/assets/icons/telecharger.png" mode="aspectFit" />
+            <image class="reservation-popup__download-icon reservation-popup__download-icon--white" src="/assets/icons/telecharger.png" mode="aspectFit" />
             <app-typography
               containerClass="btn-primary-label"
               size="16"
@@ -255,7 +255,7 @@
           </view>
         </app-button>
 
-        <app-button type="secondary" bind:onPress="handleCancelReservation" buttonClass="reservation-popup__button reservation-popup__button--danger">
+        <app-button type="secondary" bind:onPress="handleCancelReservation" buttonClass="reservation-popup__button reservation-popup__button--danger" buttonStyle="border: 3rpx solid #FF1F2D !important; border-radius: 24rpx !important;">
           <view class="reservation-popup__button-inner reservation-popup__button-inner--danger">
             <app-typography
               containerClass="btn-cancel-label"
