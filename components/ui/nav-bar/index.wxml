@@ -1,4 +1,4 @@
-<view class="osn-nav-bar {{ transparent ? 'osn-nav-bar--transparent' : '' }}" style="padding-top: {{ statusBarHeight }}px;">
+<view class="osn-nav-bar {{ transparent ? 'osn-nav-bar--transparent' : '' }} {{ showBorder ? '' : 'osn-nav-bar--no-border' }}" style="padding-top: {{ statusBarHeight }}px;">
   <view class="osn-nav-bar__content">
     <block wx:if="{{ displayMode === 'logo' }}">
       <view class="osn-nav-bar__logo">

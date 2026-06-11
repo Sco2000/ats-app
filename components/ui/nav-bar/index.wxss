@@ -18,6 +18,10 @@
   background: transparent;
 }
 
+.osn-nav-bar--no-border {
+  border-bottom: none;
+}
+
 .osn-nav-bar__content {
   display: flex;
   align-items: center;

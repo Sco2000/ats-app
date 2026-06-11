@@ -6,6 +6,7 @@
     transparent="{{ transparent }}" 
     showLogo="{{ showLogo }}" 
     logoSrc="{{ logoSrc }}" 
+    showBorder="{{ showNavBorder }}"
   />
 
   <!-- Main Content Slot -->

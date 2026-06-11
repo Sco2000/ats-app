@@ -12,6 +12,12 @@
     width: 100%;
 }
 
+.destination-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24rpx;
+}
+
 .icon-heart {
     position: absolute;
     top: 40rpx;
@@ -36,74 +42,40 @@
     transform: translateY(4rpx);
 }
 
-.destination-card-body {
-    display: flex;
-    flex-direction: column;
-    width: 416rpx;
-    margin: 0 auto;
-    opacity: 1;
-}
-
-.destination-title {
-    width: 416rpx;
-    height: 35rpx;
-    overflow: hidden;
-}
-
 .subtitle-row {
     display: flex;
     align-items: center;
-    width: 416rpx;
-    min-height: 72rpx;
     gap: 12rpx;
-    opacity: 1;
 }
 
-.subtitle-icon {
+.subtitle-icon-wrap {
+    width: 30rpx;
+    height: 30rpx;
+    flex: 0 0 30rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 30rpx;
-    width: 30rpx;
-    height: 40rpx;
-}
-
-.destination-subtitle {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .price-button-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 416rpx;
-    height: 68rpx;
+    width: 100%;
     white-space: nowrap;
     gap: 16rpx;
-    opacity: 1;
 }
 
 .price-button-row.price-only {
     justify-content: flex-start;
 }
 
-.destination-price {
-    flex: 0 0 192rpx;
-    width: 192rpx;
-    min-width: 0;
-    height: 48rpx;
-    overflow: hidden;
-}
-
 .button-container {
     display: flex;
-    align-items: center;
     justify-content: flex-end;
     flex: 0 0 176rpx;
     width: 176rpx;
-    height: 68rpx;
 }
 
 .text {

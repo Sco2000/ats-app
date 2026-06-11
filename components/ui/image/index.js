@@ -184,10 +184,17 @@ Component({
     },
 
     onImageTap() {
+      const imageInfo = this.getImageInfo();
+
       if (this.properties.previewable) {
         this.previewImage();
       }
-      this.emit('image:tap', this.getImageInfo());
+
+      this.emit('image:tap', imageInfo);
+      this.triggerEvent('imageTap', imageInfo, {
+        bubbles: true,
+        composed: true,
+      });
     },
 
     onImageLongpress() {

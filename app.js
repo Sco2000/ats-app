@@ -49,7 +49,7 @@ const DESTINATIONS = [
   },
   {
     id: 3,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/bord.png',
     title: 'Bord de mer',
     subtitle: 'Île de Ngor',
     price: '28 500 FCFA',
@@ -62,7 +62,7 @@ const DESTINATIONS = [
   },
   {
     id: 4,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/lac.png',
     title: 'Lac Rose',
     subtitle: 'Lac Retba',
     price: '15 000 FCFA',
@@ -72,10 +72,22 @@ const DESTINATIONS = [
     loading: false,
     tags: ['all', 'saly', 'sine-saloum'],
     city: 'Retba',
+    rating: '5.0',
+    reviewCount: 203,
+    duration: 'Demi-journée',
+    category: 'Dakar',
+    description: "Avec une superficie d'environ (04) quatre kilomètres, c'est un espace où vous trouverez en même temps des dunes, un lac et l'océan atlantique. Au lac rose, vous serez certainement ébloui par toute cette diversité. Au bord d'une pirogue, vous pourrez aussi faire le tour du lac, observer le paysage orné par le sel, les travailleurs... L'aventure se poursuivra ensuite autour des dunes, à dos de dromadaire.",
+    gallery: [
+      '/assets/images/img.jpg',
+      '/assets/images/bord.png',
+      '/assets/images/ranch.png',
+      '/assets/images/ile.png',
+      '/assets/images/Container (1).png',
+    ],
   },
   {
     id: 5,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/ile.png',
     title: 'Île de Gorée',
     subtitle: 'Île de Gorée',
     price: '20 000 FCFA',
@@ -88,7 +100,7 @@ const DESTINATIONS = [
   },
   {
     id: 6,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/ranch.png',
     title: 'Ranch de Bandia',
     subtitle: 'Bandia',
     price: '35 000 FCFA',
@@ -101,7 +113,7 @@ const DESTINATIONS = [
   },
   {
     id: 7,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/bord.png',
     title: 'Saly',
     subtitle: 'Saly Portudal',
     price: '42 000 FCFA',
@@ -114,7 +126,7 @@ const DESTINATIONS = [
   },
   {
     id: 8,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/Container (1).png',
     title: ' Saloum',
     subtitle: 'Saloum',
     price: '54 000 FCFA',
@@ -130,7 +142,7 @@ const DESTINATIONS = [
 const RESERVATIONS = [
   {
     id: 1,
-    image: '/assets/images/img.jpg',
+    image: '/assets/images/lac.png',
     title: 'Lac Rose',
     subtitle: 'Lac Retba',
     dateLabel: '15 Mars 2026',

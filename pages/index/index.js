@@ -1,4 +1,5 @@
 import { MAIN_TABS } from '../../utils/constants/index';
+import { navigateTo } from '../../utils/helpers/navigation';
 
 const app = getApp();
 
@@ -43,12 +44,22 @@ Page({
   /**
    * Handle destination card press
    */
-  handleCardPress() {
-    wx.showToast({
-      title: 'Carte cliquée !',
-      icon: 'success',
-      duration: 2000,
-    });
+  handleCardPress(event) {
+    const { destination } = event.detail || {};
+
+    if (!destination || !destination.id || this._openingDestinationDetail) {
+      return;
+    }
+
+    this._openingDestinationDetail = true;
+    const releaseNavigation = () => {
+      setTimeout(() => {
+        this._openingDestinationDetail = false;
+      }, 500);
+    };
+
+    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
+      .then(releaseNavigation, releaseNavigation);
   },
 
   handleDestinationLike(event) {

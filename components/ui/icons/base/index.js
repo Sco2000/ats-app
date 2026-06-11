@@ -12,10 +12,12 @@
  * @property {string} icon - Icon filename (without path or extension)
  * @property {number} width - Icon width in rpx (default: 50)
  * @property {number} height - Icon height in rpx (default: 50)
+ * @property {string} containerStyle - Inline styles for the icon wrapper
  */
 Component({
   properties: {
     containerClass: String,
+    containerStyle: String,
     bgColor: {
       type: String,
       value: '#F3F3F3',
@@ -51,5 +53,12 @@ Component({
     },
   },
 
-  methods: {},
+  methods: {
+    handleTap() {
+      this.triggerEvent('iconTap', {}, {
+        bubbles: true,
+        composed: true,
+      });
+    },
+  },
 });

@@ -1,10 +1,13 @@
 {
   "pages": [
+    
     "pages/home/home",
     "pages/index/index",
     "pages/explorer/explorer",
+    "pages/destination-detail/destination-detail",
     "pages/favoris/favoris",
-    "pages/voyage/voyage"
+    "pages/voyage/voyage",
+    "pages/booking/booking"
   ],
   "usingComponents": {
     "app-tab-bar": "/components/ui/tab-bar/index",

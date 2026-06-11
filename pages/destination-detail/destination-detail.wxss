@@ -1,0 +1,278 @@
+page {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  font-family: Inter, sans-serif;
+}
+
+.destination-detail-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
+  color: #1c1c1c;
+}
+
+.destination-detail-page__scroll {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.destination-detail-page__inner {
+  padding: 32rpx 0 230rpx;
+  box-sizing: border-box;
+}
+
+.detail-hero-container {
+  width: 100%;
+  height: 840rpx;
+  padding: 32rpx;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.detail-hero {
+  position: relative;
+  width: 100%;
+  height: 776rpx;
+  display: block;
+  border-radius: 40rpx;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.detail-floating-button {
+  position: absolute;
+  top: 32rpx;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1),
+    0 2rpx 8rpx rgba(0, 0, 0, 0.14);
+  z-index: 2;
+}
+
+.detail-floating-button--back {
+  left: 32rpx;
+}
+
+.detail-floating-button--favorite {
+  right: 32rpx;
+}
+
+.detail-content {
+  padding: 72rpx 32rpx 0;
+}
+
+.detail-title {
+  letter-spacing: 0;
+}
+
+.detail-rating-row {
+  display: flex;
+  align-items: center;
+  margin-top: 28rpx;
+}
+
+.detail-stars {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.detail-rating-score {
+  margin-left: 14rpx;
+}
+
+.detail-rating-count {
+  margin-left: 12rpx;
+}
+
+.detail-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 28rpx;
+  margin-top: 24rpx;
+}
+
+.detail-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.detail-meta-text {
+  display: block;
+}
+
+.detail-section {
+  margin-top: 48rpx;
+}
+
+.detail-section-title {
+  letter-spacing: 0;
+}
+
+.detail-description {
+  margin-top: 18rpx;
+  letter-spacing: 0;
+}
+
+.detail-category-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 54rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 999rpx;
+  background: #f5eadb;
+}
+
+.detail-section--gallery {
+  margin-top: 50rpx;
+}
+
+.detail-gallery {
+  margin-top: 28rpx;
+}
+
+.detail-gallery--double {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.detail-gallery__full {
+  width: 100%;
+  height: 384rpx;
+  display: block;
+  border-radius: 28rpx;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.detail-gallery--single .detail-gallery__full,
+.detail-gallery--double .detail-gallery__full {
+  height: 384rpx;
+}
+
+.detail-gallery__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx;
+  margin-top: 24rpx;
+}
+
+.detail-gallery__grid-item {
+  width: calc((100% - 24rpx) / 2);
+  height: 254rpx;
+  display: block;
+  border-radius: 24rpx;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.detail-booking-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  min-height: 180rpx;
+  padding: 34rpx 32rpx calc(34rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: #ffffff;
+  border-top: 1rpx solid #f3f4f6;
+  box-shadow: 0 -50rpx 100rpx -24rpx rgba(0, 0, 0, 0.25);
+}
+
+.detail-booking-price {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-booking-label {
+  display: block;
+}
+
+.detail-booking-price-line {
+  display: flex;
+  align-items: baseline;
+  margin-top: 4rpx;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.detail-booking-amount {
+  letter-spacing: 0;
+}
+
+.detail-booking-unit {
+  margin-left: 2rpx;
+}
+
+.detail-booking-button {
+  width: 267rpx;
+  height: 112rpx;
+  flex: 0 0 267rpx;
+}
+
+.detail-booking-button-label {
+  width: 140rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+
+.destination-detail-page--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.detail-empty-card {
+  width: 100%;
+  padding: 48rpx 32rpx;
+  border-radius: 32rpx;
+  background: #ffffff;
+  box-shadow:
+    0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1),
+    0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.detail-empty-title {
+  display: block;
+}
+
+.detail-empty-text {
+  display: block;
+  margin-top: 16rpx;
+}
+
+.detail-empty-button {
+  margin: 32rpx auto 0;
+  width: 220rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40rpx;
+  background: #01953e;
+}

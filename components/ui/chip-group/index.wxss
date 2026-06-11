@@ -32,11 +32,16 @@
 }
 
 .chip-text {
+    font-family: Inter, sans-serif;
     font-size: 28rpx;
-    color: #303030;
+    font-weight: 500;
+    line-height: 40rpx;
+    letter-spacing: 0;
+    text-align: center;
+    color: #1c1c1c;
 }
 
 .chip-text-active {
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 500;
 }
