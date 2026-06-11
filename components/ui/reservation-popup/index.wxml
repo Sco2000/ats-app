@@ -10,7 +10,7 @@
   hasHeader="{{true}}"
   hasContent="{{true}}"
   containerClass="reservation-popup__modal-container"
-  containerStyle="width: 88% !important; height: 80vh !important; max-height: 1180rpx !important; border-radius: 34rpx 34rpx 0 0 !important; box-shadow: none !important; overflow: hidden !important; background: #ffffff !important;"
+  containerStyle="width: calc(100% - 64rpx) !important; bottom: 32rpx !important; margin: 0 32rpx !important; height: 65vh !important; max-height: 65vh !important; border-radius: 40rpx !important; box-shadow: none !important; overflow: hidden !important; background: #ffffff !important;"
   headerStyle="padding: 0 !important; border-bottom: 0 !important;"
   bodyStyle="padding: 0 !important; overflow-y: auto !important; min-height: 0 !important;"
   bind:close="handleClose"
@@ -18,7 +18,7 @@
   <view slot="header" class="reservation-popup__modal-header">
     <app-typography
       containerClass="header-title"
-      size="17"
+      size="18"
       weight="800"
       color="#111111"
     >
@@ -36,14 +36,14 @@
         <osn-image
           src="{{ reservation.image }}"
           mode="aspectFill"
-          imageStyle="width: 100%; height: 100%; border-radius: 24rpx;"
+          imageStyle="width: 100%; height: 280rpx; border-radius: 24rpx;"
         />
       </view>
 
       <view class="reservation-popup__hero-title-row">
         <app-typography
           containerClass="dest-name"
-          size="22"
+          size="20"
           weight="800"
           color="#111111"
         >
@@ -53,7 +53,7 @@
         <view class="reservation-popup__status-pill {{ reservation.status }}">
           <app-typography
             containerClass="badge-text"
-            size="11"
+            size="14"
             weight="600"
             color="#009B43"
           >
@@ -73,7 +73,7 @@
         </app-typography>
         <app-typography
           containerClass="ref-value"
-          size="19"
+          size="18"
           weight="800"
           color="#111111"
         >
@@ -160,7 +160,7 @@
       <view class="reservation-popup__summary">
         <app-typography
           containerClass="total-label"
-          size="15"
+          size="16"
           weight="500"
           color="#475467"
         >
@@ -179,7 +179,7 @@
       <app-card containerClass="reservation-popup__support-card">
         <app-typography
           containerClass="help-title"
-          size="14"
+          size="16"
           weight="700"
           color="#111111"
         >
@@ -246,7 +246,7 @@
             <image class="reservation-popup__download-icon" src="/assets/icons/telecharger.png" mode="aspectFit" />
             <app-typography
               containerClass="btn-primary-label"
-              size="15"
+              size="16"
               weight="700"
               color="#ffffff"
             >
@@ -259,7 +259,7 @@
           <view class="reservation-popup__button-inner reservation-popup__button-inner--danger">
             <app-typography
               containerClass="btn-cancel-label"
-              size="15"
+              size="16"
               weight="600"
               color="#FF1F2D"
             >
