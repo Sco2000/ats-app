@@ -1,6 +1,11 @@
-/* wxss */
-.navbar{
- border-bottom: 1px solid #F3F4F6;
- width: 100%;
- height: 220rpx;
+.payment-page-content {
+	min-height: calc(100vh - 88rpx);
+	padding: 24rpx 20rpx 220rpx;
+	background: #ffffff;
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+	gap: 24rpx;
 }
+
+

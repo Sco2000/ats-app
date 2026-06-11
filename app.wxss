@@ -380,6 +380,7 @@ page {
 .bg-dark        { background-color: var(--bs-dark) !important; }
 .bg-light       { background-color: var(--bs-light) !important; }
 .bg-transparent { background-color: transparent !important; }
+.bg-cyan { background-color: rgb(170, 212, 234) !important; }
 
 /* ==========================================================================
    17. BORDER

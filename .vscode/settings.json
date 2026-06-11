@@ -4,5 +4,6 @@
     "*.wxss": "css",
     "*.wxs": "javascript",
     "*.wxml": "wxml"
-  }
+  },
+  "chat.disableAIFeatures": false
 }

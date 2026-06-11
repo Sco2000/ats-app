@@ -1,0 +1,129 @@
+<app-layout title="Paiement" showBack="{{true}}" showTabBar="{{false}}" transparent="{{false}}">
+  <scroll-view class="payment-page-content" scroll-y="true" enhanced="{{true}}" show-scrollbar="false">
+
+    <view class="payment-page-inner">
+
+      <!-- Résumé réservation -->
+      <view class="summary-card">
+        <view class="summary-header">
+          <app-typography containerClass="summary-label" fontSize="22rpx" color="#FFFFFF" weight="400">
+            Votre Réservation
+          </app-typography>
+
+          <app-typography containerClass="summary-title" fontSize="42rpx" color="#FFFFFF" weight="700">
+            {{reservation.title}}
+          </app-typography>
+        </view>
+
+        <view class="summary-divider"></view>
+
+        <view class="summary-body">
+          <view class="summary-item">
+            <app-typography containerClass="item-label" fontSize="18rpx" color="#FFFFFF">
+              Catégorie
+            </app-typography>
+
+            <app-typography containerClass="item-value" fontSize="28rpx" color="#FFFFFF" weight="700">
+              {{reservation.category}}
+            </app-typography>
+          </view>
+
+          <view class="summary-item">
+            <app-typography containerClass="item-label" fontSize="18rpx" color="#FFFFFF">
+              Durée
+            </app-typography>
+
+            <app-typography containerClass="item-value" fontSize="28rpx" color="#FFFFFF" weight="700">
+              {{reservation.duration}}
+            </app-typography>
+          </view>
+        </view>
+
+        <view class="summary-divider"></view>
+
+        <view class="summary-footer">
+          <app-typography containerClass="footer-label" fontSize="20rpx" color="#FFFFFF">
+            Montant Total
+          </app-typography>
+
+          <app-typography containerClass="footer-value" fontSize="52rpx" color="#FFFFFF" weight="700">
+            {{reservation.amount}}
+          </app-typography>
+        </view>
+      </view>
+
+      <view class="secure-wrapper">
+<app-card containerClass="secure-block">
+
+  <view class="secure-header">
+    <osn-icon
+      icon="Icon"
+      width="40"
+      height="40"
+      enableBg="{{true}}"
+      containerClass="secure-icon"
+    />
+
+    <app-typography
+      containerClass="secure-title"
+      fontSize="28rpx"
+      color="#0E3D91"
+      weight="700"
+    >
+      Paiement Sécurisé
+    </app-typography>
+  </view>
+
+  <app-typography
+    containerClass="secure-description"
+    fontSize="24rpx"
+    color="#4B5563"
+    weight="400"
+  >
+    Toutes les transactions sont cryptées et traitées de manière sécurisée via la super-app Max It.
+    Vos informations de paiement ne sont jamais stockées.
+  </app-typography>
+
+</app-card>
+
+      </view>
+
+      <!-- Conditions -->
+      <view class="legal-line">
+        <app-typography containerClass="legal-copy" fontSize="22rpx" color="#5f6e8a">
+          En finalisant cette réservation, vous acceptez nos
+        </app-typography>
+
+        <app-typography containerClass="legal-highlight" fontSize="26rpx" color="#ffcc00" weight="700">
+          Conditions d'Utilisation
+        </app-typography>
+
+        <app-typography containerClass="legal-copy" fontSize="22rpx" color="#5f6e8a">
+          et notre
+        </app-typography>
+
+        <app-typography containerClass="legal-highlight" fontSize="26rpx" color="#ffcc00" weight="700">
+          Politique d'Annulation.
+        </app-typography>
+
+        <app-typography containerClass="legal-copy" fontSize="22rpx" color="#5f6e8a">
+          Remboursement complet disponible jusqu'à 24h avant le voyage.
+        </app-typography>
+      </view>
+
+    </view>
+
+  </scroll-view>
+
+  <view class="pay-footer">
+    <view class="pay-footer-inner">
+      <app-button
+        type="primary"
+        buttonClass="pay-button"
+        bind:onPress="onPayPress">
+        Payer {{reservation.amount}}
+      </app-button>
+    </view>
+  </view>
+
+</app-layout>

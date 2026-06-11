@@ -1,24 +1,4 @@
-import { MAIN_TABS } from '../../utils/constants/index';
-import { navigateTo } from '../../utils/helpers/navigation';
-
-const app = getApp();
-
 Page({
-  /**
-   * Initial data of the page
-   */
-  data: {
-    activeTab: 'home',
-    tabs: MAIN_TABS,
-    isLoading: true,
-    userName: '',
-    showModal: false,
-    destinations: app.globalData.DESTINATIONS,
-  },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
   onLoad() {},
 
   /**
@@ -47,19 +27,11 @@ Page({
   handleCardPress(event) {
     const { destination } = event.detail || {};
 
-    if (!destination || !destination.id || this._openingDestinationDetail) {
+    if (!destination || !destination.id) {
       return;
     }
 
-    this._openingDestinationDetail = true;
-    const releaseNavigation = () => {
-      setTimeout(() => {
-        this._openingDestinationDetail = false;
-      }, 500);
-    };
-
-    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
-      .then(releaseNavigation, releaseNavigation);
+    navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`);
   },
 
   handleDestinationLike(event) {
