@@ -154,6 +154,7 @@
     <app-button
       type="primary"
       buttonClass="payment-pay-button"
+      loading="{{ isPaying }}"
       bind:onPress="handlePay"
     >
       <app-typography

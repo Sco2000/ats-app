@@ -169,7 +169,7 @@ Page({
     }, 500);
 
     wx.navigateTo({
-      url: `/pages/paiement/index?destinationId=${destination.id}`,
+      url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
   },
 

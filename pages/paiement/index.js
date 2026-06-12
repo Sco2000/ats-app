@@ -28,6 +28,8 @@ Page({
       duration: 'Demi-journée',
       amount: '30 000 FCFA',
     },
+    reference: 'ATS39ZY3C6',
+    isPaying: false,
   },
 
   onLoad(options = {}) {
@@ -62,13 +64,21 @@ Page({
     }
 
     this._payLocked = true;
+    this.setData({ isPaying: true });
+
+    const { reference, reservation } = this.data;
+    const params = [
+      `reference=${encodeURIComponent(reference)}`,
+      `amount=${encodeURIComponent(reservation.amount)}`,
+    ].join('&');
+
     setTimeout(() => {
       this._payLocked = false;
-    }, 600);
+      this.setData({ isPaying: false });
 
-    wx.showToast({
-      title: `Paiement ${this.data.reservation.amount}`,
-      icon: 'none',
-    });
+      wx.redirectTo({
+        url: `/pages/booking-confirmation/booking-confirmation?${params}`,
+      });
+    }, 2000);
   },
 });
