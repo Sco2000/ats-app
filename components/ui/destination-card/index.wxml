@@ -1,4 +1,3 @@
-<!-- wxml -->
 <view class="card-container" style="width: {{ cardWidth }}; {{ cardContainerStyle }}" bindtap="handleCardTap">
     <app-card containerClass="br-45 box-shadow-sm {{ cardPaddingClass }} gap-3" containerStyle="{{ cardStyle }}">
         <view class="image-container">
