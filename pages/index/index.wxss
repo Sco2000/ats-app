@@ -1,11 +1,5 @@
-.payment-page-content {
-	min-height: calc(100vh - 88rpx);
-	padding: 24rpx 20rpx 220rpx;
-	background: #ffffff;
-	display: flex;
-	box-sizing: border-box;
-	flex-direction: column;
-	gap: 24rpx;
+.index-redirect {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
 }
-
-

@@ -329,7 +329,7 @@ App({
    */
   onPageNotFound(res) {
     console.warn('[App] Page not found:', res.path);
-    wx.redirectTo({ url: '/pages/index/index' });
+    wx.redirectTo({ url: '/pages/home/home' });
   },
 
   // ==========================================================================

@@ -120,8 +120,27 @@ Page({
       return;
     }
 
+    const {
+      adults,
+      children,
+      destination,
+      selectedDate,
+      totalPrice,
+    } = this.data;
+    const selectedDateItem = this.data.dates[selectedDate] || null;
+    const dateLabel = selectedDateItem
+      ? `${selectedDateItem.day} ${selectedDateItem.date} ${selectedDateItem.month}`
+      : '';
+    const params = [
+      `destinationId=${destination && destination.id ? destination.id : 4}`,
+      `adults=${adults}`,
+      `children=${children}`,
+      `total=${encodeURIComponent(totalPrice)}`,
+      `date=${encodeURIComponent(dateLabel)}`,
+    ].join('&');
+
     wx.navigateTo({
-      url: '/pages/paiement/index'
+      url: `/pages/paiement/index?${params}`,
     });
   }
 });
