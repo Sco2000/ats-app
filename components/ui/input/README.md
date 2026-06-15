@@ -8,9 +8,6 @@
   </view>
   <app-input
     containerClass="p-1 br-35 mt-4 fs-4"
-    field-style="font-size: 25rpx;"
-    value="{{ query }}"
-    placeholder="  Où voulez-vous allez ?"
     icon="search"
     bind:input="onInput"
     bind:iconTap="onSearch"
