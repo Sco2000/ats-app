@@ -8,6 +8,9 @@ Page({
     tabs: MAIN_TABS,
     reservations: [],
     resultsLabel: '15 réservations',
+    showReservationPopup: false,
+    selectedReservation: null,
+    selectedReservationIsUpcoming: true,
   },
 
   onLoad() {
@@ -28,6 +31,57 @@ Page({
     this.setData({
       reservations,
       resultsLabel: `${total} réservation${total > 1 ? 's' : ''}`,
+    });
+  },
+
+  openReservationDetails(event) {
+    const { id } = event.currentTarget.dataset;
+    const reservation = this.data.reservations.find((item) => Number(item.id) === Number(id));
+
+    if (!reservation) {
+      return;
+    }
+
+    this.setData({
+      selectedReservation: reservation,
+      selectedReservationIsUpcoming: reservation.detailActions !== 'rebook' && reservation.status !== 'done',
+      showReservationPopup: true,
+    });
+  },
+
+  closeReservationPopup() {
+    this.setData({
+      showReservationPopup: false,
+      selectedReservation: null,
+    });
+  },
+
+  callSupport() {
+    wx.showToast({
+      title: 'Appel du support',
+      icon: 'none',
+    });
+  },
+
+  sendEmail() {
+    wx.showToast({
+      title: 'Email au support',
+      icon: 'none',
+    });
+  },
+
+  downloadTicket() {
+    wx.showToast({
+      title: 'Billet téléchargé',
+      icon: 'success',
+    });
+  },
+
+  cancelReservation() {},
+
+  rebook() {
+    wx.navigateTo({
+      url: '/pages/booking/booking',
     });
   },
 });
