@@ -186,13 +186,13 @@
           Payer {{ reservation.amount }}
         </app-typography>
 
-        <osn-icon
-          icon="Vector"
-          width="{{24}}"
-          height="{{30}}"
-          containerClass="payment-pay-button__icon"
-          containerStyle="padding: 0; filter: brightness(0) invert(1);"
-        />
+        <view class="payment-pay-button__icon">
+          <image
+            class="payment-pay-button__icon-image"
+            src="/assets/icons/global/Vector.png"
+            mode="aspectFit"
+          />
+        </view>
       </view>
     </app-button>
   </view>
