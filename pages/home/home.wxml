@@ -6,7 +6,7 @@
   transparent="{{false}}"
   activeTab="{{activeTab}}"
 >
-  <scroll-view class="content d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+  <scroll-view class="content home d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="h-300rpx d-flex flex-column gap-4">
 
       <view class=" h-50">

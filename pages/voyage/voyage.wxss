@@ -1,7 +1,7 @@
 @import "../shared-tab-page.wxss";
 
 .voyages-page {
-  padding: 24rpx 32rpx 0;
+  padding: 24rpx 32rpx 0 ;
   box-sizing: border-box;
 }
 

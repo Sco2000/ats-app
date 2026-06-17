@@ -11,7 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   background: #ffffff;
-  border-bottom: 2rpx solid #f3f4f6;
+  border-bottom: 2rpx solid #7c7c7e9e;
 }
 
 .osn-nav-bar--transparent {

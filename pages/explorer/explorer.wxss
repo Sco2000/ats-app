@@ -1,12 +1,6 @@
 @import "../shared-tab-page.wxss";
 
-.explorer-page {
-  display: flex;
-  flex-direction: column;
-  padding: 24rpx 32rpx 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
+
 
 .explorer-page__hero {
   flex: 0 0 auto;
@@ -36,8 +30,8 @@
   flex: 1;
   min-height: 0;
   height: 100%;
-  padding-bottom: 24rpx;
   box-sizing: border-box;
+  padding: 24rpx 32rpx 0;
 }
 
 .explorer-page__empty {
@@ -49,4 +43,12 @@
   padding: 48rpx 24rpx 80rpx;
   text-align: center;
   color: #7a8094;
+}
+
+.explorer-page {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 24rpx 32rpx 0;
 }

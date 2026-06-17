@@ -10,15 +10,14 @@
 }
 
 .osn-layout__content {
+  
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .osn-layout__content--with-tabbar {
-  padding-bottom: calc(192rpx + env(safe-area-inset-bottom));
 }
