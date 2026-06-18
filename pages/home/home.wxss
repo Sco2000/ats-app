@@ -6,7 +6,14 @@
 .inp{background-color: rgb(236, 234, 234);}
 
 .home {
-  padding: 24rpx 32rpx 0;
+}
+
+.greetings-container {
+  height: 363.24rpx;
+}
+
+.greetings-container__content{
+  gap: 7.98rpx;
 }
 
 .home-greeting {
@@ -30,10 +37,45 @@
   font-weight: 600;
 }
 
+.chip-container{
+  height: 284.8rpx;
+  gap: 31.98rpx;
+}
+
+.destination-list-container{
+  height: 775.94rpx;
+  gap: 31.98rpx;
+}
+
+.destination-list-head{
+  padding-top: 48rpx;
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
+}
+
+.destination-list-body{
+  padding-bottom: 31.98rpx;
+}
+
+.recomandation-list-container{
+  min-height: 279.99rpx;
+  gap: 31.98rpx;
+}
+
+.recomandation-list-body{
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
+  padding-bottom: 192.3rpx;
+}
+
 .home-section-title {
   color: #1c1c1c;
   font-size: 36rpx;
   font-weight: 600;
   line-height: 56rpx;
   letter-spacing: 0;
+}
+
+.card-padding {
+  padding: 23.98rpx 23.98rpx 31.98rpx 23.98rpx;
 }

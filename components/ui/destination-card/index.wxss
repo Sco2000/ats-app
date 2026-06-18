@@ -2,9 +2,9 @@
 
 .card-container {
     position: relative;
-    width: 480rpx;
-    border-radius: 48rpx;
+    width: 479.98rpx;
     overflow: hidden;
+    height: 579.98rpx;
 }
 
 .image-container {
@@ -15,7 +15,7 @@
 .destination-card__content {
     display: flex;
     flex-direction: column;
-    gap: 24rpx;
+    padding-top: 31.98rpx;
 }
 
 .icon-heart {
@@ -46,6 +46,7 @@
     display: flex;
     align-items: center;
     gap: 12rpx;
+    height: 71.96rpx;
 }
 
 .subtitle-icon-wrap {
@@ -65,6 +66,7 @@
     width: 100%;
     white-space: nowrap;
     gap: 16rpx;
+    height: 67.96rpx;
 }
 
 .price-button-row.price-only {
@@ -76,7 +78,4 @@
     justify-content: flex-end;
     flex: 0 0 176rpx;
     width: 176rpx;
-}
-
-.text {
 }

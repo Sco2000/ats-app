@@ -9,9 +9,8 @@
   right: 0;
   z-index: 300;
   width: 100%;
-  box-sizing: border-box;
-  background: #ffffff;
-  border-bottom: 2rpx solid #7c7c7e9e;
+  box-sizing: border-box;  border-bottom: 2rpx solid #7c7c7e9e;
+  height: 129.64rpx;
 }
 
 .osn-nav-bar--transparent {
@@ -26,10 +25,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 130rpx;
+  height: 100%;
   padding: 32rpx;
   box-sizing: border-box;
   position: relative;
+
 }
 
 .osn-nav-bar__logo {

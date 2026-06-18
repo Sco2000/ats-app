@@ -5,7 +5,6 @@
     show-scrollbar="false"
   >
     <view class="chip-row">
-
       <view
         wx:for="{{items}}"
         wx:key="id"

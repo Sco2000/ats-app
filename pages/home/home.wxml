@@ -7,16 +7,15 @@
   activeTab="{{activeTab}}"
 >
   <scroll-view class="content home d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
-    <view class="h-300rpx d-flex flex-column gap-4">
-
-      <view class=" h-50">
-        <view class=" ">
-          <view class="home-greeting">Bonjour 👋</view>
+    <view class="greetings-container padding-space d-flex flex-column">
+      <view class="greetings-container__content d-flex flex-column">
+          <view class="home-greeting">
+            Bonjour 👋
+          </view>
           <view class="home-subtitle">
             Explorons le <text class="home-subtitle__highlight">Sénégal</text> !
           </view>
-
-
+      </view>
         <app-input
         containerClass="search-input mt-4"
         value="{{ query }}"
@@ -26,58 +25,56 @@
         icon="search"
         bind:input="onInput"
         bind:iconTap="onSearch"
-        iconPosition="left"
-
-        />
-
-        </view>
-      </view>
+        iconPosition="left"/>
     </view>
-    <view class=" h-300rpx d-flex border-bottom flex-column justify-content-center gap-3">
-        <view class="home-section-title">Destinations Populaires</view>
+    <view class="chip-container d-flex flex-column">
+        <view class="home-section-title destination-list-head">Destinations Populaires</view>
         <app-chip-group
           items="{{filters}}"
           activeId="{{activeFilter}}"
           bind:change="handleFilterChange"
         />
     </view>
-    <view class="d-flex flex-column gap-6">
-      <view class="d-flex flex-column gap-3 mt-3">
-        <view class="d-flex justify-content-between align-items-center mb-2">
-          <view class="home-section-title">Destinations à la Une</view>
-          <view class="d-flex align-items-center">
-            <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
-              voir tout
-            </app-typography>
-            <app-icon icon="arrow" width="{{20}}" height="{{20}}" color="#01953E"/>
-          </view>
+    <view class="destination-list-container d-flex flex-column">
+      <view class="destination-list-head d-flex justify-content-between">
+        <view class="home-section-title">Destinations à la Une</view>
+        <view class="d-flex align-items-center">
+          <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
+            voir tout
+          </app-typography>
+          <app-icon icon="arrow" width="{{20}}" height="{{20}}" color="#01953E"/>
         </view>
-          <app-list-destination
-            destinations="{{ destinations }}"
-            layout="scroll"
-            cardWidth="480rpx"
-            imageHeight="288rpx"
-            cardPaddingClass="p-2"
-            containerClass="featured-destination-list"
-            showDetailsButton="{{ true }}"
-            bind:toggleLike="handleDestinationLike"
-            bind:onCardPress="handleCardPress" />
       </view>
-      <view class="d-flex flex-column gap-3">
-          <view class="home-section-title">Recommandations</view>
+      <view class="destination-list-body">
+        <app-list-destination
+          destinations="{{ destinations }}"
+          layout="scroll"
+          cardWidth="479.98rpx"
+          imageHeight="287.98rpx"
+          cardPaddingClass="card-padding"
+          cardContainerStyle="border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important; border-top: none;"
+          containerClass="featured-destination-list"
+          showDetailsButton="{{ true }}"
+          bind:toggleLike="handleDestinationLike"
+          bind:onCardPress="handleCardPress" />
+      </view>
+    </view>
+    <view class="recomandation-list-container d-flex flex-column">
+        <view class="destination-list-head home-section-title">Recommandations</view>
+        <view class="recomandation-list-body">
           <app-list-destination
           destinations="{{ destinations }}"
           layout="grid"
           cardWidth="100%"
           imageHeight="288rpx"
           cardPaddingClass="p-2"
-          cardStyle="height: 560rpx !important; border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
-          cardContainerStyle="border-radius: 32rpx !important;"
+          cardStyle=""
+          cardContainerStyle="border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
           imageRadius="32rpx"
           showDetailsButton="{{ false }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
-      </view>
+        </view>
     </view>
   </scroll-view>
 </app-layout>

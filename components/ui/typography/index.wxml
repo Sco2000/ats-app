@@ -11,6 +11,7 @@
     text-overflow: {{ ellipsis ? 'ellipsis' : 'initial' }};
     word-break: break-word;
     line-height: {{ lineHeight }};
+    {{ containerStyle }}
   "
 >
   <slot></slot>

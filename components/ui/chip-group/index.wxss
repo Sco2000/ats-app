@@ -14,15 +14,15 @@
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
-    padding-right: 24rpx;
-    gap: 16rpx;
+    gap: 23.98rpx;
 }
 
 .chip {
-    padding: 16rpx 34rpx;
+    padding: 21.34rpx 41.66rpx;
     border-radius: 999rpx;
     background: #ffffff;
     border: 2rpx solid #dcded8;
+    height: 83.32rpx;
 }
 
 .chip-active {
@@ -44,4 +44,12 @@
 .chip-text-active {
     color: #ffffff;
     font-weight: 500;
+}
+
+.chip:first-child {
+  margin-left: 31.98rpx;
+}
+
+.chip:last-child {
+  margin-right: 31.98rpx;
 }

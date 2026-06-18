@@ -1,4 +1,4 @@
-<view>
+<view class="h-100">
     <scroll-view
         wx:if="{{ layout === 'scroll' }}"
         class="menu-tabs {{ containerClass }}"

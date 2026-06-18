@@ -8,7 +8,7 @@
   activeTab="{{activeTab}}"
 >
   <view class="content explorer-page">
-    <view class="explorer-page__hero">
+    <view class="explorer-page__hero ">
       <view class="explorer-page__search">
           <app-input
             containerClass="explore-search-input"

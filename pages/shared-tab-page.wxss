@@ -9,7 +9,6 @@
   flex: 1;
   min-height: 0;
   height: 100%;
-  padding: 32rpx;
   box-sizing: border-box;
 }
 
@@ -34,4 +33,11 @@
   color: #4b5563;
   font-size: 28rpx;
   line-height: 1.5;
+}
+
+.padding-space{
+  padding-top: 48rpx;
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
+  padding-bottom: 31.98rpx;
 }

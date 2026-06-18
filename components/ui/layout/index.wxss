@@ -10,13 +10,14 @@
 }
 
 .osn-layout__content {
-  
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
+    border:#fad700 2rpx solid;
+
 }
 
 .osn-layout__content--with-tabbar {

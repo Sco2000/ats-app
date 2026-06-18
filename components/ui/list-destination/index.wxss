@@ -27,7 +27,11 @@
 }
 
 .featured-destination-list .menu-tabs__item {
-  margin-right: 32rpx;
+  margin-right: 31.89rpx;
+}
+
+.featured-destination-list .menu-tabs__item:first-child {
+  margin-left: 31.98rpx;
 }
 
 .grid-container {
@@ -61,4 +65,8 @@
 .seeAll{
   display: flex;
   justify-content: space-between;
+}
+
+.bor{
+  border:#fad700 2rpx solid;
 }

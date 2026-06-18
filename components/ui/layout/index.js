@@ -27,11 +27,20 @@ Component({
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
-      const statusBarHeight = sysInfo.statusBarHeight || 20;
-
+      const navBarContentHeight = sysInfo.screenWidth / 750 * 129.64;
       this.setData({
-        navContentOffset: statusBarHeight + 65
+        navContentOffset: navBarContentHeight
       });
+    },
+    ready() {
+      wx.createSelectorQuery()
+        .select('.osn-nav-bar')
+        .boundingClientRect()
+        .exec((res) => {
+          if (res && res[0] && res[0].height > 0) {
+            this.setData({ navContentOffset: res[0].height });
+          }
+        });
     }
   }
 });
