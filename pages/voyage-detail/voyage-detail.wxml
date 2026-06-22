@@ -1,0 +1,92 @@
+<view wx:if="{{ hasReservation }}" style="width: 100%; height: 100vh; overflow: hidden; background: #ffffff; color: #0f172a; font-family: Inter, sans-serif;">
+  <view style="position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; overflow: hidden; background: #ffffff;">
+    <view style="display: flex; align-items: center; justify-content: space-between; min-height: 112rpx; padding: {{ pageTopOffset }}px 26rpx 26rpx 24rpx; border-bottom: 1rpx solid #eef0f3; box-sizing: border-box; background: #ffffff;">
+      <text style="color: #0f172a; font-size: 36rpx; font-weight: 800; line-height: 46rpx;">D&#233;tails de la R&#233;servation</text>
+      <view catchtap="handleBack" style="position: relative; width: 64rpx; height: 64rpx; flex: 0 0 64rpx;">
+        <view style="position: absolute; left: 15rpx; top: 30rpx; width: 38rpx; height: 5rpx; border-radius: 999rpx; background: #202124; transform: rotate(45deg);"></view>
+        <view style="position: absolute; left: 15rpx; top: 30rpx; width: 38rpx; height: 5rpx; border-radius: 999rpx; background: #202124; transform: rotate(-45deg);"></view>
+      </view>
+    </view>
+
+    <scroll-view scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}" style="flex: 1; min-height: 0; width: 100%; background: #ffffff;">
+      <view style="padding: 28rpx 24rpx 300rpx; box-sizing: border-box;">
+        <image src="{{ reservation.image }}" mode="aspectFill" style="display: block; width: 100%; height: 388rpx; border-radius: 28rpx; background: #f2f4f7;" />
+
+        <view style="display: flex; align-items: center; justify-content: space-between; gap: 20rpx; margin-top: 50rpx;">
+          <text style="flex: 1; min-width: 0; color: #0f172a; font-size: 48rpx; font-weight: 800; line-height: 58rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ reservation.title }}</text>
+          <text style="flex: 0 0 auto; padding: 14rpx 30rpx; border-radius: 999rpx; background: {{ reservation.status === 'cancelled' ? '#fee2e2' : '#dcfce7' }}; color: {{ reservation.status === 'cancelled' ? '#ef4444' : '#009b48' }}; font-size: 26rpx; font-weight: 800; line-height: 34rpx; white-space: nowrap;">{{ reservation.statusLabel }}</text>
+        </view>
+
+        <view style="display: flex; flex-direction: column; margin-top: 40rpx; padding: 34rpx 36rpx; border-radius: 28rpx; background: #f4e8d8; box-sizing: border-box;">
+          <text style="color: #667085; font-size: 30rpx; font-weight: 500; line-height: 40rpx;">R&#233;f&#233;rence de r&#233;servation</text>
+          <text style="margin-top: 12rpx; color: #0f172a; font-size: 40rpx; font-weight: 800; line-height: 50rpx;">{{ reservation.reference }}</text>
+        </view>
+
+        <view style="display: flex; flex-direction: column; gap: 24rpx; margin-top: 40rpx;">
+          <view style="display: flex; align-items: center; min-height: 128rpx; padding: 22rpx 28rpx; border-radius: 24rpx; background: #f8f9fb; box-sizing: border-box;">
+            <image src="/assets/icons/global/localisation.png" mode="aspectFit" style="width: 34rpx; height: 34rpx; margin-right: 22rpx;" />
+            <view style="display: flex; flex-direction: column; min-width: 0;">
+              <text style="color: #667085; font-size: 24rpx; font-weight: 500; line-height: 34rpx;">Destination</text>
+              <text style="margin-top: 4rpx; color: #0f172a; font-size: 28rpx; font-weight: 700; line-height: 38rpx;">{{ reservation.subtitle }}</text>
+            </view>
+          </view>
+
+          <view style="display: flex; align-items: center; min-height: 128rpx; padding: 22rpx 28rpx; border-radius: 24rpx; background: #f8f9fb; box-sizing: border-box;">
+            <image src="/assets/icons/global/calendrier.png" mode="aspectFit" style="width: 34rpx; height: 34rpx; margin-right: 22rpx;" />
+            <view style="display: flex; flex-direction: column; min-width: 0;">
+              <text style="color: #667085; font-size: 24rpx; font-weight: 500; line-height: 34rpx;">Date du voyage</text>
+              <text style="margin-top: 4rpx; color: #0f172a; font-size: 28rpx; font-weight: 700; line-height: 38rpx;">{{ reservation.dateLabel }}</text>
+            </view>
+          </view>
+
+          <view style="display: flex; align-items: center; min-height: 128rpx; padding: 22rpx 28rpx; border-radius: 24rpx; background: #f8f9fb; box-sizing: border-box;">
+            <image src="/assets/icons/global/users.png" mode="aspectFit" style="width: 34rpx; height: 34rpx; margin-right: 22rpx;" />
+            <view style="display: flex; flex-direction: column; min-width: 0;">
+              <text style="color: #667085; font-size: 24rpx; font-weight: 500; line-height: 34rpx;">Nombre de voyageurs</text>
+              <text style="margin-top: 4rpx; color: #0f172a; font-size: 28rpx; font-weight: 700; line-height: 38rpx;">{{ reservation.travelersLabel }}</text>
+            </view>
+          </view>
+        </view>
+
+        <view style="display: flex; align-items: center; justify-content: space-between; gap: 20rpx; margin-top: 44rpx;">
+          <text style="color: #667085; font-size: 28rpx; font-weight: 500; line-height: 40rpx;">Montant total</text>
+          <text style="color: #079b43; font-size: 40rpx; font-weight: 800; line-height: 50rpx; text-align: right; white-space: nowrap;">{{ reservation.price }}</text>
+        </view>
+
+        <view style="margin-top: 42rpx; padding: 28rpx; border-radius: 22rpx; background: #f8f9fb; box-sizing: border-box;">
+          <text style="display: block; color: #202124; font-size: 28rpx; font-weight: 800; line-height: 40rpx;">Besoin d'aide ?</text>
+          <view style="display: flex; flex-direction: column; gap: 18rpx; margin-top: 22rpx;">
+            <view catchtap="handleCallSupport" style="display: flex; align-items: center; min-height: 72rpx; padding: 0 24rpx; border: 1rpx solid #e5e7eb; border-radius: 999rpx; background: #ffffff; box-sizing: border-box;">
+              <text style="width: 42rpx; margin-right: 14rpx; color: #009b48; font-size: 22rpx; font-weight: 700; line-height: 32rpx;">Tel</text>
+              <text style="color: #202124; font-size: 26rpx; font-weight: 600; line-height: 36rpx;">Appeler le support</text>
+            </view>
+            <view catchtap="handleSendEmail" style="display: flex; align-items: center; min-height: 72rpx; padding: 0 24rpx; border: 1rpx solid #e5e7eb; border-radius: 999rpx; background: #ffffff; box-sizing: border-box;">
+              <text style="width: 42rpx; margin-right: 14rpx; color: #009b48; font-size: 26rpx; font-weight: 700; line-height: 32rpx;">@</text>
+              <text style="color: #202124; font-size: 26rpx; font-weight: 600; line-height: 36rpx;">Envoyer un email</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; display: flex; flex-direction: column; gap: 18rpx; padding: 26rpx 28rpx 24rpx; background: #ffffff; border-top: 1rpx solid #f2f4f7; box-sizing: border-box;">
+      <view catchtap="handleDownloadTicket" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 94rpx; border-radius: 24rpx; background: #079b43; box-sizing: border-box;">
+        <text style="margin-right: 14rpx; color: #ffffff; font-size: 30rpx; line-height: 32rpx;">v</text>
+        <text style="color: #ffffff; font-size: 28rpx; font-weight: 800; line-height: 40rpx;">T&#233;l&#233;charger le billet</text>
+      </view>
+      <view catchtap="handleCancelReservation" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 94rpx; border: 3rpx solid #ff2d36; border-radius: 24rpx; background: #ffffff; box-sizing: border-box;">
+        <text style="color: #ff2d36; font-size: 28rpx; font-weight: 700; line-height: 40rpx;">Annuler la r&#233;servation</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:else style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100vh; padding: 32rpx; background: #ffffff; box-sizing: border-box;">
+  <view style="display: flex; flex-direction: column; width: 100%; padding: 48rpx 32rpx; border-radius: 28rpx; background: #ffffff; box-sizing: border-box;">
+    <text style="color: #202124; font-size: 36rpx; font-weight: 800; line-height: 48rpx; text-align: center;">R&#233;servation introuvable</text>
+    <text style="margin-top: 18rpx; color: #667085; font-size: 28rpx; line-height: 40rpx; text-align: center;">Retournez aux voyages pour choisir une r&#233;servation disponible.</text>
+    <view catchtap="handleBack" style="display: flex; align-items: center; justify-content: center; width: 220rpx; height: 82rpx; margin: 34rpx auto 0; border-radius: 999rpx; background: #079b43;">
+      <text style="color: #ffffff; font-size: 28rpx; font-weight: 700; line-height: 40rpx;">Retour</text>
+    </view>
+  </view>
+</view>
