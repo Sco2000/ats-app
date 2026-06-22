@@ -14,8 +14,16 @@
   padding: 0 !important;
   line-height: normal;
   box-sizing: border-box;
-  width: 100% !important;
+  width: 100%;
   -webkit-appearance: none;
+}
+
+.osn-btn-primary.osn-btn--auto,
+.osn-btn-secondary.osn-btn--auto {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 24rpx 0 !important;
 }
 .osn-btn-primary::after,
 .osn-btn-secondary::after {

@@ -36,14 +36,14 @@
         <osn-image
           src="{{ reservation.image }}"
           mode="aspectFill"
-          imageStyle="width: 100%; height: 380rpx; border-radius: 32rpx;"
+          imageStyle="width: 100%; height: 320rpx; border-radius: 32rpx;"
         />
       </view>
 
       <view class="reservation-popup__hero-title-row">
         <app-typography
           containerClass="dest-name"
-          size="22"
+          size="24"
           weight="800"
           color="#111111"
         >
@@ -96,7 +96,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -120,7 +120,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -144,7 +144,7 @@
               </app-typography>
               <app-typography
                 containerClass="field-value"
-                size="15"
+                size="16"
                 weight="600"
                 color="#111111"
               >
@@ -168,7 +168,7 @@
         </app-typography>
         <app-typography
           containerClass="total-amount"
-          size="22"
+          size="24"
           weight="800"
           color="#009B43"
         >
@@ -227,11 +227,12 @@
         </view>
       </app-card>
 
-      <view wx:if="{{ reservation.status === 'done' }}" class="reservation-popup__actions">
-        <app-button type="primary" bind:onPress="handleBookAgain" buttonClass="reservation-popup__button reservation-popup__button--primary reservation-popup__button--again">
+      <view wx:if="{{ reservation.status === 'done' }}" class="reservation-popup__actions reservation-popup__actions--centered">
+        <app-button class="reservation-popup__action-button reservation-popup__action-button--again" style="width:100% !important; display:block !important; align-self:stretch !important;" type="primary" buttonClass="reservation-popup__button reservation-popup__button--primary reservation-popup__button--again" buttonStyle="display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; width:100% !important;" bind:onPress="handleBookAgain">
           <app-typography
             containerClass="btn-primary-label"
-            size="15"
+            align="center"
+            size="16"
             weight="700"
             color="#ffffff"
           >
@@ -241,11 +242,12 @@
       </view>
 
       <view wx:if="{{ reservation.status !== 'done' }}" class="reservation-popup__actions">
-        <app-button type="primary" bind:onPress="handleDownloadTicket" buttonClass="reservation-popup__button reservation-popup__button--primary">
+        <app-button class="reservation-popup__action-button reservation-popup__action-button--primary" style="width:100% !important; display:block !important; align-self:stretch !important;" type="primary" bind:onPress="handleDownloadTicket" buttonClass="reservation-popup__button reservation-popup__button--primary" buttonStyle="display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; width:100% !important;">
           <view class="reservation-popup__button-inner">
             <image class="reservation-popup__download-icon reservation-popup__download-icon--white" src="/assets/icons/telecharger.png" mode="aspectFit" />
             <app-typography
               containerClass="btn-primary-label"
+              align="center"
               size="16"
               weight="700"
               color="#ffffff"
@@ -255,10 +257,11 @@
           </view>
         </app-button>
 
-        <app-button type="secondary" bind:onPress="handleCancelReservation" buttonClass="reservation-popup__button reservation-popup__button--danger" buttonStyle="border: 3rpx solid #FF1F2D !important; border-radius: 24rpx !important;">
+        <app-button class="reservation-popup__action-button reservation-popup__action-button--danger" style="width:100% !important; display:block !important; align-self:stretch !important;" type="secondary" bind:onPress="handleCancelReservation" buttonClass="reservation-popup__button reservation-popup__button--danger" buttonStyle="display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; border: 3rpx solid #FF1F2D !important; border-radius: 24rpx !important; width:100% !important;">
           <view class="reservation-popup__button-inner reservation-popup__button-inner--danger">
             <app-typography
               containerClass="btn-cancel-label"
+              align="center"
               size="16"
               weight="600"
               color="#FF1F2D"
