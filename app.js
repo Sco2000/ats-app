@@ -49,7 +49,7 @@ const DESTINATIONS = [
   },
   {
     id: 3,
-    image: '/assets/images/bord.png',
+    image: '/assets/images/bord.jpg',
     title: 'Bord de mer',
     subtitle: 'Île de Ngor',
     price: '28 500 FCFA',
@@ -62,7 +62,7 @@ const DESTINATIONS = [
   },
   {
     id: 4,
-    image: '/assets/images/lac.png',
+    image: '/assets/images/img.jpg',
     title: 'Lac Rose',
     subtitle: 'Lac Retba',
     price: '15 000 FCFA',
@@ -78,8 +78,8 @@ const DESTINATIONS = [
     category: 'Dakar',
     description: "Avec une superficie d'environ (04) quatre kilomètres, c'est un espace où vous trouverez en même temps des dunes, un lac et l'océan atlantique. Au lac rose, vous serez certainement ébloui par toute cette diversité. Au bord d'une pirogue, vous pourrez aussi faire le tour du lac, observer le paysage orné par le sel, les travailleurs... L'aventure se poursuivra ensuite autour des dunes, à dos de dromadaire.",
     gallery: [
-      '/assets/images/img.jpg',
-      '/assets/images/bord.png',
+      '/assets/images/pirogue.jpg',
+      '/assets/images/bord.jpg',
       '/assets/images/ranch.png',
       '/assets/images/ile.png',
       '/assets/images/Container (1).png',

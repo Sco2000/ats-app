@@ -1,25 +1,33 @@
 @import "../shared-tab-page.wxss";
 
-
-
 .explorer-page__hero {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20rpx;
-  border-bottom: 2rpx solid #f3f4f6;
+  border-bottom: 1.66rpx solid #f3f4f6;
 }
 
 .explorer-page__search {
   width: 100%;
+  padding-left: 31.98rpx;
+  padding-right: 31.98rpx;
+  padding-bottom: 23.98rpx;
 }
 
 .explorer-page__filters {
   width: 100%;
+  padding-bottom: 25.66rpx;
 }
 
 .explorer-page__results {
+  padding: 31.98rpx 31.98rpx;
   flex: 0 0 auto;
+}
+
+.destination-list {
+  padding: 0 31.98rpx;
+  padding-bottom: 180rpx;
 }
 
 .explorer-page__list-scroll {
@@ -46,7 +54,7 @@
   overflow: hidden;
 }
 
-.destination-list-head{
+.destination-list-head {
   padding-right: 31.98rpx;
   padding-left: 31.98rpx;
 }
