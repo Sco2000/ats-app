@@ -141,3 +141,6 @@
   text-align: center;
   color: #7a8094;
 }
+.reservation-card:last-child {
+  margin-bottom: 150rpx; /* Ajoute de l'espace sous la dernière carte */
+}
