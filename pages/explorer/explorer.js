@@ -20,6 +20,7 @@ Page({
     tabs: MAIN_TABS,
     searchValue: '',
     activeFilter: 'all',
+    isFocused: false,
     filters: [
       { id: 'all', label: 'Tous' },
       { id: 'dakar', label: 'Dakar' },
@@ -90,6 +91,14 @@ Page({
     this.setData({ searchValue }, () => {
       this.applyFilters();
     });
+  },
+
+  onSearchFocus() {
+    this.setData({ isFocused: true });
+  },
+
+  onSearchBlur() {
+    this.setData({ isFocused: false });
   },
 
   handleFilterChange(event) {

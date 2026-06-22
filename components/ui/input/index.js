@@ -68,6 +68,12 @@ Component({
     },
     onDateChange(e) {
       this.triggerEvent('dateChanged', { value: e.detail.value });
+    },
+    onFocus(e) {
+      this.triggerEvent('focus', e.detail);
+    },
+    onBlur(e) {
+      this.triggerEvent('blur', e.detail);
     }
   }
 });
