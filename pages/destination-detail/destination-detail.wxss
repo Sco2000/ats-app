@@ -396,6 +396,6 @@ page {
 .arrow-text {
   color: #ffffff;
   font-size: 32rpx;
-  font-weight: 300;
+  font-weight: 301;
 
 }
