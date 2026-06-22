@@ -16,8 +16,6 @@
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-    border:#fad700 2rpx solid;
-
 }
 
 .osn-layout__content--with-tabbar {

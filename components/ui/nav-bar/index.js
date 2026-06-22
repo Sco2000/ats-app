@@ -28,7 +28,8 @@ Component({
 
   data: {
     statusBarHeight: 0,
-    navHeight: 44,
+    navBarHeight: 0,
+    navContentHeight: 0,
     displayMode: 'default',
   },
 
@@ -42,10 +43,12 @@ Component({
   lifetimes: {
     attached() {
       const sysInfo = wx.getSystemInfoSync();
+      const statusBarHeight = sysInfo.statusBarHeight || 20;
 
-      this.setData({
-        statusBarHeight: sysInfo.statusBarHeight || 20,
-      });
+      const navContentHeight = 44;
+      const navBarHeight = statusBarHeight + navContentHeight;
+
+      this.setData({ statusBarHeight, navBarHeight, navContentHeight });
     },
   },
 
