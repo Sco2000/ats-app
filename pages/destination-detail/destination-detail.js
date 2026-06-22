@@ -214,20 +214,26 @@ closePreview() {
 },
 
 prevPreviewImage() {
-  if (this.data.previewIndex > 0) {
-    this.setData({ previewIndex: this.data.previewIndex - 1 });
-  }
+  const { previewIndex, previewGallery } = this.data;
+  const length = previewGallery.length;
+
+  this.setData({
+    previewIndex: (previewIndex - 1 + length) % length
+  });
 },
 
 nextPreviewImage() {
-  if (this.data.previewIndex < this.data.previewGallery.length - 1) {
-    this.setData({ previewIndex: this.data.previewIndex + 1 });
-  }
+  const { previewIndex, previewGallery } = this.data;
+  const length = previewGallery.length;
+
+  this.setData({
+    previewIndex: (previewIndex + 1) % length
+  });
 },
 
 onPreviewChange(e) {
   this.setData({
     previewIndex: e.detail.current
   });
-},
+}
 });

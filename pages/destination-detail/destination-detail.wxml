@@ -239,17 +239,21 @@
       <text class="close-text">✕</text>
     </view>
   </view>
+<swiper 
+  class="custom-preview-swiper"
+  current="{{ previewIndex }}"
+  circular="true"
+  bindchange="onPreviewChange"
+>
+  <swiper-item wx:for="{{ previewGallery }}" wx:key="*this">
+    <image src="{{ item }}" mode="aspectFill" class="custom-preview-image" />
+  </swiper-item>
+</swiper>
 
-  <swiper class="custom-preview-swiper" current="{{ previewIndex }}" bindchange="onPreviewChange">
-    <swiper-item wx:for="{{ previewGallery }}" wx:key="*this" class="custom-preview-item">
-      <image src="{{ item }}" mode="aspectFit" class="custom-preview-image" />
-    </swiper-item>
-  </swiper>
-
-  <view class="custom-preview-arrow custom-preview-arrow--left" catchtap="prevPreviewImage" wx:if="{{ previewIndex > 0 }}">
+  <view class="custom-preview-arrow custom-preview-arrow--left" catchtap="prevPreviewImage">
     <text class="arrow-text">❮</text>
   </view>
-  <view class="custom-preview-arrow custom-preview-arrow--right" catchtap="nextPreviewImage" wx:if="{{ previewIndex < previewGallery.length - 1 }}">
+  <view class="custom-preview-arrow custom-preview-arrow--right" catchtap="nextPreviewImage">
     <text class="arrow-text">❯</text>
   </view>
 </view>
