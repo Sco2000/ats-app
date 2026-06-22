@@ -135,6 +135,7 @@ export const MAIN_TABS = [
     iconImage: '/assets/icons/favoris.png',
     url: '/pages/favoris/favoris',
   },
+  
   {
     id: 'voyages',
     label: 'Voyages',

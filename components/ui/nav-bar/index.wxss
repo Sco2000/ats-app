@@ -9,7 +9,7 @@
   right: 0;
   z-index: 300;
   width: 100%;
-  box-sizing: border-box;  border-bottom: 2rpx solid #7c7c7e9e;
+  box-sizing: border-box;  border-bottom: 0.1rpx solid #dadadc9e;
   height: 129.64rpx;
 }
 
