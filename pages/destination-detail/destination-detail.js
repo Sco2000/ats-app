@@ -79,6 +79,9 @@ Page({
     stars: [1, 2, 3, 4, 5],
     hasDestination: false,
     pageTopOffset: 32,
+    showPreview: false,
+    previewIndex: 0,
+    previewGallery: [],
   },
 
   onLoad(options = {}) {
@@ -172,18 +175,59 @@ Page({
       url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
   },
+handlePreviewGallery(event) {
+  const destination = this.data.destination;
 
-  handlePreviewGallery(event) {
-    const { destination } = this.data;
-    const index = Number(event.currentTarget.dataset.index || 0);
+  if (!destination) return;
 
-    if (!destination || !destination.gallery.length) {
-      return;
-    }
+  const gallery = Array.isArray(destination.gallery)
+    ? destination.gallery.filter(img => typeof img === 'string' && img.length > 0)
+    : [];
 
-    wx.previewImage({
-      current: destination.gallery[index],
-      urls: destination.gallery,
+  if (gallery.length === 0) {
+    wx.showToast({
+      title: 'Aucune image',
+      icon: 'none'
     });
-  },
+    return;
+  }
+
+  let index = Number(event.currentTarget.dataset.index);
+
+  if (!Number.isFinite(index) || index < 0 || index >= gallery.length) {
+    index = 0;
+  }
+
+  console.log('[preview] custom modal', { index, gallery });
+
+  this.setData({
+    showPreview: true,
+    previewIndex: index,
+    previewGallery: gallery
+  });
+},
+
+closePreview() {
+  this.setData({
+    showPreview: false
+  });
+},
+
+prevPreviewImage() {
+  if (this.data.previewIndex > 0) {
+    this.setData({ previewIndex: this.data.previewIndex - 1 });
+  }
+},
+
+nextPreviewImage() {
+  if (this.data.previewIndex < this.data.previewGallery.length - 1) {
+    this.setData({ previewIndex: this.data.previewIndex + 1 });
+  }
+},
+
+onPreviewChange(e) {
+  this.setData({
+    previewIndex: e.detail.current
+  });
+},
 });

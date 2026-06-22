@@ -111,7 +111,7 @@
             <view
               class="detail-gallery__full"
               data-index="{{0}}"
-              bindtap="handlePreviewGallery"
+              catchtap="handlePreviewGallery"
             >
               <osn-image
                 src="{{ destination.mainGalleryImage }}"
@@ -119,26 +119,27 @@
                 data-index="{{0}}"
                 containerStyle="width: 100%; height: 100%; display: block;"
                 imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
-                bind:imageTap="handlePreviewGallery"
               />
             </view>
           </view>
 
           <view wx:elif="{{ destination.galleryMode === 'double' }}" class="detail-gallery detail-gallery--double">
+          
             <view
-              wx:for="{{ destination.gallery }}"
-              wx:key="*this"
-              class="detail-gallery__full"
-              data-index="{{index}}"
-              bindtap="handlePreviewGallery"
-            >
+  wx:for="{{ destination.gallery }}"
+  wx:key="*this"
+  wx:for-item="item"
+  wx:for-index="index"
+  class="detail-gallery__full"
+  data-index="{{index}}"
+  catchtap="handlePreviewGallery"
+>
               <osn-image
                 src="{{ item }}"
                 mode="aspectFill"
                 data-index="{{index}}"
                 containerStyle="width: 100%; height: 100%; display: block;"
                 imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
-                bind:imageTap="handlePreviewGallery"
               />
             </view>
           </view>
@@ -147,7 +148,7 @@
             <view
               class="detail-gallery__full"
               data-index="{{0}}"
-              bindtap="handlePreviewGallery"
+              catchtap="handlePreviewGallery"
             >
               <osn-image
                 src="{{ destination.mainGalleryImage }}"
@@ -155,7 +156,6 @@
                 data-index="{{0}}"
                 containerStyle="width: 100%; height: 100%; display: block;"
                 imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
-                bind:imageTap="handlePreviewGallery"
               />
             </view>
 
@@ -165,7 +165,7 @@
                 wx:key="*this"
                 class="detail-gallery__grid-item"
                 data-index="{{index + 1}}"
-                bindtap="handlePreviewGallery"
+                catchtap="handlePreviewGallery"
               >
                 <osn-image
                   src="{{ item }}"
@@ -173,7 +173,6 @@
                   data-index="{{index + 1}}"
                   containerStyle="width: 100%; height: 100%; display: block;"
                   imageStyle="width: 100%; height: 100%; border-radius: 24rpx;"
-                  bind:imageTap="handlePreviewGallery"
                 />
               </view>
             </view>
@@ -228,5 +227,29 @@
         Retour
       </app-typography>
     </view>
+  </view>
+</view>
+
+<view wx:if="{{ showPreview }}" class="custom-preview-overlay">
+  <view class="custom-preview-header">
+    <view class="custom-preview-counter">
+      {{ previewIndex + 1 }} / {{ previewGallery.length }}
+    </view>
+    <view class="custom-preview-close" catchtap="closePreview">
+      <text class="close-text">✕</text>
+    </view>
+  </view>
+
+  <swiper class="custom-preview-swiper" current="{{ previewIndex }}" bindchange="onPreviewChange">
+    <swiper-item wx:for="{{ previewGallery }}" wx:key="*this" class="custom-preview-item">
+      <image src="{{ item }}" mode="aspectFit" class="custom-preview-image" />
+    </swiper-item>
+  </swiper>
+
+  <view class="custom-preview-arrow custom-preview-arrow--left" catchtap="prevPreviewImage" wx:if="{{ previewIndex > 0 }}">
+    <text class="arrow-text">❮</text>
+  </view>
+  <view class="custom-preview-arrow custom-preview-arrow--right" catchtap="nextPreviewImage" wx:if="{{ previewIndex < previewGallery.length - 1 }}">
+    <text class="arrow-text">❯</text>
   </view>
 </view>
