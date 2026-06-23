@@ -2,9 +2,18 @@
 
 .favorites-page {
   box-sizing: border-box;
+   padding: 40rpx  10.98rpx 0 10.98rpx;
+    gap :10.98rpx;
+
 }
 
 .favorites-page__header {
+   width: 716rpx;
+   height: 60rpx;
+    padding-left:12rpx;
+
+    
+    
 }
 
 .favorites-page__empty {
@@ -15,4 +24,6 @@
   min-height: 360rpx;
   text-align: center;
   color: #7a8094;
+  
 }
+
