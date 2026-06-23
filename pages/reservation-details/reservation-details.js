@@ -9,7 +9,7 @@ Page({
 
   onLoad(options = {}) {
     const reservationId = options.id || options.reference;
-
+          
     if (!reservationId) {
       wx.showToast({
         title: "Réservation introuvable",
@@ -22,7 +22,7 @@ Page({
 
     this.setData({ reservationId, showModal: true });
   },
-
+    
   closeModal() {
     this.setData({ showModal: false }, () => {
       wx.navigateBack();
