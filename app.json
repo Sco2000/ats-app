@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/voyage/voyage",
     "pages/home/home",
     "pages/explorer/explorer",
     "pages/destination-detail/destination-detail",
@@ -8,6 +7,7 @@
     "pages/paiement/index",
     "pages/booking-confirmation/booking-confirmation",
     "pages/favoris/favoris",
+    "pages/voyage/voyage",
     "pages/index/index"
   ],
   "usingComponents": {
@@ -35,7 +35,7 @@
     "scope.camera": {
       "desc": "Need camera access to take photos or videos"
     },
-    "scope.album": { 
+    "scope.album": {
       "desc": "Need photo album access to select media"
     }
   }

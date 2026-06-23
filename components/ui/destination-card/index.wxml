@@ -1,4 +1,4 @@
-<view class="card-container" style="width: {{ cardWidth }}; {{ cardContainerStyle }}" bindtap="handleCardTap">
+<view class="card-container" hover-class="card-container--hovered" hover-stay-time="200" style="width: {{ cardWidth }}; {{ cardContainerStyle }}" bindtap="handleCardTap">
     <app-card containerClass="h-100 {{ cardPaddingClass }}" containerStyle="{{ cardStyle }}">
         <view class="image-container">
             <osn-image
