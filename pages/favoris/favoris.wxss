@@ -1,11 +1,11 @@
 @import "../shared-tab-page.wxss";
 
 .favorites-page {
-  box-sizing: border-box;
+  box-sizing: border-box;  
+  padding-top: 33.66rpx;
   padding-right: 31.98rpx;
   padding-left: 31.98rpx;
-  gap :10.98rpx;
-
+  padding-bottom: 151.98rpx;
 }
 
 .favorites-page__header {

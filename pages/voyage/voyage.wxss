@@ -2,7 +2,6 @@
 
 .voyages-page {
   box-sizing: border-box;
-  border: 2rpx solid yellow;
   display: flex;
   flex-direction: column;
   gap: 31.98rpx;
