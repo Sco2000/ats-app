@@ -10,17 +10,7 @@
   />
 
   <!-- Main Content Slot -->
-  <view
-    class="osn-layout__content {{ showTabBar ? 'osn-layout__content--with-tabbar' : '' }}"
-    style="padding-top: {{ navContentOffset }}px;"
-  >
+  <view class="osn-layout__content" style="padding-top: {{ navContentOffset }}px;">
     <slot></slot>
   </view>
-
-  <!-- Bottom Tab Bar -->
-  <app-tab-bar 
-    wx:if="{{ showTabBar }}" 
-    tabs="{{ tabs }}" 
-    activeTab="{{ activeTab }}" 
-  />
 </view>

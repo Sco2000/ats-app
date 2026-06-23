@@ -11,7 +11,6 @@
     "pages/index/index"
   ],
   "usingComponents": {
-    "app-tab-bar": "/components/ui/tab-bar/index",
     "app-nav-bar": "/components/ui/nav-bar/index",
     "osn-image": "/components/ui/image/index",
     "app-icon": "/components/ui/icons/base/index",
@@ -30,6 +29,39 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom",
     "pageTransitionDuration": 0
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#009B4D",
+    "selectedColor": "#009B4D",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "Accueil",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home.png"
+      },
+      {
+        "pagePath": "pages/explorer/explorer",
+        "text": "Explorer",
+        "iconPath": "assets/icons/explore.png",
+        "selectedIconPath": "assets/icons/explore.png"
+      },
+      {
+        "pagePath": "pages/favoris/favoris",
+        "text": "Favoris",
+        "iconPath": "assets/icons/favoris.png",
+        "selectedIconPath": "assets/icons/favoris.png"
+      },
+      {
+        "pagePath": "pages/voyage/voyage",
+        "text": "Voyages",
+        "iconPath": "assets/icons/voyage.png",
+        "selectedIconPath": "assets/icons/voyage.png"
+      }
+    ]
   },
   "permission": {
     "scope.camera": {

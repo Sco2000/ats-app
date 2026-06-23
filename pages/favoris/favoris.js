@@ -1,5 +1,6 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
+import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
 const app = getApp();
 
@@ -21,6 +22,7 @@ Page({
   },
 
   onShow() {
+    setCustomTabBarActive(this, 'favorites');
     this.refreshFavorites();
   },
 

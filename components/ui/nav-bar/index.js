@@ -1,3 +1,11 @@
+import { MAIN_TABS } from '../../../utils/constants/index';
+
+const TAB_BAR_URLS = MAIN_TABS.map((tab) => tab.url);
+
+function isTabBarUrl(url) {
+  return TAB_BAR_URLS.includes((url || '').split('?')[0]);
+}
+
 /**
  * Nav Bar Component
  * Custom navigation bar with safe area handling, back button, title, or centered logo.
@@ -63,13 +71,16 @@ Component({
       const app = getApp();
       if (app && app.globalData.navHistory && app.globalData.navHistory.length > 0) {
         const prevUrl = app.globalData.navHistory.pop();
-        wx.redirectTo({
-          url: prevUrl,
-        });
+
+        if (isTabBarUrl(prevUrl)) {
+          wx.switchTab({ url: prevUrl.split('?')[0] });
+        } else {
+          wx.redirectTo({ url: prevUrl });
+        }
         return;
       }
 
-      wx.reLaunch({
+      wx.switchTab({
         url: '/pages/home/home',
       });
     },

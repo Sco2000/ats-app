@@ -1,5 +1,3 @@
-import { MAIN_TABS } from '../../../utils/constants/index';
-
 Component({
   options: {
     multipleSlots: true
@@ -14,10 +12,10 @@ Component({
     logoSrc: { type: String, value: '' },
     showNavBorder: { type: Boolean, value: true },
 
-    // Tab bar properties
+    // Kept for backward compatibility with existing page markup.
     showTabBar: { type: Boolean, value: true },
     activeTab: { type: String, value: '' },
-    tabs: { type: Array, value: MAIN_TABS }
+    tabs: { type: Array, value: [] }
   },
 
   data: {

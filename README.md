@@ -74,6 +74,7 @@ tcmpp-boilerplate/
 | 8 | Using components | [Components Overview](docs/08-components-overview.md) |
 | 9 | Common tasks | [Recipes](docs/14-recipes.md) |
 | 10 | When things go wrong | [Troubleshooting](docs/15-troubleshooting.md) |
+| 11 | Custom WeChat tabbar | [Custom TabBar WeChat](docs/17-custom-tab-bar.md) |
 
 ## All Documentation
 
@@ -91,6 +92,7 @@ tcmpp-boilerplate/
 - [Behaviors Guide](docs/11-behaviors-guide.md) — Shared mixin system
 - [Navigation Guide](docs/12-navigation-guide.md) — Page stack and navigation helpers
 - [Storage Guide](docs/13-storage-guide.md) — Local storage wrapper
+- [Custom TabBar WeChat](docs/17-custom-tab-bar.md) — Native tabbar override with the app's custom style
 
 ### Reference
 - [Recipes](docs/14-recipes.md) — Step-by-step cookbook for common tasks

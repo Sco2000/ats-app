@@ -333,7 +333,7 @@ App({
    */
   onPageNotFound(res) {
     console.warn('[App] Page not found:', res.path);
-    wx.redirectTo({ url: '/pages/home/home' });
+    wx.switchTab({ url: '/pages/home/home' });
   },
 
   // ==========================================================================
