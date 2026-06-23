@@ -2,18 +2,15 @@
 
 .favorites-page {
   box-sizing: border-box;
-   padding: 40rpx  10.98rpx 0 10.98rpx;
-    gap :10.98rpx;
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
+  gap :10.98rpx;
 
 }
 
 .favorites-page__header {
-   width: 716rpx;
-   height: 60rpx;
-    padding-left:12rpx;
-
-    
-    
+  width: 716rpx;
+  height: 60rpx;
 }
 
 .favorites-page__empty {

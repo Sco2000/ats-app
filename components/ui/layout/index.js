@@ -28,8 +28,11 @@ Component({
     attached() {
       const sysInfo = wx.getSystemInfoSync();
       const statusBarHeight = sysInfo.statusBarHeight || 20;
+      const windowWidth = sysInfo.windowWidth || 375;
+      // nav-bar has padding-bottom: 33.66rpx (box-sizing: content-box) — convert to px
+      const navPaddingBottomPx = Math.round(33.66 * windowWidth / 750);
 
-      this.setData({ navContentOffset: statusBarHeight + 44 });
+      this.setData({ navContentOffset: statusBarHeight + 44 + navPaddingBottomPx });
     }
   }
 });

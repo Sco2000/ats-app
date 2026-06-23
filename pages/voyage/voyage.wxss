@@ -2,16 +2,25 @@
 
 .voyages-page {
   box-sizing: border-box;
+  border: 2rpx solid yellow;
+  display: flex;
+  flex-direction: column;
+  gap: 31.98rpx;
 }
 
 .voyages-page__header {
-  margin-bottom: 24rpx;
+  margin-bottom: 21.98rpx;
+  padding-top: 33.66rpx;
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
 }
 
 .voyages-page__list {
   display: flex;
   flex-direction: column;
   gap: 22rpx;
+  padding-right: 31.98rpx;
+  padding-left: 31.98rpx;
 }
 
 .reservation-card {
