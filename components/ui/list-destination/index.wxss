@@ -27,11 +27,10 @@
 }
 
 .featured-destination-list .menu-tabs__item {
-  margin-right: 31.89rpx;
+  margin-right: 0;
 }
 
 .featured-destination-list .menu-tabs__item:first-child {
-  margin-left: 31.98rpx;
 }
 
 .grid-container {
@@ -45,7 +44,7 @@
 }
 
 .grid-item {
-  margin-bottom: 20rpx;
+  /* margin-bottom: 20rpx; */
   box-sizing: border-box;
 }
 
@@ -55,18 +54,18 @@
   margin-bottom: 20rpx;
 }
 
-.header-row{
+.header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24rpx;
 }
 
-.seeAll{
+.seeAll {
   display: flex;
   justify-content: space-between;
 }
 
-.bor{
-  border:#fad700 2rpx solid;
+.bor {
+  border: #fad700 2rpx solid;
 }

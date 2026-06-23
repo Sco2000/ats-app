@@ -4,8 +4,8 @@ const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter 
 
 const DEFAULT_GALLERY = [
   '/assets/images/img.jpg',
-  '/assets/images/lac.png',
-  '/assets/images/bord.png',
+  '/assets/images/pirogue.jpg',
+  '/assets/images/bord.jpg',
   '/assets/images/ranch.png',
   '/assets/images/ile.png',
 ];
@@ -79,6 +79,9 @@ Page({
     stars: [1, 2, 3, 4, 5],
     hasDestination: false,
     pageTopOffset: 32,
+    showPreview: false,
+    previewIndex: 0,
+    previewGallery: [],
   },
 
   onLoad(options = {}) {
@@ -172,18 +175,65 @@ Page({
       url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
   },
+handlePreviewGallery(event) {
+  const destination = this.data.destination;
 
-  handlePreviewGallery(event) {
-    const { destination } = this.data;
-    const index = Number(event.currentTarget.dataset.index || 0);
+  if (!destination) return;
 
-    if (!destination || !destination.gallery.length) {
-      return;
-    }
+  const gallery = Array.isArray(destination.gallery)
+    ? destination.gallery.filter(img => typeof img === 'string' && img.length > 0)
+    : [];
 
-    wx.previewImage({
-      current: destination.gallery[index],
-      urls: destination.gallery,
+  if (gallery.length === 0) {
+    wx.showToast({
+      title: 'Aucune image',
+      icon: 'none'
     });
-  },
+    return;
+  }
+
+  let index = Number(event.currentTarget.dataset.index);
+
+  if (!Number.isFinite(index) || index < 0 || index >= gallery.length) {
+    index = 0;
+  }
+
+  console.log('[preview] custom modal', { index, gallery });
+
+  this.setData({
+    showPreview: true,
+    previewIndex: index,
+    previewGallery: gallery
+  });
+},
+
+closePreview() {
+  this.setData({
+    showPreview: false
+  });
+},
+
+prevPreviewImage() {
+  const { previewIndex, previewGallery } = this.data;
+  const length = previewGallery.length;
+
+  this.setData({
+    previewIndex: (previewIndex - 1 + length) % length
+  });
+},
+
+nextPreviewImage() {
+  const { previewIndex, previewGallery } = this.data;
+  const length = previewGallery.length;
+
+  this.setData({
+    previewIndex: (previewIndex + 1) % length
+  });
+},
+
+onPreviewChange(e) {
+  this.setData({
+    previewIndex: e.detail.current
+  });
+}
 });

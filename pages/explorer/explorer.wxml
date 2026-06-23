@@ -9,7 +9,7 @@
 >
   <view class="content explorer-page">
     <view class="explorer-page__hero ">
-      <view class="explorer-page__search">
+      <view class="explorer-page__search ">
           <app-input
             containerClass="explore-search-input"
             value="{{ query }}"
@@ -35,20 +35,22 @@
 
     <scroll-view class="explorer-page__list-scroll" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
       <view class="explorer-page__results">
-        <app-typography size="14" weight="500" color="#7A8094">
+        <app-typography size="14" weight="500" color="#6A7282">
           {{ resultsLabel }}
         </app-typography>
       </view>
 
-      <view wx:if="{{ visibleDestinations.length }}">
+      <view wx:if="{{ visibleDestinations.length }} " class="destination-list">
         <app-list-destination
           destinations="{{ visibleDestinations }}"
           layout="grid"
           columns="2"
           cardWidth="100%"
-          imageHeight="288rpx"
+          imageHeight="287.98rpx"
           cardPaddingClass="p-2"
-          cardStyle="height: 560rpx !important; border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important;"
+          cardStyle="height: 559.98rpx !important; border-radius: 32rpx !important; box-shadow:
+  0px 1px 2px rgba(0, 0, 0, 0.05),
+  0px 4px 12px rgba(0, 0, 0, 0.08); !important; background-color: #FFFFFF;"
           cardContainerStyle="border-radius: 32rpx !important;"
           imageRadius="32rpx"
           showDetailsButton="{{ false }}"

@@ -1,81 +1,81 @@
 /* wxss */
 
 .card-container {
-    position: relative;
-    width: 479.98rpx;
-    overflow: hidden;
-    height: 579.98rpx;
+  position: relative;
+  width: 479.98rpx;
+  /* overflow: hidden; */
+  height: 579.98rpx;
 }
 
 .image-container {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .destination-card__content {
-    display: flex;
-    flex-direction: column;
-    padding-top: 31.98rpx;
+  display: flex;
+  flex-direction: column;
+  padding-top: 31.98rpx;
 }
 
 .icon-heart {
-    position: absolute;
-    top: 40rpx;
-    right: 24rpx;
-    width: 68rpx;
-    height: 68rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow:
-        0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1),
-        0 2rpx 6rpx rgba(0, 0, 0, 0.1);
-    z-index: 10;
+  position: absolute;
+  top: 40rpx;
+  right: 24rpx;
+  width: 68rpx;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1),
+    0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .icon-heart__inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(4rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(4rpx);
 }
 
 .subtitle-row {
-    display: flex;
-    align-items: center;
-    gap: 12rpx;
-    height: 71.96rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  height: 71.96rpx;
 }
 
 .subtitle-icon-wrap {
-    width: 30rpx;
-    height: 30rpx;
-    flex: 0 0 30rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
+  width: 30rpx;
+  height: 30rpx;
+  flex: 0 0 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
 }
 
 .price-button-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    white-space: nowrap;
-    gap: 16rpx;
-    height: 67.96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  white-space: nowrap;
+  gap: 16rpx;
+  height: 67.96rpx;
 }
 
 .price-button-row.price-only {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .button-container {
-    display: flex;
-    justify-content: flex-end;
-    flex: 0 0 176rpx;
-    width: 176rpx;
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 0 176rpx;
+  width: 176rpx;
 }

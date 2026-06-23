@@ -9,12 +9,12 @@
   <scroll-view class="content home d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="greetings-container padding-space d-flex flex-column">
       <view class="greetings-container__content d-flex flex-column">
-          <view class="home-greeting">
+          <app-typography size="30" weight="bold" lineHeight="72rpx" color="#1C1C1C" containerStyle="height: 72rpx;">
             Bonjour 👋
-          </view>
-          <view class="home-subtitle">
-            Explorons le <text class="home-subtitle__highlight">Sénégal</text> !
-          </view>
+          </app-typography>
+          <app-typography size="20" weight="400" color="#1C1C1C" lineHeight="48rpx" containerStyle="height: 55.98rpx; display: inline-block;">
+            Explorons le <app-typography size="20" weight="400" color="#fad700" lineHeight="48rpx" containerStyle="display: inline-block;">Sénégal</app-typography> !
+          </app-typography>
       </view>
         <app-input
         containerClass="search-input mt-4"
@@ -28,7 +28,7 @@
         iconPosition="left"/>
     </view>
     <view class="chip-container d-flex flex-column">
-        <view class="home-section-title destination-list-head">Destinations Populaires</view>
+        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx"  class="destination-list-head">Destinations Populaires</app-typography>
         <app-chip-group
           items="{{filters}}"
           activeId="{{activeFilter}}"
@@ -37,7 +37,7 @@
     </view>
     <view class="destination-list-container d-flex flex-column">
       <view class="destination-list-head d-flex justify-content-between">
-        <view class="home-section-title">Destinations à la Une</view>
+        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx">Destinations à la Une</app-typography>
         <view class="d-flex align-items-center">
           <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
             voir tout
@@ -49,7 +49,7 @@
         <app-list-destination
           destinations="{{ destinations }}"
           layout="scroll"
-          cardWidth="479.98rpx"
+          cardWidth="750rpx"
           imageHeight="287.98rpx"
           cardPaddingClass="card-padding"
           cardContainerStyle="border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important; border-top: none;"
@@ -60,7 +60,7 @@
       </view>
     </view>
     <view class="recomandation-list-container d-flex flex-column">
-        <view class="destination-list-head home-section-title">Recommandations</view>
+        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx" class="destination-list-head">Recommandations</app-typography>
         <view class="recomandation-list-body">
           <app-list-destination
           destinations="{{ destinations }}"

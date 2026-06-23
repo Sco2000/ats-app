@@ -28,7 +28,6 @@
 .chip-active {
     background: #0aa347;
     border-color: #0aa347;
-    box-shadow: 0 10rpx 24rpx rgba(10, 163, 71, 0.2);
 }
 
 .chip-text {

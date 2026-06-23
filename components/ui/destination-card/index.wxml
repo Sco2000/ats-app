@@ -6,7 +6,6 @@
                 mode="aspectFill"
                 containerStyle="width: 100%; height: {{ imageHeight }}; display: block;"
                 imageStyle="width: 100%; height: {{ imageHeight }}; border-radius: {{ imageRadius }};"
-                bind:imageTap="handleCardTap"
             />
             <view class="icon-heart" catchtap="handleLikeTap">
                 <view class="icon-heart__inner">

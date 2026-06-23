@@ -1,4 +1,4 @@
-<view class="osn-layout" enhanced="{{true}}"  show-scrollbar="{{false}}" >
+<view class="osn-layout">
   <!-- Nav Bar -->
   <app-nav-bar 
     title="{{ title }}" 
