@@ -26,7 +26,7 @@ Page({
       title: 'Lac Rose',
       category: 'Dakar',
       duration: 'Demi-journée',
-      amount: '30 000 FCFA',
+      amount: '70 000 FCFA',
     },
     reference: 'ATS39ZY3C6',
     isPaying: false,
