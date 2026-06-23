@@ -9,8 +9,10 @@
   right: 0;
   z-index: 300;
   width: 100%;
-  box-sizing: border-box;  border-bottom: 0.1rpx solid #dadadc9e;
-  height: 129.64rpx;
+  box-sizing: content-box;
+  background-color: #ffffff;
+  border-bottom: 2rpx solid #F3F4F6;
+  padding-bottom: 33.66rpx;
 }
 
 .osn-nav-bar--transparent {
