@@ -11,6 +11,7 @@
 .explorer-page__search {
   width: 100%;
   padding-left: 31.98rpx;
+  padding-top: 31.98rpx;
   padding-right: 31.98rpx;
   padding-bottom: 23.98rpx;
 }
