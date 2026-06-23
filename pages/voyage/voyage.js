@@ -1,4 +1,5 @@
 import { MAIN_TABS } from '../../utils/constants/index';
+import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
 const app = getApp();
 
@@ -18,6 +19,7 @@ Page({
   },
 
   onShow() {
+    setCustomTabBarActive(this, 'voyages');
     this.refreshReservations();
   },
 

@@ -1,5 +1,6 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
+import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
 const app = getApp();
 Page({
@@ -62,16 +63,15 @@ Page({
       })
     },
     handleShowAll(){
-      wx.navigateTo(
-        {
-          url:
-          '/pages/explorer/explorer'
-        }
-      )
+      wx.switchTab({
+        url: '/pages/explorer/explorer',
+      });
      
     },
 
   onShow() {
+    setCustomTabBarActive(this, 'home');
+
     this.setData({
       destinations: app.globalData.DESTINATIONS,
     });
