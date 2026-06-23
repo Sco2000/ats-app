@@ -4,8 +4,8 @@ const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter 
 
 const DEFAULT_GALLERY = [
   '/assets/images/img.jpg',
-  '/assets/images/lac.png',
-  '/assets/images/bord.png',
+  '/assets/images/pirogue.jpg',
+  '/assets/images/bord.jpg',
   '/assets/images/ranch.png',
   '/assets/images/ile.png',
 ];

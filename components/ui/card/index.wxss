@@ -1,4 +1,4 @@
 /* Card styles inherited from page via styleIsolation: apply-shared */
-.card-gap{
-    gap: 23.98rpx;
+.card-gap {
+  gap: 23.98rpx;
 }
