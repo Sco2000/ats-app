@@ -2,9 +2,10 @@
 
 .card-container {
   position: relative;
-  width: 479.98rpx;
+  width: 480rpx;
   /* overflow: hidden; */
-  height: 579.98rpx;
+  min-height: 580rpx;
+  box-sizing: border-box;
 }
 
 .card-container--hovered {
@@ -23,7 +24,7 @@
 .destination-card__content {
   display: flex;
   flex-direction: column;
-  padding-top: 31.98rpx;
+  padding-top: 32rpx;
 }
 
 .icon-heart {
@@ -54,7 +55,7 @@
   display: flex;
   align-items: center;
   gap: 12rpx;
-  height: 71.96rpx;
+  min-height: 72rpx;
 }
 
 .subtitle-icon-wrap {
@@ -74,7 +75,7 @@
   width: 100%;
   white-space: nowrap;
   gap: 16rpx;
-  height: 67.96rpx;
+  min-height: 68rpx;
 }
 
 .price-button-row.price-only {

@@ -2,9 +2,10 @@
   <scroll-view
     class="chip-scroll"
     scroll-x="true"
+    enhanced="{{true}}"
     show-scrollbar="false"
   >
-    <view class="chip-row">
+    <view class="chip-row" style="padding-left: {{edgeInset}}rpx; padding-right: {{edgeInset}}rpx;">
       <view
         wx:for="{{items}}"
         wx:key="id"

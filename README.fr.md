@@ -75,6 +75,7 @@ tcmpp-boilerplate/
 | 9 | Tâches courantes | [Recipes](docs/14-recipes.md) |
 | 10 | Quand ça plante | [Troubleshooting](docs/15-troubleshooting.md) |
 | 11 | Tabbar personnalisé WeChat | [Custom TabBar WeChat](docs/17-custom-tab-bar.md) |
+| 12 | Audit responsive iPhone | [Audit Responsive iPhone](docs/README-responsive-iphone.md) |
 
 ## Toute la documentation
 
@@ -93,6 +94,7 @@ tcmpp-boilerplate/
 - [Navigation Guide](docs/12-navigation-guide.md) — pile de pages et helpers de navigation
 - [Storage Guide](docs/13-storage-guide.md) — wrapper de stockage local
 - [Custom TabBar WeChat](docs/17-custom-tab-bar.md) — override du tabbar natif avec le style applicatif
+- [Audit Responsive iPhone](docs/README-responsive-iphone.md) — diagnostic des gaps et problemes d'affichage sur iPhone reel
 
 ### Référence
 - [Recipes](docs/14-recipes.md) — recettes pas à pas pour les tâches courantes

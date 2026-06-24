@@ -32,6 +32,7 @@
         <app-chip-group
           items="{{filters}}"
           activeId="{{activeFilter}}"
+          edgeInset="{{0}}"
           bind:change="handleFilterChange"
         />
     </view>
@@ -49,7 +50,7 @@
         <app-list-destination
           destinations="{{ destinations }}"
           layout="scroll"
-          cardWidth="750rpx"
+          cardWidth="500rpx"
           imageHeight="287.98rpx"
           cardPaddingClass="card-padding"
           cardContainerStyle="border-radius: 32rpx !important; box-shadow: 0 2rpx 4rpx -2rpx rgba(0, 0, 0, 0.1), 0 2rpx 6rpx rgba(0, 0, 0, 0.1) !important; border-top: none;"

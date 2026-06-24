@@ -24,6 +24,10 @@ Component({
     activeId: {
       type: String,
       value: ''
+    },
+    edgeInset: {
+      type: Number,
+      value: 32
     }
   },
 

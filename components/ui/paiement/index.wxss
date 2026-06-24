@@ -23,7 +23,7 @@
 
 .payment-page-inner {
   padding: 42rpx;
-  padding-bottom: 180rpx;
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
 }
 
 .summary-card {
@@ -71,8 +71,9 @@
   left: 0;
   right: 0;
   background: #fff;
-  padding: 24rpx;
+  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
   box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .pay-button {

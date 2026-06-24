@@ -8,7 +8,7 @@
 
 .payment-page {
   width: 100%;
-  padding: 40rpx 38rpx 220rpx;
+  padding: 40rpx 38rpx calc(220rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -116,7 +116,7 @@
 
 .payment-pay-button {
   width: 100% !important;
-  height: 112rpx !important;
+  min-height: 112rpx !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;

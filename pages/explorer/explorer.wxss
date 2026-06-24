@@ -10,30 +10,26 @@
 
 .explorer-page__search {
   width: 100%;
-  padding-left: 31.98rpx;
-  padding-right: 31.98rpx;
-  padding-bottom: 23.98rpx;
+  padding-bottom: 24rpx;
 }
 
 .explorer-page__filters {
   width: 100%;
-  padding-bottom: 25.66rpx;
+  padding-bottom: 26rpx;
 }
 
 .explorer-page__results {
-  padding: 31.98rpx 31.98rpx;
+  padding: 32rpx 0;
   flex: 0 0 auto;
 }
 
 .destination-list {
-  padding: 0 31.98rpx;
-  padding-bottom: 180rpx;
+  padding: 0;
 }
 
 .explorer-page__list-scroll {
   flex: 1;
   min-height: 0;
-  height: 100%;
   box-sizing: border-box;
 }
 
@@ -51,10 +47,13 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  overflow: hidden;
+  padding-right: 32rpx;
+  padding-left: 32rpx;
+  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
+  overflow: visible;
 }
 
 .destination-list-head {
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
+  padding-right: 0;
+  padding-left: 0;
 }

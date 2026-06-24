@@ -7,6 +7,14 @@
 .chip-scroll {
     white-space: nowrap;
     height: 116rpx;
+    scrollbar-width: none;
+}
+
+.chip-scroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
 }
 
 .chip-row {
@@ -14,7 +22,8 @@
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
-    gap: 23.98rpx;
+    gap: 24rpx;
+    box-sizing: border-box;
 }
 
 .chip {
@@ -22,7 +31,8 @@
     border-radius: 999rpx;
     background: #ffffff;
     border: 2rpx solid #dcded8;
-    height: 83.32rpx;
+    min-height: 84rpx;
+    box-sizing: border-box;
 }
 
 .chip-active {
@@ -43,12 +53,4 @@
 .chip-text-active {
     color: #ffffff;
     font-weight: 500;
-}
-
-.chip:first-child {
-  margin-left: 31.98rpx;
-}
-
-.chip:last-child {
-  margin-right: 31.98rpx;
 }

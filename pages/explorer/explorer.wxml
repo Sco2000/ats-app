@@ -28,6 +28,7 @@
         <app-chip-group
           items="{{filters}}"
           activeId="{{activeFilter}}"
+          edgeInset="{{0}}"
           bind:change="handleFilterChange"
         />
       </view>
