@@ -7,6 +7,9 @@
 }
 
 .payment-page {
+  display: flex;
+  flex-direction: column;
+  gap: 48rpx;
   width: 100%;
   padding-top: 40rpx;
   padding-right: 38rpx;
@@ -66,6 +69,19 @@
 
 .payment-secure-card {
   display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  background: transparent;
+  /* padding: 30rpx 32rpx 32rpx;
+  border-radius: 24rpx;
+  background: #ffffff; */
+}
+
+.payment-secure-card_icone_copy {
+  display: flex;
   align-items: flex-start;
   gap: 22rpx;
   width: 100%;
@@ -100,6 +116,7 @@
 }
 
 .payment-terms__link {
+  font-size: 32rpx;
   color: #fad700;
   font-weight: 700;
 }
@@ -116,6 +133,16 @@
   border-top: 1rpx solid #f3f4f6;
   box-shadow: 0 -20rpx 50rpx rgba(0, 0, 0, 0.08);
 }
+
+.payment-pay-btn-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  width: 100%;
+}
+
 
 .payment-pay-button {
   width: 100% !important;

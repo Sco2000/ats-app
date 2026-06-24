@@ -98,7 +98,7 @@
         </view>
       </view>
 
-      <app-typography
+      <!-- <app-typography
         containerClass="payment-section-title"
         fontSize="35rpx"
         weight="700"
@@ -106,15 +106,26 @@
         lineHeight="48rpx"
       >
         Moyen de Paiement
-      </app-typography>
+      </app-typography> -->
 
       <view class="payment-secure-card">
+        <app-typography
+          containerClass="payment-section-title"
+          fontSize="35rpx"
+          weight="700"
+          color="#1C1C1C"
+          lineHeight="48rpx"
+        >
+          Moyen de Paiement
+        </app-typography>
+        
+        <view class="payment-secure-card_icone_copy">
         <view class="payment-secure-card__icon">
           <app-icon icon="Vector" width="{{30}}" height="{{38}}" />
         </view>
 
-        <view class="payment-secure-card__copy">
-          <app-typography
+         <view class="payment-secure-card__copy">
+           <app-typography
             fontSize="29rpx"
             weight="700"
             color="#174EA6"
@@ -131,6 +142,7 @@
           >
             Toutes les transactions sont cryptées et traitées de manière sécurisée via la super-app Max It. Vos informations de paiement ne sont jamais stockées.
           </app-typography>
+          </view>
         </view>
       </view>
 
@@ -141,11 +153,11 @@
         color="#7A8094"
         lineHeight="34rpx"
       >
-        En finalisant cette réservation, vous acceptez nos
-        <text class="payment-terms__link">Conditions d'Utilisation</text>
-        et notre
-        <text class="payment-terms__link">Politique d'Annulation</text>.
-        Remboursement complet disponible jusqu'à 24h avant le voyage.
+        <text>En finalisant cette réservation, vous acceptez nos \n</text>
+        <text class="payment-terms__link">Conditions d'Utilisation </text>
+        <text>et notre\n</text>
+        <text class="payment-terms__link">Politique d'Annulation </text>.
+        <text>Remboursement complet disponible jusqu'à 24h avant le voyage.</text>
       </app-typography>
     </view>
   </scroll-view>
@@ -157,7 +169,26 @@
       loading="{{ isPaying }}"
       bind:onPress="handlePay"
     >
-      <app-typography
+     <view class="payment-pay-btn-content">
+        <app-typography
+          fontSize="32rpx"
+          weight="600"
+          color="#FFFFFF"
+          lineHeight="48rpx"
+        >
+          Payer {{ reservation.amount }}
+        </app-typography>
+        
+        <!-- containerStyle avec padding: 0 et le filtre pour rendre l'icône blanche -->
+        <app-icon 
+          icon="Vector" 
+          width="{{24}}" 
+          height="{{38}}" 
+          containerStyle="padding: 0; font-size: 0; filter: brightness(0) invert(1);" 
+        />
+      </view>
+
+      <!-- <app-typography
         fontSize="32rpx"
         weight="600"
         color="#FFFFFF"
@@ -166,6 +197,8 @@
       >
         Payer {{ reservation.amount }}
       </app-typography>
+      <app-icon icon="Vector" width="{{30}}" height="{{38}}" /> -->
+
     </app-button>
   </view>
 </app-layout>
