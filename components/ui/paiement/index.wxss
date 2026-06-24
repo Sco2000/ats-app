@@ -25,6 +25,7 @@
   padding-top: 42rpx;
   padding-right: 42rpx;
   padding-left: 42rpx;
+  padding-bottom: 160rpx;
 }
 
 .summary-card {

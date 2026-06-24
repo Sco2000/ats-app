@@ -1,15 +1,9 @@
 import { MAIN_TABS } from '../../utils/constants/index';
+import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
 const app = getApp();
-
-function normalizeText(value = '') {
-  return String(value)
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
 
 function formatResultsLabel(count) {
   return `${count} destination${count === 1 ? '' : 's'} disponible${count === 1 ? '' : 's'}`;
@@ -19,6 +13,7 @@ Page({
   data: {
     activeTab: 'explorer',
     tabs: MAIN_TABS,
+    query: '',
     searchValue: '',
     activeFilter: 'all',
     filters: [
@@ -62,25 +57,13 @@ Page({
   },
 
   applyFilters() {
-    const { allDestinations, searchValue, activeFilter } = this.data;
-    const query = normalizeText(searchValue.trim());
-
-    const visibleDestinations = (allDestinations || []).filter((destination) => {
-      const destinationTags = Array.isArray(destination.tags) ? destination.tags : [];
-      const searchableText = normalizeText([
-        destination.title,
-        destination.subtitle,
-        destination.city,
-        ...destinationTags,
-      ].join(' '));
-
-      const matchesQuery = !query || searchableText.includes(query);
-      const matchesFilter = activeFilter === 'all'
-        || destinationTags.includes(activeFilter)
-        || normalizeText(destination.city).includes(activeFilter);
-
-      return matchesQuery && matchesFilter;
-    });
+    const { allDestinations, query, searchValue, activeFilter } = this.data;
+    const currentQuery = query === undefined || query === null ? searchValue : query;
+    const visibleDestinations = filterDestinations(
+      allDestinations,
+      currentQuery,
+      activeFilter
+    );
 
     this.setData({
       visibleDestinations,
@@ -88,16 +71,24 @@ Page({
     });
   },
 
-  onSearchInput(event) {
-    const searchValue = event.detail.value || '';
-    this.setData({ searchValue }, () => {
+  onInput(event) {
+    const query = event.detail.value || '';
+    this.setData({ query, searchValue: query }, () => {
       this.applyFilters();
     });
   },
 
+  onSearchInput(event) {
+    this.onInput(event);
+  },
+
+  onSearch() {
+    this.applyFilters();
+  },
+
   handleFilterChange(event) {
     this.setData({
-      activeFilter: event.detail.id,
+      activeFilter: event.detail.id || 'all',
     }, () => {
       this.applyFilters();
     });

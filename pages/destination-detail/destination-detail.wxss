@@ -20,6 +20,7 @@ page {
 
 .destination-detail-page__inner {
   padding-top: 32rpx;
+  padding-bottom: 180rpx;
   box-sizing: border-box;
 }
 

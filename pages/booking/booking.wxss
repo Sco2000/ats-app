@@ -22,6 +22,7 @@
   padding-top: 40rpx;
   padding-right: 32rpx;
   padding-left: 32rpx;
+  padding-bottom: 240rpx;
   box-sizing: border-box;
   background: #ffffff;
 }

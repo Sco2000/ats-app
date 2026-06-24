@@ -49,6 +49,7 @@
   box-sizing: border-box;
   padding-right: 32rpx;
   padding-left: 32rpx;
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
   overflow: visible;
 }
 
