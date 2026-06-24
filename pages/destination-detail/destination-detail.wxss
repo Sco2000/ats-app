@@ -19,7 +19,7 @@ page {
 }
 
 .destination-detail-page__inner {
-  padding: 32rpx 0 calc(230rpx + env(safe-area-inset-bottom));
+  padding-top: 32rpx;
   box-sizing: border-box;
 }
 
@@ -193,7 +193,7 @@ page {
   justify-content: space-between;
   gap: 20rpx;
   min-height: 180rpx;
-  padding: 34rpx 32rpx calc(34rpx + env(safe-area-inset-bottom));
+  padding: 34rpx 32rpx;
   box-sizing: border-box;
   background: #ffffff;
   border-top: 1rpx solid #f3f4f6;

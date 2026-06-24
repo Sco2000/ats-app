@@ -56,7 +56,9 @@ page {
 
 .booking-confirmation-content {
   min-height: 100vh;
-  padding: 154rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
+  padding-top: 154rpx;
+  padding-right: 40rpx;
+  padding-left: 40rpx;
   box-sizing: border-box;
 }
 

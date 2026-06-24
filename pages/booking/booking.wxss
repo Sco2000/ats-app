@@ -19,7 +19,9 @@
 
 .booking-container {
   width: 100%;
-  padding: 40rpx 32rpx calc(260rpx + env(safe-area-inset-bottom));
+  padding-top: 40rpx;
+  padding-right: 32rpx;
+  padding-left: 32rpx;
   box-sizing: border-box;
   background: #ffffff;
 }
@@ -338,7 +340,7 @@
   right: 0;
   bottom: 0;
   z-index: 30;
-  padding: 32rpx 32rpx calc(28rpx + env(safe-area-inset-bottom));
+  padding: 32rpx 32rpx 28rpx;
   box-sizing: border-box;
   background: #ffffff;
   border-top: 1rpx solid #f3f4f6;

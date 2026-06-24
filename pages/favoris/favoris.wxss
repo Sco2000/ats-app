@@ -8,7 +8,6 @@
   padding-top: 34rpx;
   padding-right: 32rpx;
   padding-left: 32rpx;
-  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
 }
 
 .favorites-page__header {

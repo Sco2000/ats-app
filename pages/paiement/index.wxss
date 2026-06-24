@@ -8,7 +8,9 @@
 
 .payment-page {
   width: 100%;
-  padding: 40rpx 38rpx calc(220rpx + env(safe-area-inset-bottom));
+  padding-top: 40rpx;
+  padding-right: 38rpx;
+  padding-left: 38rpx;
   box-sizing: border-box;
 }
 
@@ -107,7 +109,7 @@
   right: 0;
   bottom: 0;
   z-index: 40;
-  padding: 24rpx 38rpx calc(24rpx + env(safe-area-inset-bottom));
+  padding: 24rpx 38rpx;
   box-sizing: border-box;
   background: #ffffff;
   border-top: 1rpx solid #f3f4f6;
