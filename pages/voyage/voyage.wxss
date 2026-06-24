@@ -4,22 +4,25 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 31.98rpx;
+  gap: 32rpx;
+  padding-right: 32rpx;
+  padding-left: 32rpx;
+  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
 }
 
 .voyages-page__header {
-  margin-bottom: 21.98rpx;
-  padding-top: 33.66rpx;
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
+  margin-bottom: 22rpx;
+  padding-top: 34rpx;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .voyages-page__list {
   display: flex;
   flex-direction: column;
   gap: 22rpx;
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .reservation-card {
@@ -144,7 +147,7 @@
   align-items: center;
   justify-content: center;
   min-height: 360rpx;
-  padding: 48rpx 24rpx 80rpx;
+  padding: 48rpx 0 80rpx;
   text-align: center;
   color: #7a8094;
 }
@@ -165,7 +168,10 @@
 .reservation-popup__panel {
   width: 100%;
   height: 100%;
+  min-height: 0;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-top-left-radius: 28rpx;
   border-top-right-radius: 28rpx;
@@ -176,10 +182,11 @@
 .detail-header {
   width: 100%;
   height: 112rpx;
+  flex: 0 0 112rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28rpx;
+  padding: 0 32rpx;
   border-bottom: 2rpx solid #f0f1f3;
   background: #ffffff;
   box-sizing: border-box;
@@ -221,12 +228,15 @@
 
 .detail-scroll {
   width: 100%;
-  height: calc(100vh - 268rpx);
+  height: 0;
+  flex: 1;
+  min-height: 0;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .detail-content {
-  padding: 36rpx 28rpx 48rpx;
+  padding: 36rpx 32rpx 48rpx;
   background: #ffffff;
   box-sizing: border-box;
 }
@@ -241,21 +251,25 @@
 
 .detail-title-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 16rpx;
   margin-top: 48rpx;
   margin-bottom: 42rpx;
 }
 
 .detail-title {
   flex: 1;
+  min-width: 0;
   color: #05070d;
   font-size: 48rpx;
   font-weight: 800;
   line-height: 58rpx;
+  word-break: break-word;
 }
 
 .detail-status {
+  flex: 0 0 auto;
   min-width: 104rpx;
   padding: 12rpx 24rpx;
   border-radius: 999rpx;
@@ -266,6 +280,7 @@
   line-height: 32rpx;
   text-align: center;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .detail-status.done {
@@ -295,6 +310,7 @@
   font-size: 40rpx;
   font-weight: 800;
   line-height: 48rpx;
+  word-break: break-word;
 }
 
 .detail-info-card {
@@ -309,6 +325,8 @@
 }
 
 .detail-info-copy {
+  flex: 1;
+  min-width: 0;
   margin-left: 24rpx;
 }
 
@@ -326,6 +344,7 @@
   font-size: 32rpx;
   font-weight: 700;
   line-height: 40rpx;
+  word-break: break-word;
 }
 
 .detail-divider {
@@ -338,6 +357,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  gap: 24rpx;
   margin-bottom: 56rpx;
 }
 
@@ -348,10 +368,13 @@
 }
 
 .detail-total-value {
+  flex: 0 0 auto;
   color: #00963f;
   font-size: 48rpx;
   font-weight: 800;
   line-height: 58rpx;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .detail-support {
@@ -396,6 +419,8 @@
 }
 
 .detail-support-text {
+  flex: 1;
+  min-width: 0;
   margin-left: 18rpx;
   color: #05070d;
   font-size: 30rpx;
@@ -404,7 +429,7 @@
 }
 
 .detail-actions {
-  padding-bottom: 28rpx;
+  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
 }
 
 .detail-action-button {
@@ -413,6 +438,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 24rpx;
   margin: 0 0 28rpx;
   border-radius: 24rpx;
   font-size: 32rpx;

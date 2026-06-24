@@ -6,46 +6,56 @@
 .inp{background-color: rgb(236, 234, 234);}
 
 .home {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 32rpx;
+  padding-left: 32rpx;
+  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
+}
+
+.home .padding-space {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .greetings-container {
-  height: 363.24rpx;
+  min-height: 363rpx;
 }
 
 .greetings-container__content{
-  height: 135.94rpx;
-  gap: 7.98rpx;
+  min-height: 136rpx;
+  gap: 8rpx;
 }
 
 .chip-container{
-  height: 284.8rpx;
-  gap: 31.98rpx;
+  min-height: 285rpx;
+  gap: 32rpx;
 }
 
 .destination-list-container{
-  height: 775.94rpx;
-  gap: 31.98rpx;
+  min-height: 776rpx;
+  gap: 32rpx;
 }
 
 .destination-list-head{
   padding-top: 48rpx;
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .destination-list-body{
-  padding-bottom: 31.98rpx;
+  padding-bottom: 32rpx;
 }
 
 .recomandation-list-container{
-  min-height: 279.99rpx;
-  gap: 31.98rpx;
+  min-height: 280rpx;
+  gap: 32rpx;
 }
 
 .recomandation-list-body{
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
-  padding-bottom: 192.3rpx;
+  padding-right: 0;
+  padding-left: 0;
+  padding-bottom: 0;
 }
 
 .home-section-title {
@@ -57,5 +67,5 @@
 }
 
 .card-padding {
-  padding: 23.98rpx 23.98rpx 31.98rpx 23.98rpx;
+  padding: 24rpx 24rpx 32rpx 24rpx;
 }

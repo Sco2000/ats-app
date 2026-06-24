@@ -1,16 +1,19 @@
 @import "../shared-tab-page.wxss";
 
 .favorites-page {
-  box-sizing: border-box;  
-  padding-top: 33.66rpx;
-  padding-right: 31.98rpx;
-  padding-left: 31.98rpx;
-  padding-bottom: 151.98rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+  padding-top: 34rpx;
+  padding-right: 32rpx;
+  padding-left: 32rpx;
+  padding-bottom: calc(208rpx + env(safe-area-inset-bottom));
 }
 
 .favorites-page__header {
-  width: 716rpx;
-  height: 60rpx;
+  width: 100%;
+  min-height: 60rpx;
 }
 
 .favorites-page__empty {
@@ -21,6 +24,4 @@
   min-height: 360rpx;
   text-align: center;
   color: #7a8094;
-  
 }
-

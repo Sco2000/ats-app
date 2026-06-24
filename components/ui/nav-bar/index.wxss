@@ -12,7 +12,7 @@
   box-sizing: content-box;
   background-color: #ffffff;
   border-bottom: 2rpx solid #F3F4F6;
-  padding-bottom: 33.66rpx;
+  padding-bottom: 34rpx;
 }
 
 .osn-nav-bar--transparent {
@@ -33,7 +33,7 @@
 }
 
 .osn-nav-bar__logo {
-  width: 117.04rpx;
+  width: 118rpx;
   height: 64rpx;
   display: flex;
   justify-content: center;

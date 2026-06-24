@@ -109,6 +109,8 @@ Component({
       this.data.imageId = `tc-image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       this.eventBus = getApp().eventBus;
     },
+  
+    
 
     attached() {
       this.init();

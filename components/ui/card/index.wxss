@@ -1,4 +1,5 @@
 /* Card styles inherited from page via styleIsolation: apply-shared */
 .card-gap {
-  gap: 23.98rpx;
+  gap: 24rpx;
+  box-sizing: border-box;
 }

@@ -113,7 +113,13 @@
         </view>
       </view>
 
-      <scroll-view class="detail-scroll" scroll-y="{{true}}" enhanced="{{true}}">
+      <scroll-view
+        class="detail-scroll"
+        scroll-y="{{true}}"
+        enhanced="{{true}}"
+        enable-flex="{{true}}"
+        show-scrollbar="{{false}}"
+      >
         <view class="detail-content">
           <image class="detail-image" src="{{ selectedReservation.image }}" mode="aspectFill" />
 

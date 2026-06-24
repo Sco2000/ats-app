@@ -8,6 +8,7 @@
   box-sizing: border-box;
   padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
   background: transparent;
+  pointer-events: none;
 }
 
 .osn-tab-bar__tabs {
@@ -21,6 +22,7 @@
   border-radius: 999rpx;
   background: #ffffff;
   box-shadow: 0 10rpx 30rpx rgba(17, 24, 39, 0.16);
+  pointer-events: auto;
 }
 
 .osn-tab-bar__tab {
@@ -40,8 +42,8 @@
 
 .osn-tab-bar__tab--active {
   flex: 1;
-  min-width: 188rpx;
-  padding: 0 28rpx;
+  min-width: 176rpx;
+  padding: 0 24rpx;
   color: #ffffff;
   background: #009b4d;
   box-shadow: 0 8rpx 18rpx rgba(0, 155, 77, 0.28);

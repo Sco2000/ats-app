@@ -16,7 +16,8 @@
   background: transparent;
   font-size: inherit;
   outline: none;
-  width: 40ch;
+  width: 0;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -55,7 +56,7 @@
 }
 
 .search-input {
-  width: 716rpx;
+  width: 100%;
   max-width: 100%;
   min-height: 88rpx;
   padding: 22rpx 32rpx;
@@ -82,7 +83,7 @@
 }
 
 .explore-search-input {
-  width: 716rpx;
+  width: 100%;
   max-width: 100%;
   min-height: 83rpx;
   padding: 20rpx 32rpx;
