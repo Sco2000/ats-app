@@ -2,7 +2,8 @@
   title="Date & Voyageurs"
   showBack="{{true}}"
   showLogo="{{false}}"
-  transparent="{{false}}"
+  transparent="{{true}}"
+  showNavBorder="{{false}}"
   showTabBar="{{false}}"
 >
   <scroll-view

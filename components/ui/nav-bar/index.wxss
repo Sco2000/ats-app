@@ -10,13 +10,13 @@
   z-index: 300;
   width: 100%;
   box-sizing: content-box;
-  background-color: #ffffff;
+  background-color: transparent !important;
   border-bottom: 2rpx solid #F3F4F6;
   padding-bottom: 34rpx;
 }
 
 .osn-nav-bar--transparent {
-  background: transparent;
+  background: transparent !important;
 }
 
 .osn-nav-bar--no-border {

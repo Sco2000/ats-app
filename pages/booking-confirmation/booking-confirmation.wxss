@@ -55,10 +55,12 @@ page {
 }
 
 .booking-confirmation-content {
+  width: auto;
   min-height: 100vh;
   padding-top: 154rpx;
-  padding-right: 40rpx;
-  padding-left: 40rpx;
+  margin-right: 40rpx;
+  margin-left: 40rpx;
+  background: transparent !important;
   box-sizing: border-box;
 }
 

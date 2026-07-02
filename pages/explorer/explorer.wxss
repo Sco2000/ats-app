@@ -44,11 +44,11 @@
 }
 
 .explorer-page {
+  width: auto;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding-right: 32rpx;
-  padding-left: 32rpx;
+  background: transparent !important;
   padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
   overflow: visible;
 }

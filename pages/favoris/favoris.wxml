@@ -2,7 +2,8 @@
   title="Mes Favoris"
   showBack="{{true}}"
   showLogo="{{false}}"
-  transparent="{{false}}"
+  transparent="{{true}}"
+  showNavBorder="{{false}}"
   activeTab="{{activeTab}}"
 >
   <scroll-view class="content favorites-page" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">

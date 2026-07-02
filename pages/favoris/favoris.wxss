@@ -1,13 +1,15 @@
 @import "../shared-tab-page.wxss";
 
 .favorites-page {
+  width: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 32rpx;
   padding-top: 34rpx;
-  padding-right: 32rpx;
-  padding-left: 32rpx;
+  margin-right: 32rpx;
+  margin-left: 32rpx;
+  background: transparent !important;
   padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
 }
 

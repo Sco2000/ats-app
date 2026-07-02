@@ -1,30 +1,30 @@
 .osn-layout,
 .osn-layout__content {
-  background-color: #ffffff !important;
+  background-color: transparent !important;
 }
 
 .booking-scroll {
   width: 100%;
   height: 100%;
   min-height: 0;
-  background: #ffffff;
+  background: transparent;
 }
 
 .booking-page {
   width: 100%;
   min-height: 100%;
-  background: #ffffff;
+  background: transparent;
   box-sizing: border-box;
 }
 
 .booking-container {
-  width: 100%;
+  width: auto;
   padding-top: 40rpx;
-  padding-right: 32rpx;
-  padding-left: 32rpx;
+  margin-right: 32rpx;
+  margin-left: 32rpx;
   padding-bottom: 240rpx;
   box-sizing: border-box;
-  background: #ffffff;
+  background: transparent;
 }
 
 .booking-section {

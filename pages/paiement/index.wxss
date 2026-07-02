@@ -2,17 +2,18 @@
   flex: 1;
   min-height: 0;
   width: 100%;
-  background: #ffffff;
+  background: transparent;
   box-sizing: border-box;
 }
 
 .payment-page {
-  width: 100%;
+  width: auto;
   padding-top: 40rpx;
-  padding-right: 38rpx;
-  padding-left: 38rpx;
+  margin-right: 38rpx;
+  margin-left: 38rpx;
   padding-bottom: 160rpx;
   box-sizing: border-box;
+  background: transparent !important;
 }
 
 .payment-summary-card {

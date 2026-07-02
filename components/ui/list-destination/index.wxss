@@ -5,7 +5,9 @@
 }
 
 .menu-tabs {
-  display: block;
+
+
+  min-width: 720rpx;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -23,7 +25,6 @@
 .menu-tabs__item {
   display: inline-block;
   vertical-align: top;
-  margin-right: 20rpx;
   box-sizing: border-box;
 }
 
@@ -33,11 +34,17 @@
 }
 
 .featured-destination-list .menu-tabs__item {
+  margin-right: 24rpx;
+}
+
+.featured-destination-list .menu-tabs__item:first-child{
+  margin-left: 32rpx;
+}
+
+.featured-destination-list .menu-tabs__item:last-child{
   margin-right: 32rpx;
 }
 
-.featured-destination-list .menu-tabs__item:first-child {
-}
 
 .grid-container {
   display: flex;

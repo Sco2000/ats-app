@@ -3,11 +3,12 @@
   showBack="{{false}}"
   logoSrc="/assets/images/logo.png"
   showLogo="{{true}}"
-  transparent="{{false}}"
+  transparent="{{true}}"
+  showNavBorder="{{false}}"
   activeTab="{{activeTab}}"
 >
   <scroll-view class="content home d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
-    <view class="greetings-container padding-space d-flex flex-column">
+    <view class="greetings-container d-flex flex-column px-3 py-3 pb-3 pt-4">
       <view class="greetings-container__content d-flex flex-column">
           <app-typography size="30" weight="bold" lineHeight="72rpx" color="#1C1C1C" containerStyle="height: 72rpx;">
             Bonjour 👋
@@ -37,8 +38,10 @@
         />
     </view>
     <view class="destination-list-container d-flex flex-column">
-      <view class="destination-list-head d-flex justify-content-between">
-        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx">Destinations à la Une</app-typography>
+      <view class="destination-list-head d-flex justify-content-between px-3 py-3 pb-3 pt-4">
+        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx">
+          Destinations à la Une
+        </app-typography>
         <view class="d-flex align-items-center">
           <app-typography  size="14" weight="600" color="#01953E" bindtap="handleShowAll">
             voir tout
@@ -60,8 +63,8 @@
           bind:onCardPress="handleCardPress" />
       </view>
     </view>
-    <view class="recomandation-list-container d-flex flex-column">
-        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx" class="destination-list-head">Recommandations</app-typography>
+    <view class="recomandation-list-container d-flex flex-column px-3 py-3 pt-4">
+        <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx" class="">Recommandations</app-typography>
         <view class="recomandation-list-body">
           <app-list-destination
           destinations="{{ destinations }}"
