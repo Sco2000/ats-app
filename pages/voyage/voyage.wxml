@@ -184,13 +184,13 @@
               <text class="detail-download">⇩</text>
               <text>Télécharger le billet</text>
             </view>
-            <view class="detail-action-button detail-danger" bindtap="cancelReservation">
+            <view class="detail-action-button detail-action-button--last detail-danger" bindtap="cancelReservation">
               <text>Annuler la réservation</text>
             </view>
           </view>
 
           <view wx:else class="detail-actions">
-            <view class="detail-action-button detail-primary" bindtap="rebook">
+            <view class="detail-action-button detail-action-button--last detail-primary" bindtap="rebook">
               <text>Réserver à nouveau</text>
             </view>
           </view>

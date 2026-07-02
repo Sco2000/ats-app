@@ -41,7 +41,7 @@
         </app-typography>
       </view>
 
-      <view wx:if="{{ visibleDestinations.length }} " class="destination-list px-3">
+      <view wx:if="{{visibleDestinations.length}}" class="destination-list px-3">
         <app-list-destination
           destinations="{{ visibleDestinations }}"
           layout="grid"
@@ -50,8 +50,8 @@
           imageHeight="287.98rpx"
           cardPaddingClass="p-2"
           cardStyle="height: 559.98rpx !important; border-radius: 32rpx !important; box-shadow:
-  0px 1px 2px rgba(0, 0, 0, 0.05),
-  0px 4px 12px rgba(0, 0, 0, 0.08); !important; background-color: #FFFFFF;"
+  0 1px 2px rgba(0, 0, 0, 0.05),
+  0 4px 12px rgba(0, 0, 0, 0.08) !important; background-color: #FFFFFF;"
           cardContainerStyle="border-radius: 32rpx !important;"
           imageRadius="32rpx"
           showDetailsButton="{{ false }}"

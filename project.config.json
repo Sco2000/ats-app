@@ -17,7 +17,24 @@
 	"createTime": 1747392594781,
 	"accessTime": 1747392594781,
 	"packOptions": {
-		"ignore": []
+		"ignore": [
+			{
+				"type": "folder",
+				"value": "assets/Fonts"
+			},
+			{
+				"type": "folder",
+				"value": "docs"
+			},
+			{
+				"type": "folder",
+				"value": "types"
+			},
+			{
+				"type": "folder",
+				"value": "typings"
+			}
+		]
 	},
 	"debugOptions": {
 		"hidedInDevtools": []

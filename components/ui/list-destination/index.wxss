@@ -33,15 +33,15 @@
   min-height: 592rpx;
 }
 
-.featured-destination-list .menu-tabs__item {
+.menu-tabs__item--scroll {
   margin-right: 24rpx;
 }
 
-.featured-destination-list .menu-tabs__item:first-child{
+.menu-tabs__item--first {
   margin-left: 32rpx;
 }
 
-.featured-destination-list .menu-tabs__item:last-child{
+.menu-tabs__item--last {
   margin-right: 32rpx;
 }
 

@@ -10,10 +10,10 @@
   <scroll-view class="content home d-flex flex-column" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
     <view class="greetings-container d-flex flex-column px-3 py-3 pb-3 pt-4">
       <view class="greetings-container__content d-flex flex-column">
-          <app-typography size="30" weight="bold" lineHeight="72rpx" color="#1C1C1C" containerStyle="height: 72rpx;">
+          <app-typography size="30" weight="bold" lineHeight="72rpx" color="#1C1C1C" containerStyle="min-height: 72rpx;">
             Bonjour 👋
           </app-typography>
-          <app-typography size="20" weight="400" color="#1C1C1C" lineHeight="48rpx" containerStyle="height: 55.98rpx; display: inline-block;">
+          <app-typography size="20" weight="400" color="#1C1C1C" lineHeight="48rpx" containerStyle="min-height: 55.98rpx; display: inline-block;">
             Explorons le <app-typography size="20" weight="400" color="#fad700" lineHeight="48rpx" containerStyle="display: inline-block;">Sénégal</app-typography> !
           </app-typography>
       </view>

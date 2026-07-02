@@ -450,7 +450,7 @@
   text-align: center;
 }
 
-.detail-actions .detail-action-button:last-child {
+.detail-action-button--last {
   margin-bottom: 0;
 }
 
