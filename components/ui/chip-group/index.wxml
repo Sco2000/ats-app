@@ -9,7 +9,7 @@
       <view
         wx:for="{{items}}"
         wx:key="id"
-        class="chip {{activeId === item.id ? 'chip-active' : ''}}"
+        class="chip {{index === 0 ? 'chip-first' : ''}} {{index === items.length - 1 ? 'chip-last' : ''}} {{activeId === item.id ? 'chip-active' : ''}}"
         data-id="{{item.id}}"
         bindtap="handleTap"
       >

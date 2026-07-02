@@ -55,10 +55,10 @@
     font-weight: 500;
 }
 
-.chip:first-child {
+.chip-first {
     margin-left: 32rpx;
 }
 
-.chip:last-child {
+.chip-last {
     margin-right: 32rpx;
 }
