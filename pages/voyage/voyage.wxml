@@ -25,7 +25,7 @@
       >
         <app-card
           containerClass="reservation-card__shell {{ reservation.showAction ? 'reservation-card__shell--with-action' : 'reservation-card__shell--compact' }}"
-          containerStyle="border-radius: 32rpx !important; gap: 0 !important;"
+          containerStyle="padding: 2rpx; border: 2rpx solid #E5E7EB; border-radius: 32rpx !important; background: #FFFFFF; box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.06); overflow: hidden; gap: 0 !important; {{ reservation.showAction ? 'min-height: 365rpx;' : 'min-height: 0;' }}"
         >
           <view class="reservation-card__body">
             <view class="reservation-card__image-wrap">
@@ -50,21 +50,21 @@
 
               <view class="reservation-card__meta">
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="localisation" width="{{20}}" height="{{20}}" />
+                  <view class="reservation-card__location-pin"></view>
                   <app-typography size="14" color="#667085">
                     {{ reservation.subtitle }}
                   </app-typography>
                 </view>
 
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="calendrier" width="{{20}}" height="{{20}}" />
+                  <app-icon icon="calendrier" width="{{20}}" height="{{20}}" containerStyle="padding: 0;" />
                   <app-typography size="14" color="#667085">
                     {{ reservation.dateLabel }}
                   </app-typography>
                 </view>
 
                 <view class="reservation-card__meta-row">
-                  <app-icon icon="users" width="{{20}}" height="{{20}}" />
+                  <app-icon icon="users" width="{{20}}" height="{{20}}" containerStyle="padding: 0;" />
                   <app-typography size="14" color="#667085">
                     {{ reservation.travelersLabel }}
                   </app-typography>

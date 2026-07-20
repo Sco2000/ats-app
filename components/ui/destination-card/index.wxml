@@ -1,5 +1,5 @@
 <view class="card-container" hover-class="card-container--hovered" hover-stay-time="200" style="width: {{ cardWidth }}; {{ cardContainerStyle }}" bindtap="handleCardTap">
-    <app-card containerClass="h-100 {{ cardPaddingClass }}" containerStyle="{{ cardStyle }}">
+    <app-card containerClass="h-100 {{ cardPaddingClass }}" containerStyle="{{ resolvedCardStyle }}">
         <view class="image-container">
             <osn-image
                 src="{{ destination.image }}"
@@ -26,7 +26,7 @@
 
             <view class="subtitle-row">
                 <view class="subtitle-icon-wrap">
-                    <osn-icon icon="icon" width="{{30}}" height="{{30}}"/>
+                    <view class="destination-card__location-pin"></view>
                 </view>
                 <app-typography size="14" weight="400" color="#4A5565" lineHeight="40rpx">
                     {{ destination.subtitle }}

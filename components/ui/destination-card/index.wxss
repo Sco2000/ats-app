@@ -59,13 +59,44 @@
 }
 
 .subtitle-icon-wrap {
-  width: 30rpx;
-  height: 30rpx;
-  flex: 0 0 30rpx;
+  width: 38rpx;
+  height: 38rpx;
+  flex: 0 0 38rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
+}
+
+.destination-card__location-pin {
+  position: relative;
+  width: 32rpx;
+  height: 38rpx;
+  flex: 0 0 32rpx;
+}
+
+.destination-card__location-pin::before {
+  content: "";
+  position: absolute;
+  left: 4rpx;
+  top: 2rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border: 4rpx solid #0aa347;
+  border-radius: 50% 50% 50% 0;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+}
+
+.destination-card__location-pin::after {
+  content: "";
+  position: absolute;
+  left: 13rpx;
+  top: 11rpx;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: #0aa347;
 }
 
 .price-button-row {
