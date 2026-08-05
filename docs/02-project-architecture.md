@@ -67,7 +67,7 @@ Page method
       │   │   └─► Valid? Return cached token
       │   └─► Expired? POST to AUTH_URL
       │       └─► Cache new token + set expiry
-      │       └─► httpClient.setToken(token)
+      │       └─► httpClient.setToken(token)g
       │
       ├─► httpClient.get('/items', { query })
       │   └─► wx.request({
