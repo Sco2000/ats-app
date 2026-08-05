@@ -65,24 +65,20 @@ Component({
 
       const value = this.properties.columns;
       const columnsCount = Math.max(1, Number(value) || 1);
-      const gap = 20;
-      const totalGap = Math.max(0, (columnsCount - 1) * gap);
-      const width = columnsCount > 1 ? `calc((100% - ${totalGap}rpx) / ${columnsCount})` : '100%';
+      const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
       this.setData({ computedGridItemWidth: width });
     }
   },
 
   lifetimes: {
     attached() {
-      if (this.data.gridItemWidth) {
-        this.setData({ computedGridItemWidth: this.data.gridItemWidth });
+      if (this.properties.gridItemWidth) {
+        this.setData({ computedGridItemWidth: this.properties.gridItemWidth });
         return;
       }
 
       const columnsCount = Math.max(1, Number(this.data.columns) || 1);
-      const gap = 20;
-      const totalGap = Math.max(0, (columnsCount - 1) * gap);
-      const width = columnsCount > 1 ? `calc((100% - ${totalGap}rpx) / ${columnsCount})` : '100%';
+      const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
       this.setData({ computedGridItemWidth: width });
       console.log('ListDestination component loaded with destinations:', this.data.destinations);
     }

@@ -50,6 +50,8 @@
 		}
 	},
 	"SASappid": "mp1vl29c7w1xcmbo",
+	"SASLibVersion": "2.3.10",
+	"tmfLibVersion": "2.3.10",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -1,7 +1,8 @@
 /**
  * Card Component
  * Slot-based content container with optional custom class.
- * Inherits page-level utility classes via apply-shared.
+ * Includes local utility fallbacks because iOS mini-program engines can be
+ * stricter about page styles crossing component boundaries.
  *
  * @example
  * <app-card containerClass="p-3 br-10">
@@ -11,6 +12,11 @@
  * @property {string} containerClass - Additional CSS class for the card wrapper
  */
 Component({
+  options: {
+    addGlobalClass: true,
+    styleIsolation: 'apply-shared',
+  },
+
   properties: {
     containerClass: String,
     containerStyle: {

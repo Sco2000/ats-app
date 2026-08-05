@@ -22,13 +22,18 @@
 .voyages-page__list {
   display: flex;
   flex-direction: column;
-  gap: 22rpx;
+  gap: 0;
   padding-right: 0;
   padding-left: 0;
 }
 
 .reservation-card {
   width: 100%;
+  margin-bottom: 22rpx;
+}
+
+.reservation-card:last-child {
+  margin-bottom: 0;
 }
 
 .reservation-card__shell {
@@ -114,6 +119,37 @@
   display: flex;
   align-items: center;
   gap: 10rpx;
+}
+
+.reservation-card__location-pin {
+  position: relative;
+  width: 24rpx;
+  height: 30rpx;
+  flex: 0 0 24rpx;
+}
+
+.reservation-card__location-pin::before {
+  content: "";
+  position: absolute;
+  left: 3rpx;
+  top: 2rpx;
+  width: 18rpx;
+  height: 18rpx;
+  border: 3rpx solid #c4cad5;
+  border-radius: 50% 50% 50% 0;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+}
+
+.reservation-card__location-pin::after {
+  content: "";
+  position: absolute;
+  left: 10rpx;
+  top: 9rpx;
+  width: 5rpx;
+  height: 5rpx;
+  border-radius: 50%;
+  background: #c4cad5;
 }
 
 .reservation-card__price-row {
