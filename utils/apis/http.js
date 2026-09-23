@@ -51,9 +51,10 @@ export class HttpClient {
    * @returns {Promise<IUnifiedResponse>}
    */
   async get(path, options = {}) {
-    const query = options.query
-      ? '?' + new URLSearchParams(options.query).toString()
+    const queryParams = options.query
+      ? new URLSearchParams(options.query).toString()
       : '';
+    const query = queryParams ? `?${queryParams}` : '';
     return this.#request(`${this.#base}${path}${query}`, 'GET', null, options);
   }
 
@@ -97,9 +98,10 @@ export class HttpClient {
    * @returns {Promise<IUnifiedResponse>}
    */
   async delete(path, options = {}) {
-    const query = options.query
-      ? '?' + new URLSearchParams(options.query).toString()
+    const queryParams = options.query
+      ? new URLSearchParams(options.query).toString()
       : '';
+    const query = queryParams ? `?${queryParams}` : '';
     return this.#request(`${this.#base}${path}${query}`, 'DELETE', null, options);
   }
 

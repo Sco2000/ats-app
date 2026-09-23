@@ -1,123 +1,83 @@
 // ============================================================================
-// BACKEND API SERVICE
-// Business logic layer for your application's API operations
+// ATS BACKEND API SERVICE
+// Centralized access to ATS REST endpoints.
 // ============================================================================
 
 import { httpClient } from './http.js';
 import { authenticate } from './auth.js';
-import { sculpt } from '../json-sculpt/sculpt.js';
-// import { ExampleSchema } from '../mappers/example.sculpt.js';
-
-// ============================================================================
-// API ENDPOINTS - Define your API paths here
-// ============================================================================
+import {
+  mapApiCategoryToFilter,
+  mapApiPackageToDestination,
+} from '../mappers/ats.js';
 
 const ENDPOINTS = {
-  // Example: USERS: '/users',
-  // Example: PRODUCTS: '/products',
+  CATEGORIES: '/categories',
+  PACKAGES: '/packages',
+  BOOKINGS: '/bookings',
 };
 
-// ============================================================================
-// BACKEND API CLASS
-// ============================================================================
+function assertSuccessResponse(res, message) {
+  const body = res && res.data ? res.data : null;
 
-/**
- * Service for your application's API operations.
- * All methods automatically handle authentication.
- *
- * Pattern from eSIM:
- * 1. Call authenticate() before each request
- * 2. Use httpClient for HTTP operations
- * 3. Use sculpt for response transformation
- *
- * @class BackendAPI
- */
+  if (!body || body.success !== true) {
+    throw new Error(message);
+  }
+
+  return body;
+}
+
 class BackendAPI {
   /** @type {import('./http').HttpClient} */
   #client = httpClient;
 
-  // ==========================================================================
-  // EXAMPLE: READ OPERATIONS
-  // ==========================================================================
-
-  /**
-   * Example: Fetch a list of items from the API.
-   * Replace this with your actual service methods.
-   *
-   * @async
-   * @param {Object} [params] - Query parameters
-   * @param {number} [params.limit=10] - Number of items to fetch
-   * @param {number} [params.offset=0] - Pagination offset
-   * @returns {Promise<{items: Array, total: number}>}
-   *
-   * @example
-   * const { items, total } = await backendAPI.getItems({ limit: 5 });
-   */
-  async getItems(params = {}) {
+  async getPackages(params = {}) {
     await authenticate();
 
-    const query = {
-      limit: params.limit || 10,
-      offset: params.offset || 0,
-    };
+    const res = await this.#client.get(ENDPOINTS.PACKAGES, { query: params });
+    const body = assertSuccessResponse(res, 'Failed to fetch packages');
+    const items = Array.isArray(body.data) ? body.data : [];
 
-    const res = await this.#client.get(ENDPOINTS.ITEMS || '/items', { query });
-
-    if (!res.success) {
-      throw new Error(res.error?.message || 'Failed to fetch items');
-    }
-
-    // Example: Transform response with sculpt
-    // const items = sculpt.data({ data: res.data.content, to: ExampleSchema });
-    // return { items, total: res.data.total };
-
-    return { items: res.data?.content || [], total: res.data?.total || 0 };
+    return items.map(mapApiPackageToDestination);
   }
 
-  // ==========================================================================
-  // EXAMPLE: WRITE OPERATIONS
-  // ==========================================================================
-
-  /**
-   * Example: Create a new item.
-   * Replace this with your actual service methods.
-   *
-   * @async
-   * @param {Object} payload - Item data
-   * @returns {Promise<Object>} Created item
-   */
-  async createItem(payload) {
+  async getCategories() {
     await authenticate();
 
-    const res = await this.#client.post(ENDPOINTS.ITEMS || '/items', payload);
+    const res = await this.#client.get(ENDPOINTS.CATEGORIES);
+    const body = assertSuccessResponse(res, 'Failed to fetch categories');
+    const items = Array.isArray(body.data) ? body.data : [];
 
-    if (!res.success) {
-      const err = new Error(res.error?.message || 'Failed to create item');
-      err.statusCode = res.status;
-      throw err;
-    }
-
-    return res.data;
+    return [
+      { id: 'all', label: 'Tous' },
+      ...items.map(mapApiCategoryToFilter),
+    ];
   }
 
-  // ==========================================================================
-  // UTILITY METHODS
-  // ==========================================================================
+  async getPackageDetail(id) {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}/${id}`);
+    const body = assertSuccessResponse(res, 'Failed to fetch package detail');
+    return mapApiPackageToDestination(body.data);
+  }
 
-  /**
-   * Resets the HTTP client session.
-   * Call when starting a new user flow.
-   */
+  async createBooking(payload) {
+    await authenticate();
+
+    const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
+    return assertSuccessResponse(res, 'Failed to create booking');
+  }
+
+  async getBooking(reference) {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
+    return assertSuccessResponse(res, 'Failed to fetch booking');
+  }
+
   resetSession() {
     this.#client.resetSession();
   }
 }
 
-// ============================================================================
-// SINGLETON EXPORT
-// ============================================================================
-
-/** @type {BackendAPI} */
 export const backendAPI = new BackendAPI();
 
 export { BackendAPI };

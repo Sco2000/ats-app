@@ -2,16 +2,42 @@ import { MAIN_TABS } from '../../utils/constants/index';
 import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { backendAPI } from '../../utils/apis/index';
+import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
 const app = getApp();
 
 Page({
+
+
+  /**
+   * Fonction appelée au chargement de la page
+   */
+  async onLoad() {
+    try {
+      const rawPackages = await backendAPI.getPackages();
+      const packages = applyFavoritesToPackages(rawPackages);
+
+      app.globalData.DESTINATIONS = packages;
+
+      this.setData({
+        allDestinations: packages,
+        destinations: packages
+      }, () => {
+        this.applyFilters();
+      });
+
+    } catch (error) {
+      console.error("Erreur lors du chargement des packages :", error);
+    }
+  },
+
   data: {
     activeTab: 'home',
     tabs: MAIN_TABS,
     query: '',
-    allDestinations: app.globalData.DESTINATIONS,
-    destinations: app.globalData.DESTINATIONS,
+    allDestinations: [],
+    destinations: [],
     filters: [
       { id: 'all', label: 'Tous' },
       { id: 'dakar', label: 'Dakar' },
@@ -39,9 +65,12 @@ Page({
   },
 
   refreshDestinations() {
-    const allDestinations = Array.isArray(app.globalData.DESTINATIONS)
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
+
+    const allDestinations = applyFavoritesToPackages(rawDestinations);
+    app.globalData.DESTINATIONS = allDestinations;
 
     this.setData({ allDestinations }, () => {
       this.applyFilters();
@@ -84,6 +113,10 @@ Page({
       return;
     }
 
+    // 1. Sauvegarder dans le stockage local persistant
+    toggleFavoriteId(destination.id, like);
+
+    // 2. Mettre à jour la liste en mémoire
     const sourceDestinations = Array.isArray(this.data.allDestinations)
       ? this.data.allDestinations
       : [];
