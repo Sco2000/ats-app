@@ -53,11 +53,24 @@ class BackendAPI {
     ];
   }
 
+  async getPackageDetail(id) {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}/${id}`);
+    const body = assertSuccessResponse(res, 'Failed to fetch package detail');
+    return mapApiPackageToDestination(body.data);
+  }
+
   async createBooking(payload) {
     await authenticate();
 
     const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
     return assertSuccessResponse(res, 'Failed to create booking');
+  }
+
+  async getBooking(reference) {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
+    return assertSuccessResponse(res, 'Failed to fetch booking');
   }
 
   resetSession() {
