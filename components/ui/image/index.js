@@ -104,6 +104,14 @@ Component({
     hasOverlay: false
   },
 
+  observers: {
+    'src': function (newSrc) {
+      if (newSrc && newSrc !== this.data.computedSrc) {
+        this.loadImage(newSrc);
+      }
+    }
+  },
+
   lifetimes: {
     created() {
       this.data.imageId = `tc-image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
