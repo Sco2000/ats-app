@@ -3,7 +3,13 @@ import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
-import { DEFAULT_FILTERS, loadCategoryFilters } from '../../utils/services/catalog';
+import {
+  DEFAULT_FILTERS,
+  getCatalogDestinations,
+  loadCategoryFilters,
+  syncGlobalDestinations,
+  updateDestinationLike,
+} from '../../utils/services/catalog';
 
 const app = getApp();
 
@@ -54,9 +60,7 @@ Page({
   async refreshDestinations() {
     await waitForAppInit(app);
 
-    const allDestinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    const allDestinations = getCatalogDestinations();
 
     this.setData({ allDestinations }, () => {
       this.applyFilters();
@@ -99,16 +103,9 @@ Page({
       return;
     }
 
-    const sourceDestinations = Array.isArray(this.data.allDestinations)
-      ? this.data.allDestinations
-      : [];
-    const updatedDestinations = sourceDestinations.map((item) => (
-      item.id === destination.id
-        ? { ...item, like }
-        : item
-    ));
+    const updatedDestinations = updateDestinationLike(destination.id, like);
 
-    app.globalData.DESTINATIONS = updatedDestinations;
+    syncGlobalDestinations(app, updatedDestinations);
     this.setData({ allDestinations: updatedDestinations }, () => {
       this.applyFilters();
     });

@@ -1,65 +1,36 @@
 // ============================================================================
-// AUTHENTICATION
-// OAuth2 token management with caching and auto-refresh
+// AUTHENTICATION BRIDGE
+// MaxIt owns authentication. This module only stores a token when one is
+// provided by the host/native layer and attaches it to the HTTP client.
 // ============================================================================
 
 import { httpClient } from './http.js';
-import { config } from '../config.js';
-import { STORAGE_KEYS, AUTH_CONFIG } from '../constants/index.js';
+import { STORAGE_KEYS } from '../constants/index.js';
 
-/**
- * Authenticates with the backend API using OAuth2 client credentials.
- * Caches the token in local storage and refreshes it before expiry.
- *
- * @returns {Promise<string>} Access token
- *
- * @example
- * await authenticate();
- * // httpClient now has the token set - make API calls normally
- * const res = await httpClient.get('/api/data');
- */
+export function setAccessToken(token) {
+  if (!token) {
+    return null;
+  }
+
+  wx.setStorageSync(STORAGE_KEYS.ACCESS_TOKEN, token);
+  httpClient.setToken(token);
+
+  return token;
+}
+
+export function clearAccessToken() {
+  wx.removeStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
+  wx.removeStorageSync(STORAGE_KEYS.TOKEN_EXPIRY);
+  httpClient.setToken(null);
+}
+
 export async function authenticate() {
-  const now = Date.now();
   const storedToken = wx.getStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
-  const storedExp = wx.getStorageSync(STORAGE_KEYS.TOKEN_EXPIRY);
 
-  // Return cached token if still valid
-  if (storedToken && storedExp && now < storedExp) {
+  if (storedToken) {
     httpClient.setToken(storedToken);
     return storedToken;
   }
 
-  // Request a new token. The ATS API expects JSON here.
-  const body = {
-    client_id: config.CLIENT_ID,
-    client_secret: config.CLIENT_SECRET,
-  };
-
-  const res = await new Promise((resolve, reject) => {
-    wx.request({
-      method: 'POST',
-      url: `${config.BASE_URL}${config.AUTH_URL}`,
-      header: { 'Content-Type': 'application/json' },
-      data: body,
-      success: ({ data, statusCode }) => {
-        if (statusCode >= 200 && statusCode < 300) {
-          resolve(data);
-        } else {
-          reject(new Error(`Auth failed: ${statusCode}`));
-        }
-      },
-      fail: reject,
-    });
-  });
-
-  const { access_token, expires_in } = res;
-  const expiresInSec = expires_in || AUTH_CONFIG.DEFAULT_EXPIRY_SEC;
-  const expiry = now + (expiresInSec * 1000) - AUTH_CONFIG.REFRESH_BUFFER_MS;
-
-  // Cache token
-  wx.setStorageSync(STORAGE_KEYS.ACCESS_TOKEN, access_token);
-  wx.setStorageSync(STORAGE_KEYS.TOKEN_EXPIRY, expiry);
-  httpClient.setToken(access_token);
-
-  return access_token;
+  return null;
 }

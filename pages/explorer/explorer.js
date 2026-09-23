@@ -4,7 +4,13 @@ import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
-import { DEFAULT_FILTERS, loadCategoryFilters } from '../../utils/services/catalog';
+import {
+  DEFAULT_FILTERS,
+  getCatalogDestinations,
+  loadCategoryFilters,
+  syncGlobalDestinations,
+  updateDestinationLike,
+} from '../../utils/services/catalog';
 
 const app = getApp();
 
@@ -53,9 +59,7 @@ Page({
   async refreshDestinations() {
     await waitForAppInit(app);
 
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    const destinations = getCatalogDestinations();
 
     this.setData({
       allDestinations: destinations,
@@ -127,11 +131,7 @@ Page({
       return;
     }
 
-    const updatedDestinations = (this.data.allDestinations || []).map((item) => (
-      item.id === destination.id
-        ? { ...item, like }
-        : item
-    ));
+    const updatedDestinations = updateDestinationLike(destination.id, like);
 
     this.setData({
       allDestinations: updatedDestinations,
@@ -139,6 +139,6 @@ Page({
       this.applyFilters();
     });
 
-    app.globalData.DESTINATIONS = updatedDestinations;
+    syncGlobalDestinations(app, updatedDestinations);
   },
 });
