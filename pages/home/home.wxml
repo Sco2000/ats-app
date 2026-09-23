@@ -50,7 +50,11 @@
         </view>
       </view>
       <view class="destination-list-body">
+        <view wx:if="{{ isLoading }}" class="px-3 py-3">Chargement des destinations…</view>
+        <view wx:elif="{{ errorMessage }}" class="px-3 py-3">{{ errorMessage }}</view>
+        <view wx:elif="{{ isEmpty }}" class="px-3 py-3">Aucune destination trouvée.</view>
         <app-list-destination
+          wx:else
           destinations="{{ destinations }}"
           layout="scroll"
           cardWidth="500rpx"
@@ -67,6 +71,7 @@
         <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx" class="">Recommandations</app-typography>
         <view class="recomandation-list-body">
           <app-list-destination
+          wx:if="{{ !isLoading && !isEmpty }}"
           destinations="{{ destinations }}"
           layout="grid"
           cardWidth="100%"

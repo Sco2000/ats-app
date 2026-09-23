@@ -41,7 +41,11 @@
         </app-typography>
       </view>
 
-      <view wx:if="{{visibleDestinations.length}}" class="destination-list px-3">
+      <view wx:if="{{ isLoading }}" class="explorer-page__empty px-3">Chargement des destinations…</view>
+
+      <view wx:elif="{{ errorMessage }}" class="explorer-page__empty px-3">{{ errorMessage }}</view>
+
+      <view wx:elif="{{visibleDestinations.length}}" class="destination-list px-3">
         <app-list-destination
           destinations="{{ visibleDestinations }}"
           layout="grid"

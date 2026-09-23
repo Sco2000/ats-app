@@ -5,6 +5,7 @@ import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import {
   DEFAULT_FILTERS,
+  getCatalogStatus,
   getCatalogDestinations,
   loadCategoryFilters,
   syncGlobalDestinations,
@@ -18,29 +19,45 @@ Page({
     activeTab: 'home',
     tabs: MAIN_TABS,
     query: '',
-    allDestinations: app.globalData.DESTINATIONS,
-    destinations: app.globalData.DESTINATIONS,
+    allDestinations: [],
+    destinations: [],
     filters: DEFAULT_FILTERS,
     activeFilter: 'all',
+    isLoading: true,
+    errorMessage: '',
+    isEmpty: false,
   },
 
   onLoad() {
-    this.loadFilters();
+    this.initializeCatalog();
   },
 
-  async loadFilters() {
-    const filters = await loadCategoryFilters();
+  async initializeCatalog() {
+    if (this._loadingCatalog) return;
+    this._loadingCatalog = true;
+    this.setData({ isLoading: true, errorMessage: '' });
+
+    await waitForAppInit(app);
+    const [filters] = await Promise.all([loadCategoryFilters(), Promise.resolve(getCatalogDestinations())]);
+    const allDestinations = getCatalogDestinations();
+    const { destinationsError, filtersError } = getCatalogStatus();
+    const error = destinationsError || filtersError;
 
     const nextActiveFilter = filters.some((filter) => filter.id === this.data.activeFilter)
       ? this.data.activeFilter
       : 'all';
+    const destinations = filterDestinations(allDestinations, this.data.query, nextActiveFilter);
 
     this.setData({
+      allDestinations,
+      destinations,
       filters,
       activeFilter: nextActiveFilter,
-    }, () => {
-      this.applyFilters();
+      isLoading: false,
+      isEmpty: destinations.length === 0,
+      errorMessage: error ? 'Impossible de charger les destinations. Réessaie plus tard.' : '',
     });
+    this._loadingCatalog = false;
   },
 
   applyFilters() {
@@ -54,7 +71,7 @@ Page({
       this.data.activeFilter
     );
 
-    this.setData({ destinations });
+    this.setData({ destinations, isEmpty: destinations.length === 0 });
   },
 
   async refreshDestinations() {
@@ -127,6 +144,8 @@ Page({
 
   async onShow() {
     setCustomTabBarActive(this, 'home');
-    await this.refreshDestinations();
+    if (!this._loadingCatalog) {
+      await this.refreshDestinations();
+    }
   }
 });

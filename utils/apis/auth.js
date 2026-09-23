@@ -5,17 +5,25 @@
 // ============================================================================
 
 import { httpClient } from './http.js';
-import { STORAGE_KEYS } from '../constants/index.js';
+import { config } from '../config.js';
+import { __DEV__, STORAGE_KEYS } from '../constants/index.js';
 
-export function setAccessToken(token) {
-  if (!token) {
+let authPromise = null;
+
+export function setAccessToken(token, expiresInSeconds) {
+  const normalizedToken = typeof token === 'string' ? token.trim() : '';
+
+  if (!normalizedToken) {
     return null;
   }
 
-  wx.setStorageSync(STORAGE_KEYS.ACCESS_TOKEN, token);
-  httpClient.setToken(token);
+  wx.setStorageSync(STORAGE_KEYS.ACCESS_TOKEN, normalizedToken);
+  if (Number.isFinite(expiresInSeconds) && expiresInSeconds > 0) {
+    wx.setStorageSync(STORAGE_KEYS.TOKEN_EXPIRY, Date.now() + (expiresInSeconds * 1000));
+  }
+  httpClient.setToken(normalizedToken);
 
-  return token;
+  return normalizedToken;
 }
 
 export function clearAccessToken() {
@@ -25,12 +33,29 @@ export function clearAccessToken() {
 }
 
 export async function authenticate() {
-  const storedToken = wx.getStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
+  if (authPromise) return authPromise;
 
-  if (storedToken) {
-    httpClient.setToken(storedToken);
-    return storedToken;
-  }
+  authPromise = Promise.resolve().then(() => {
+    const storedToken = wx.getStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
+    const expiry = Number(wx.getStorageSync(STORAGE_KEYS.TOKEN_EXPIRY) || 0);
 
-  return null;
+    if (expiry && expiry <= Date.now()) {
+      clearAccessToken();
+      return null;
+    }
+
+    if (storedToken) return setAccessToken(storedToken);
+
+    // This is intentionally restricted to local development. Production tokens
+    // must be supplied by the trusted native host or backend.
+    if (__DEV__ && config.DEV_ACCESS_TOKEN) {
+      return setAccessToken(config.DEV_ACCESS_TOKEN);
+    }
+
+    return null;
+  }).finally(() => {
+    authPromise = null;
+  });
+
+  return authPromise;
 }

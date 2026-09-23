@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { httpClient } from './http.js';
-import { authenticate } from './auth.js';
+import { authenticate, clearAccessToken } from './auth.js';
 import {
   mapApiCategoryToFilter,
   mapApiPackageToDestination,
@@ -26,6 +26,11 @@ function assertSuccessResponse(res, message) {
   return body;
 }
 
+function clearInvalidToken(error) {
+  if (Number(error?.status) === 401) clearAccessToken();
+  throw error;
+}
+
 class BackendAPI {
   /** @type {import('./http').HttpClient} */
   #client = httpClient;
@@ -33,7 +38,7 @@ class BackendAPI {
   async getPackages(params = {}) {
     await authenticate();
 
-    const res = await this.#client.get(ENDPOINTS.PACKAGES, { query: params });
+    const res = await this.#client.get(ENDPOINTS.PACKAGES, { query: params }).catch(clearInvalidToken);
     const body = assertSuccessResponse(res, 'Failed to fetch packages');
     const items = Array.isArray(body.data) ? body.data : [];
 
@@ -43,7 +48,7 @@ class BackendAPI {
   async getCategories() {
     await authenticate();
 
-    const res = await this.#client.get(ENDPOINTS.CATEGORIES);
+    const res = await this.#client.get(ENDPOINTS.CATEGORIES).catch(clearInvalidToken);
     const body = assertSuccessResponse(res, 'Failed to fetch categories');
     const items = Array.isArray(body.data) ? body.data : [];
 
@@ -56,7 +61,7 @@ class BackendAPI {
   async createBooking(payload) {
     await authenticate();
 
-    const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
+    const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload).catch(clearInvalidToken);
     return assertSuccessResponse(res, 'Failed to create booking');
   }
 

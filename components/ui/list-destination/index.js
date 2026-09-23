@@ -80,7 +80,6 @@ Component({
       const columnsCount = Math.max(1, Number(this.data.columns) || 1);
       const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
       this.setData({ computedGridItemWidth: width });
-      console.log('ListDestination component loaded with destinations:', this.data.destinations);
     }
   },
 

@@ -1,8 +1,10 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
-
-const app = getApp();
+import {
+  getCatalogDestinations,
+  updateDestinationLike,
+} from '../../utils/services/catalog';
 
 function formatFavoritesLabel(count) {
   return `${count} destination${count === 1 ? '' : 's'} sauvegardée${count === 1 ? '' : 's'}`;
@@ -27,9 +29,7 @@ Page({
   },
 
   refreshFavorites() {
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    const destinations = getCatalogDestinations();
 
     const favoriteDestinations = destinations.filter((destination) => Boolean(destination.like));
 
@@ -65,13 +65,7 @@ Page({
       return;
     }
 
-    const updatedDestinations = (this.data.allDestinations || []).map((item) => (
-      item.id === destination.id
-        ? { ...item, like }
-        : item
-    ));
-
-    app.globalData.DESTINATIONS = updatedDestinations;
+    const updatedDestinations = updateDestinationLike(destination.id, like);
 
     const favoriteDestinations = updatedDestinations.filter((item) => Boolean(item.like));
 

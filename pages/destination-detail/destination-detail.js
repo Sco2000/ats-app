@@ -1,4 +1,7 @@
-const app = getApp();
+import {
+  getCatalogDestinations,
+  updateDestinationLike,
+} from '../../utils/services/catalog';
 
 const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter pleinement du Sénégal, entre paysages naturels, moments de détente et découvertes locales. Vous pourrez explorer les lieux emblématiques, observer la vie autour de vous et vivre une sortie simple, confortable et mémorable.";
 
@@ -24,9 +27,7 @@ function uniqueImages(images = []) {
 }
 
 function findDestination(id) {
-  const destinations = Array.isArray(app.globalData.DESTINATIONS)
-    ? app.globalData.DESTINATIONS
-    : [];
+  const destinations = getCatalogDestinations();
 
   return destinations.find((destination) => String(destination.id) === String(id));
 }
@@ -142,13 +143,7 @@ Page({
     }, 300);
 
     const nextLiked = !isLiked;
-    const updatedDestinations = (app.globalData.DESTINATIONS || []).map((item) => (
-      item.id === destination.id
-        ? { ...item, like: nextLiked }
-        : item
-    ));
-
-    app.globalData.DESTINATIONS = updatedDestinations;
+    updateDestinationLike(destination.id, nextLiked);
 
     this.setData({
       isLiked: nextLiked,
@@ -197,8 +192,6 @@ handlePreviewGallery(event) {
   if (!Number.isFinite(index) || index < 0 || index >= gallery.length) {
     index = 0;
   }
-
-  console.log('[preview] custom modal', { index, gallery });
 
   this.setData({
     showPreview: true,

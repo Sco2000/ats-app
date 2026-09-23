@@ -35,17 +35,17 @@
             
            <view class="price-button-row{{ !showDetailsButton ? ' price-only' : '' }}">
                 <app-typography containerClass="flex-1 " size="16" weight="700" color="#1C1C1C" lineHeight="48rpx">
-                    {{ destination.price }}
+                    {{ destination.priceLabel || destination.price }}
                 </app-typography>
                 <view class="button-container" wx:if="{{ showDetailsButton }}">
                     <app-button
                         buttonClass="destination-details-button"
                         buttonStyle="height: 68rpx !important; padding: 0 !important; border-radius: 60rpx !important; background: #01953e !important; font-size: 28rpx !important; font-weight: 600 !important; line-height: 68rpx !important; box-shadow: none !important; letter-spacing: 0 !important;"
                         type="primary"
-                        loading="{{ destination.loading }}"
+                        loading="{{ false }}"
                         bind:onPress="handleSubmit"
                     >
-                        {{ destination.buttonLabel || 'Details' }}
+                        Details
                     </app-button>
                 </view>
             </view>

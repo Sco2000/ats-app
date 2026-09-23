@@ -55,7 +55,10 @@ export class HttpClient {
       ? new URLSearchParams(options.query).toString()
       : '';
     const query = queryParams ? `?${queryParams}` : '';
-    return this.#request(`${this.#base}${path}${query}`, 'GET', null, options);
+    return this.#withRetry(
+      () => this.#request(`${this.#base}${path}${query}`, 'GET', null, options),
+      options.retry ?? 1,
+    );
   }
 
   /**
@@ -153,6 +156,25 @@ export class HttpClient {
         },
       });
     });
+  }
+
+  async #withRetry(request, retries) {
+    let lastError;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        return await request();
+      } catch (error) {
+        lastError = error;
+        const status = Number(error?.status || error?.error?.code || 0);
+        const isTransient = status === 0 || status === 429 || status >= 500;
+
+        if (!isTransient || attempt === retries) break;
+        await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+      }
+    }
+
+    throw lastError;
   }
 }
 

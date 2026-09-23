@@ -1,4 +1,4 @@
-const app = getApp();
+import { getCatalogDestinations } from '../../utils/services/catalog';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -33,9 +33,7 @@ Page({
   },
 
   onLoad(options = {}) {
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    const destinations = getCatalogDestinations();
     const destinationId = Number(options.destinationId || options.id);
     const destination = destinations.find((item) => item.id === destinationId)
       || destinations.find((item) => item.id === 4)
@@ -43,7 +41,7 @@ Page({
       || {};
     const adults = Math.max(1, Number(options.adults) || 2);
     const children = Math.max(0, Number(options.children) || 0);
-    const basePrice = parsePrice(destination.price) || 15000;
+    const basePrice = Number(destination.priceAmount) || parsePrice(destination.price) || 15000;
     const childPrice = Math.round(basePrice * 0.5);
     const computedAmount = formatPrice((adults * basePrice) + (children * childPrice));
     const amount = safeDecode(options.total) || computedAmount;

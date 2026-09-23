@@ -17,14 +17,32 @@ const DEFAULT_FILTERS = [
   { id: 'experience-locale', label: 'Experience Locale' },
 ];
 
-export async function loadDestinations({ fallback = [] } = {}) {
-  try {
-    const destinations = await backendAPI.getPackages();
-    return setDestinations(destinations);
-  } catch (error) {
-    console.warn('[Catalog] Packages API failed, using fallback destinations:', error);
-    return setDestinations(fallback);
-  }
+let destinationsPromise = null;
+let filtersPromise = null;
+let destinationsError = null;
+let filtersError = null;
+
+export function getCatalogStatus() {
+  return { destinationsError, filtersError };
+}
+
+export async function loadDestinations({ fallback = [], force = false } = {}) {
+  if (!force && destinationsPromise) return destinationsPromise;
+
+  destinationsPromise = backendAPI.getPackages()
+    .then((destinations) => {
+      destinationsError = null;
+      return setDestinations(destinations);
+    })
+    .catch((error) => {
+      destinationsError = error;
+      return setDestinations(fallback);
+    })
+    .finally(() => {
+      destinationsPromise = null;
+    });
+
+  return destinationsPromise;
 }
 
 export async function loadCategoryFilters({ force = false } = {}) {
@@ -34,17 +52,27 @@ export async function loadCategoryFilters({ force = false } = {}) {
     return cachedFilters;
   }
 
-  try {
-    const filters = await backendAPI.getCategories();
-    const nextFilters = Array.isArray(filters) && filters.length > 0
-      ? filters
-      : DEFAULT_FILTERS;
+  if (!force && filtersPromise) return filtersPromise;
 
-    return setFilters(nextFilters);
-  } catch (error) {
-    console.warn('[Catalog] Categories API failed, using default filters:', error);
-    return setFilters(DEFAULT_FILTERS);
-  }
+  filtersPromise = backendAPI.getCategories()
+    .then((filters) => {
+      filtersError = null;
+      const nextFilters = Array.isArray(filters) && filters.length > 0 ? filters : DEFAULT_FILTERS;
+      return setFilters(nextFilters);
+    })
+    .catch((error) => {
+      filtersError = error;
+      return setFilters(DEFAULT_FILTERS);
+    })
+    .finally(() => {
+      filtersPromise = null;
+    });
+
+  return filtersPromise;
+}
+
+export async function refreshDestinations(options = {}) {
+  return loadDestinations({ ...options, force: true });
 }
 
 export function getCatalogDestinations() {

@@ -6,6 +6,7 @@ import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 
 import {
   DEFAULT_FILTERS,
+  getCatalogStatus,
   getCatalogDestinations,
   loadCategoryFilters,
   syncGlobalDestinations,
@@ -29,31 +30,50 @@ Page({
     allDestinations: [],
     visibleDestinations: [],
     resultsLabel: '0 destination disponible',
+    isLoading: true,
+    errorMessage: '',
+    isEmpty: false,
   },
 
   onLoad() {
-    this.loadFilters();
-    this.refreshDestinations();
+    this.initializeCatalog();
   },
 
-  async loadFilters() {
+  async initializeCatalog() {
+    if (this._loadingCatalog) return;
+    this._loadingCatalog = true;
+    this.setData({ isLoading: true, errorMessage: '' });
+
+    await waitForAppInit(app);
     const filters = await loadCategoryFilters();
+    const allDestinations = getCatalogDestinations();
+    const { destinationsError, filtersError } = getCatalogStatus();
+    const error = destinationsError || filtersError;
 
     const nextActiveFilter = filters.some((filter) => filter.id === this.data.activeFilter)
       ? this.data.activeFilter
       : 'all';
+    const currentQuery = this.data.query || this.data.searchValue;
+    const visibleDestinations = filterDestinations(allDestinations, currentQuery, nextActiveFilter);
 
     this.setData({
+      allDestinations,
+      visibleDestinations,
+      resultsLabel: formatResultsLabel(visibleDestinations.length),
       filters,
       activeFilter: nextActiveFilter,
-    }, () => {
-      this.applyFilters();
+      isLoading: false,
+      isEmpty: visibleDestinations.length === 0,
+      errorMessage: error ? 'Impossible de charger les destinations. Réessaie plus tard.' : '',
     });
+    this._loadingCatalog = false;
   },
 
   async onShow() {
     setCustomTabBarActive(this, 'explorer');
-    await this.refreshDestinations();
+    if (!this._loadingCatalog) {
+      await this.refreshDestinations();
+    }
   },
 
   async refreshDestinations() {
@@ -80,6 +100,7 @@ Page({
     this.setData({
       visibleDestinations,
       resultsLabel: formatResultsLabel(visibleDestinations.length),
+      isEmpty: visibleDestinations.length === 0,
     });
   },
 
