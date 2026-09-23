@@ -59,6 +59,27 @@ class BackendAPI {
     return items.map(mapApiPackageToDestination);
   }
 
+  async getPackage(id) {
+    if (!id) {
+      throw new Error('Package id manquant');
+    }
+
+    await authenticate();
+
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGE_DETAIL}/${id}`);
+
+    if (!res.success) {
+      throw new Error(res.error?.message || 'Impossible de recuperer le detail du package');
+    }
+
+    const body = res.data || {};
+    const item = body.data && !Array.isArray(body.data)
+      ? body.data
+      : body;
+
+    return mapApiPackageToDestination(item);
+  }
+
   async getCategories() {
     await authenticate();
 

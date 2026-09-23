@@ -279,13 +279,13 @@ App({
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
     try {
       console.log('[App] Loading packages...');
-      // const destinations = DESTINATIONS;
       const destinations = await backendAPI.getPackages();
       this.globalData.DESTINATIONS = destinations;
       Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
       console.log('[App] Packages loaded');
     } catch (error) {
-      console.warn('[App] Packages API failed, using local fallback:', error);
+      this.globalData.DESTINATIONS = [];
+      console.warn('[App] Packages API failed:', error);
     }
 
     // Mark app as initialized after user and catalog data are ready.
@@ -428,7 +428,7 @@ App({
     /** Event names for convenience */
     EVENTS,
 
-    DESTINATIONS,
+    DESTINATIONS: [],
     RESERVATIONS,
   },
 });

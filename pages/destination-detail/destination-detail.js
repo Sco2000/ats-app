@@ -1,14 +1,6 @@
+import { backendAPI } from '../../utils/apis/index';
+
 const app = getApp();
-
-const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter pleinement du Sénégal, entre paysages naturels, moments de détente et découvertes locales. Vous pourrez explorer les lieux emblématiques, observer la vie autour de vous et vivre une sortie simple, confortable et mémorable.";
-
-const DEFAULT_GALLERY = [
-  '/assets/images/img.jpg',
-  '/assets/images/pirogue.jpg',
-  '/assets/images/bord.jpg',
-  '/assets/images/ranch.png',
-  '/assets/images/ile.png',
-];
 
 function uniqueImages(images = []) {
   const seen = {};
@@ -23,19 +15,11 @@ function uniqueImages(images = []) {
   });
 }
 
-function findDestination(id) {
-  const destinations = Array.isArray(app.globalData.DESTINATIONS)
-    ? app.globalData.DESTINATIONS
-    : [];
-
-  return destinations.find((destination) => String(destination.id) === String(id));
-}
-
 function buildGallery(destination) {
   const customGallery = Array.isArray(destination.gallery) ? destination.gallery : [];
   const gallery = customGallery.length
     ? customGallery
-    : [destination.image, ...DEFAULT_GALLERY];
+    : [destination.image];
 
   return uniqueImages(gallery);
 }
@@ -54,17 +38,17 @@ function getGalleryMode(count) {
 
 function normalizeDestination(destination) {
   const gallery = buildGallery(destination);
-  const reviewCount = Number(destination.reviewCount || 203);
+  const reviewCount = Number(destination.reviewCount || 0);
 
   return {
     ...destination,
     heroImage: destination.heroImage || destination.image,
-    description: destination.description || DEFAULT_DESCRIPTION,
-    rating: destination.rating || '5.0',
+    description: destination.description || '',
+    rating: destination.rating || '',
     reviewCount,
     reviewLabel: `(${reviewCount} avis)`,
-    duration: destination.duration || 'Demi-journée',
-    category: destination.category || destination.city || 'Dakar',
+    duration: destination.duration || '',
+    category: destination.category || destination.city || '',
     gallery,
     galleryMode: getGalleryMode(gallery.length),
     mainGalleryImage: gallery[0] || '',
@@ -78,16 +62,49 @@ Page({
     isLiked: false,
     stars: [1, 2, 3, 4, 5],
     hasDestination: false,
+    isLoading: false,
     pageTopOffset: 32,
     showPreview: false,
     previewIndex: 0,
     previewGallery: [],
   },
 
-  onLoad(options = {}) {
+  async onLoad(options = {}) {
     const sysInfo = wx.getSystemInfoSync();
     const statusBarHeight = sysInfo.statusBarHeight || 20;
-    const destination = findDestination(options.id);
+
+    this.setData({
+      pageTopOffset: statusBarHeight + 16,
+    });
+
+    if (!options.id) {
+      wx.showToast({
+        title: 'Destination introuvable',
+        icon: 'none',
+      });
+      return;
+    }
+
+    wx.showLoading({
+      title: 'Chargement',
+      mask: true,
+    });
+    this.setData({ isLoading: true });
+
+    let destination = null;
+
+    try {
+      destination = await backendAPI.getPackage(options.id);
+    } catch (error) {
+      console.warn('[DestinationDetail] Package detail API failed:', error);
+      wx.showToast({
+        title: 'Detail API indisponible',
+        icon: 'none',
+      });
+    } finally {
+      wx.hideLoading();
+      this.setData({ isLoading: false });
+    }
 
     if (!destination) {
       wx.showToast({
@@ -103,7 +120,6 @@ Page({
       destination: normalizedDestination,
       isLiked: Boolean(normalizedDestination.like),
       hasDestination: true,
-      pageTopOffset: statusBarHeight + 16,
     });
   },
 
@@ -175,65 +191,64 @@ Page({
       url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
   },
-handlePreviewGallery(event) {
-  const destination = this.data.destination;
 
-  if (!destination) return;
+  handlePreviewGallery(event) {
+    const destination = this.data.destination;
 
-  const gallery = Array.isArray(destination.gallery)
-    ? destination.gallery.filter(img => typeof img === 'string' && img.length > 0)
-    : [];
+    if (!destination) return;
 
-  if (gallery.length === 0) {
-    wx.showToast({
-      title: 'Aucune image',
-      icon: 'none'
+    const gallery = Array.isArray(destination.gallery)
+      ? destination.gallery.filter((img) => typeof img === 'string' && img.length > 0)
+      : [];
+
+    if (gallery.length === 0) {
+      wx.showToast({
+        title: 'Aucune image',
+        icon: 'none',
+      });
+      return;
+    }
+
+    let index = Number(event.currentTarget.dataset.index);
+
+    if (!Number.isFinite(index) || index < 0 || index >= gallery.length) {
+      index = 0;
+    }
+
+    this.setData({
+      showPreview: true,
+      previewIndex: index,
+      previewGallery: gallery,
     });
-    return;
-  }
+  },
 
-  let index = Number(event.currentTarget.dataset.index);
+  closePreview() {
+    this.setData({
+      showPreview: false,
+    });
+  },
 
-  if (!Number.isFinite(index) || index < 0 || index >= gallery.length) {
-    index = 0;
-  }
+  prevPreviewImage() {
+    const { previewIndex, previewGallery } = this.data;
+    const length = previewGallery.length;
 
-  console.log('[preview] custom modal', { index, gallery });
+    this.setData({
+      previewIndex: (previewIndex - 1 + length) % length,
+    });
+  },
 
-  this.setData({
-    showPreview: true,
-    previewIndex: index,
-    previewGallery: gallery
-  });
-},
+  nextPreviewImage() {
+    const { previewIndex, previewGallery } = this.data;
+    const length = previewGallery.length;
 
-closePreview() {
-  this.setData({
-    showPreview: false
-  });
-},
+    this.setData({
+      previewIndex: (previewIndex + 1) % length,
+    });
+  },
 
-prevPreviewImage() {
-  const { previewIndex, previewGallery } = this.data;
-  const length = previewGallery.length;
-
-  this.setData({
-    previewIndex: (previewIndex - 1 + length) % length
-  });
-},
-
-nextPreviewImage() {
-  const { previewIndex, previewGallery } = this.data;
-  const length = previewGallery.length;
-
-  this.setData({
-    previewIndex: (previewIndex + 1) % length
-  });
-},
-
-onPreviewChange(e) {
-  this.setData({
-    previewIndex: e.detail.current
-  });
-}
+  onPreviewChange(e) {
+    this.setData({
+      previewIndex: e.detail.current,
+    });
+  },
 });
