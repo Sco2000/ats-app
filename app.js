@@ -280,8 +280,8 @@ App({
     console.log('[App] User:', fullName, '| ID:', msisdn);
 
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
-    console.log('[App] Loading packages...');
-    const destinations = await loadDestinations({ fallback: DESTINATIONS });
+    console.log('[App] Loading packages from API...');
+    const destinations = await loadDestinations({ fallback: [] });
     syncGlobalDestinations(this, destinations);
     Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
     console.log('[App] Packages loaded');

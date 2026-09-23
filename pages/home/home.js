@@ -1,46 +1,53 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { filterDestinations } from '../../utils/helpers/destination-filter';
-import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
-import {
-  DEFAULT_FILTERS,
-  getCatalogDestinations,
-  loadCategoryFilters,
-  syncGlobalDestinations,
-  updateDestinationLike,
-} from '../../utils/services/catalog';
+import { backendAPI } from '../../utils/apis/index';
+import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
 const app = getApp();
 
 Page({
+
+
+  /**
+   * Fonction appelée au chargement de la page
+   */
+  async onLoad() {
+    try {
+      const rawPackages = await backendAPI.getPackages();
+      const packages = applyFavoritesToPackages(rawPackages);
+
+      app.globalData.DESTINATIONS = packages;
+
+      this.setData({
+        allDestinations: packages,
+        destinations: packages
+      }, () => {
+        this.applyFilters();
+      });
+
+    } catch (error) {
+      console.error("Erreur lors du chargement des packages :", error);
+    }
+  },
+
   data: {
     activeTab: 'home',
     tabs: MAIN_TABS,
     query: '',
-    allDestinations: app.globalData.DESTINATIONS,
-    destinations: app.globalData.DESTINATIONS,
-    filters: DEFAULT_FILTERS,
+    allDestinations: [],
+    destinations: [],
+    filters: [
+      { id: 'all', label: 'Tous' },
+      { id: 'dakar', label: 'Dakar' },
+      { id: 'saly', label: 'Saly' },
+      { id: 'sine-saloum', label: 'Sine Saloum' },
+      { id: 'saint-louis', label: 'Saint Louis' },
+      { id: 'lompoul', label: 'Lompoul' },
+      { id: 'experience-locale', label: 'Experience Locale' },
+    ],
     activeFilter: 'all',
-  },
-
-  onLoad() {
-    this.loadFilters();
-  },
-
-  async loadFilters() {
-    const filters = await loadCategoryFilters();
-
-    const nextActiveFilter = filters.some((filter) => filter.id === this.data.activeFilter)
-      ? this.data.activeFilter
-      : 'all';
-
-    this.setData({
-      filters,
-      activeFilter: nextActiveFilter,
-    }, () => {
-      this.applyFilters();
-    });
   },
 
   applyFilters() {
@@ -57,10 +64,13 @@ Page({
     this.setData({ destinations });
   },
 
-  async refreshDestinations() {
-    await waitForAppInit(app);
+  refreshDestinations() {
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
+      ? app.globalData.DESTINATIONS
+      : [];
 
-    const allDestinations = getCatalogDestinations();
+    const allDestinations = applyFavoritesToPackages(rawDestinations);
+    app.globalData.DESTINATIONS = allDestinations;
 
     this.setData({ allDestinations }, () => {
       this.applyFilters();
@@ -103,9 +113,20 @@ Page({
       return;
     }
 
-    const updatedDestinations = updateDestinationLike(destination.id, like);
+    // 1. Sauvegarder dans le stockage local persistant
+    toggleFavoriteId(destination.id, like);
 
-    syncGlobalDestinations(app, updatedDestinations);
+    // 2. Mettre à jour la liste en mémoire
+    const sourceDestinations = Array.isArray(this.data.allDestinations)
+      ? this.data.allDestinations
+      : [];
+    const updatedDestinations = sourceDestinations.map((item) => (
+      item.id === destination.id
+        ? { ...item, like }
+        : item
+    ));
+
+    app.globalData.DESTINATIONS = updatedDestinations;
     this.setData({ allDestinations: updatedDestinations }, () => {
       this.applyFilters();
     });
@@ -125,8 +146,8 @@ Page({
     });
   },
 
-  async onShow() {
+  onShow() {
     setCustomTabBarActive(this, 'home');
-    await this.refreshDestinations();
+    this.refreshDestinations();
   }
 });
