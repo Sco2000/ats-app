@@ -1,7 +1,10 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { filterDestinations } from '../../utils/helpers/destination-filter';
+import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+
+import { DEFAULT_FILTERS, loadCategoryFilters } from '../../utils/services/catalog';
 
 const app = getApp();
 
@@ -16,34 +19,39 @@ Page({
     query: '',
     searchValue: '',
     activeFilter: 'all',
-    filters: [
-      { id: 'all', label: 'Tous' },
-      { id: 'dakar', label: 'Dakar' },
-      { id: 'saly', label: 'Saly' },
-      { id: 'sine-saloum', label: 'Sine Saloum' },
-      { id: 'saint-louis', label: 'Saint Louis' },
-      { id: 'lompoul', label: 'Lompoul' },
-      { id: 'experience-locale', label: 'Experience Locale' },
-    ],
+    filters: DEFAULT_FILTERS,
     allDestinations: [],
     visibleDestinations: [],
     resultsLabel: '0 destination disponible',
   },
 
   onLoad() {
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    this.loadFilters();
+    this.refreshDestinations();
+  },
+
+  async loadFilters() {
+    const filters = await loadCategoryFilters();
+
+    const nextActiveFilter = filters.some((filter) => filter.id === this.data.activeFilter)
+      ? this.data.activeFilter
+      : 'all';
 
     this.setData({
-      allDestinations: destinations,
+      filters,
+      activeFilter: nextActiveFilter,
     }, () => {
       this.applyFilters();
     });
   },
 
-  onShow() {
+  async onShow() {
     setCustomTabBarActive(this, 'explorer');
+    await this.refreshDestinations();
+  },
+
+  async refreshDestinations() {
+    await waitForAppInit(app);
 
     const destinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS

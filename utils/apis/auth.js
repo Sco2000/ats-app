@@ -29,14 +29,17 @@ export async function authenticate() {
     return storedToken;
   }
 
-  // Request a new token
-  const body = `grant_type=${config.GRANT_TYPE}&client_id=${config.CLIENT_ID}&client_secret=${config.CLIENT_SECRET}`;
+  // Request a new token. The ATS API expects JSON here.
+  const body = {
+    client_id: config.CLIENT_ID,
+    client_secret: config.CLIENT_SECRET,
+  };
 
   const res = await new Promise((resolve, reject) => {
     wx.request({
       method: 'POST',
       url: `${config.BASE_URL}${config.AUTH_URL}`,
-      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      header: { 'Content-Type': 'application/json' },
       data: body,
       success: ({ data, statusCode }) => {
         if (statusCode >= 200 && statusCode < 300) {

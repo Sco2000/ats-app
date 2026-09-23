@@ -8,14 +8,26 @@ import { authenticate } from './auth.js';
 import { sculpt } from '../json-sculpt/sculpt.js';
 // import { ExampleSchema } from '../mappers/example.sculpt.js';
 
+import {
+  mapApiPackageToDestination,
+  mapApiCategoryToFilter,
+} from '../mappers/ats.js';
+
 // ============================================================================
 // API ENDPOINTS - Define your API paths here
 // ============================================================================
 
 const ENDPOINTS = {
+  CATEGORIES: '/categories',
+  PACKAGES: '/packages',
+  PACKAGE_DETAIL: '/packages',
+  BOOKINGS: '/bookings',
+
   // Example: USERS: '/users',
   // Example: PRODUCTS: '/products',
 };
+
+
 
 // ============================================================================
 // BACKEND API CLASS
@@ -35,6 +47,31 @@ const ENDPOINTS = {
 class BackendAPI {
   /** @type {import('./http').HttpClient} */
   #client = httpClient;
+
+  async getPackages() {
+    await authenticate();
+
+    const res = await this.#client.get(ENDPOINTS.PACKAGES);
+
+    const body = res.data || {};
+    const items = Array.isArray(body.data) ? body.data : [];
+
+    return items.map(mapApiPackageToDestination);
+  }
+
+  async getCategories() {
+    await authenticate();
+
+    const res = await this.#client.get(ENDPOINTS.CATEGORIES);
+
+    const body = res.data || {};
+    const items = Array.isArray(body.data) ? body.data : [];
+
+    return [
+      { id: 'all', label: 'Tous' },
+      ...items.map(mapApiCategoryToFilter),
+    ];
+  }
 
   // ==========================================================================
   // EXAMPLE: READ OPERATIONS
