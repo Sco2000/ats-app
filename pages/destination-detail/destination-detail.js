@@ -96,9 +96,8 @@ Page({
     try {
       destination = await backendAPI.getPackage(options.id);
     } catch (error) {
-      console.warn('[DestinationDetail] Package detail API failed:', error);
       wx.showToast({
-        title: 'Detail API indisponible',
+        title: error.message || 'Detail indisponible',
         icon: 'none',
       });
     } finally {

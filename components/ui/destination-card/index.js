@@ -134,8 +134,6 @@ Component({
     },
 
     handleLikeTap() {
-      console.log('[DestinationCard] heart tapped', this.properties.destination);
-
       const nextLiked = !this.data.isLiked;
       this.setData({
         isLiked: nextLiked,

@@ -225,11 +225,6 @@ Component({
         });
     },
 
-    isImageCached(key) {
-      const cache = wx.getStorageSync('tc-image-cache') || {};
-      return cache[key] && (Date.now() - cache[key].timestamp < 3600000);
-    },
-
     cacheImage(key) {
       const cache = wx.getStorageSync('tc-image-cache') || {};
       cache[key] = { timestamp: Date.now() };

@@ -5,8 +5,6 @@
 
 import { httpClient } from './http.js';
 import { authenticate } from './auth.js';
-import { sculpt } from '../json-sculpt/sculpt.js';
-// import { ExampleSchema } from '../mappers/example.sculpt.js';
 
 import {
   mapApiPackageToDestination,
@@ -20,14 +18,15 @@ import {
 const ENDPOINTS = {
   CATEGORIES: '/categories',
   PACKAGES: '/packages',
-  PACKAGE_DETAIL: '/packages',
-  BOOKINGS: '/bookings',
-
-  // Example: USERS: '/users',
-  // Example: PRODUCTS: '/products',
 };
 
+function getResponseBody(response, fallbackMessage) {
+  if (!response || !response.success) {
+    throw new Error(response?.error?.message || fallbackMessage);
+  }
 
+  return response.data || {};
+}
 
 // ============================================================================
 // BACKEND API CLASS
@@ -36,11 +35,6 @@ const ENDPOINTS = {
 /**
  * Service for your application's API operations.
  * All methods automatically handle authentication.
- *
- * Pattern from eSIM:
- * 1. Call authenticate() before each request
- * 2. Use httpClient for HTTP operations
- * 3. Use sculpt for response transformation
  *
  * @class BackendAPI
  */
@@ -52,8 +46,7 @@ class BackendAPI {
     await authenticate();
 
     const res = await this.#client.get(ENDPOINTS.PACKAGES);
-
-    const body = res.data || {};
+    const body = getResponseBody(res, 'Impossible de recuperer les packages');
     const items = Array.isArray(body.data) ? body.data : [];
 
     return items.map(mapApiPackageToDestination);
@@ -66,96 +59,32 @@ class BackendAPI {
 
     await authenticate();
 
-    const res = await this.#client.get(`${ENDPOINTS.PACKAGE_DETAIL}/${id}`);
-
-    if (!res.success) {
-      throw new Error(res.error?.message || 'Impossible de recuperer le detail du package');
-    }
-
-    const body = res.data || {};
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}/${id}`);
+    const body = getResponseBody(res, 'Impossible de recuperer le detail du package');
     const item = body.data && !Array.isArray(body.data)
       ? body.data
       : body;
 
-    return mapApiPackageToDestination(item);
+    const destination = mapApiPackageToDestination(item);
+
+    if (!destination.id) {
+      throw new Error('Detail du package incomplet');
+    }
+
+    return destination;
   }
 
   async getCategories() {
     await authenticate();
 
     const res = await this.#client.get(ENDPOINTS.CATEGORIES);
-
-    const body = res.data || {};
+    const body = getResponseBody(res, 'Impossible de recuperer les categories');
     const items = Array.isArray(body.data) ? body.data : [];
 
     return [
       { id: 'all', label: 'Tous' },
       ...items.map(mapApiCategoryToFilter),
     ];
-  }
-
-  // ==========================================================================
-  // EXAMPLE: READ OPERATIONS
-  // ==========================================================================
-
-  /**
-   * Example: Fetch a list of items from the API.
-   * Replace this with your actual service methods.
-   *
-   * @async
-   * @param {Object} [params] - Query parameters
-   * @param {number} [params.limit=10] - Number of items to fetch
-   * @param {number} [params.offset=0] - Pagination offset
-   * @returns {Promise<{items: Array, total: number}>}
-   *
-   * @example
-   * const { items, total } = await backendAPI.getItems({ limit: 5 });
-   */
-  async getItems(params = {}) {
-    await authenticate();
-
-    const query = {
-      limit: params.limit || 10,
-      offset: params.offset || 0,
-    };
-
-    const res = await this.#client.get(ENDPOINTS.ITEMS || '/items', { query });
-
-    if (!res.success) {
-      throw new Error(res.error?.message || 'Failed to fetch items');
-    }
-
-    // Example: Transform response with sculpt
-    // const items = sculpt.data({ data: res.data.content, to: ExampleSchema });
-    // return { items, total: res.data.total };
-
-    return { items: res.data?.content || [], total: res.data?.total || 0 };
-  }
-
-  // ==========================================================================
-  // EXAMPLE: WRITE OPERATIONS
-  // ==========================================================================
-
-  /**
-   * Example: Create a new item.
-   * Replace this with your actual service methods.
-   *
-   * @async
-   * @param {Object} payload - Item data
-   * @returns {Promise<Object>} Created item
-   */
-  async createItem(payload) {
-    await authenticate();
-
-    const res = await this.#client.post(ENDPOINTS.ITEMS || '/items', payload);
-
-    if (!res.success) {
-      const err = new Error(res.error?.message || 'Failed to create item');
-      err.statusCode = res.status;
-      throw err;
-    }
-
-    return res.data;
   }
 
   // ==========================================================================
