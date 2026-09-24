@@ -13,9 +13,10 @@
       </app-typography>
     </view>
 
-    <view wx:if="{{ favoriteDestinations.length }}">
+    <view wx:if="{{ loading || favoriteDestinations.length }}">
       <app-list-destination
         destinations="{{ favoriteDestinations }}"
+        loading="{{ loading }}"
         layout="grid"
         columns="2"
         cardWidth="100%"
