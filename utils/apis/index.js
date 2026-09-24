@@ -9,6 +9,7 @@ import {
   mapApiCategoryToFilter,
   mapApiPackageToDestination,
 } from '../mappers/ats.js';
+import { mapApiReservation, mapApiReservationDetail } from '../mappers/reservation.js';
 
 const ENDPOINTS = {
   CATEGORIES: '/categories',
@@ -100,9 +101,18 @@ class BackendAPI {
   }
 
   async getBooking(reference) {
+    if (!reference) throw new Error('Référence de réservation manquante');
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
-    return assertSuccessResponse(res, 'Failed to fetch booking');
+    const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
+    return mapApiReservationDetail(body);
+  }
+
+  async createBooking(payload) {
+    await authenticate();
+    const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
+    const body = assertSuccessResponse(res, 'Impossible de créer la réservation');
+    return mapApiReservation(body);
   }
 
   resetSession() {

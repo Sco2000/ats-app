@@ -10,7 +10,31 @@ function formatPrice(value) {
 }
 
 function parsePrice(price) {
-  return Number(String(price || '').replace(/[^\d]/g, '')) || 15000;
+  return Number(String(price || '').replace(/[^\d]/g, '')) || 0;
+}
+
+const MONTHS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+const DAYS = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+function tomorrowIso() {
+  const tomorrow = new Date();
+  tomorrow.setHours(0, 0, 0, 0);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return formatDate(tomorrow);
+}
+function createFutureDates(count = 12) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Array.from({ length: count }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(date.getDate() + index + 1);
+    return { day: DAYS[date.getDay()], date: String(date.getDate()), month: MONTHS[date.getMonth()], isoDate: formatDate(date) };
+  });
 }
 
 Page({
@@ -18,26 +42,15 @@ Page({
     destination: null,
     basePrice: 15000,
     selectedDate: -1,
+    selectedDateIso: '',
+    minDate: tomorrowIso(),
     canContinue: false,
     continueButtonStyle: DISABLED_BUTTON_STYLE,
     travelerCardStyle: TRAVELER_CARD_STYLE,
     priceCardStyle: PRICE_CARD_STYLE,
-    adults: 2,
+    adults: 1,
     children: 0,
-    dates: [
-      { day: 'Mar', date: '9', month: 'Jui' },
-      { day: 'Mer', date: '10', month: 'Jui' },
-      { day: 'Jeu', date: '11', month: 'Jui' },
-      { day: 'Ven', date: '12', month: 'Jui' },
-      { day: 'Sam', date: '13', month: 'Jui' },
-      { day: 'Dim', date: '14', month: 'Jui' },
-      { day: 'Lun', date: '15', month: 'Jui' },
-      { day: 'Mar', date: '16', month: 'Jui' },
-      { day: 'Mer', date: '17', month: 'Jui' },
-      { day: 'Jeu', date: '18', month: 'Jui' },
-      { day: 'Ven', date: '19', month: 'Jui' },
-      { day: 'Sam', date: '20', month: 'Jui' },
-    ],
+    dates: createFutureDates(),
     adultLine: '2 Adultes x 15 000 FCFA',
     adultSubtotal: '30 000 FCFA',
     childrenLine: '',
@@ -50,8 +63,8 @@ Page({
       ? app.globalData.DESTINATIONS
       : [];
     const destinationId = Number(options.destinationId);
-    const destination = destinations.find((item) => item.id === destinationId) || null;
-    const basePrice = destination ? parsePrice(destination.price) : 15000;
+    const destination = destinations.find((item) => Number(item.id) === destinationId) || null;
+    const basePrice = destination ? parsePrice(destination.price) : 0;
 
     this.setData({
       destination,
@@ -62,10 +75,34 @@ Page({
   },
 
   selectDate(event) {
+    const index = Number(event.currentTarget.dataset.index);
+    const selected = this.data.dates[index];
+    if (!selected || selected.isoDate <= formatDate(new Date())) return;
     this.setData({
-      selectedDate: Number(event.currentTarget.dataset.index) || 0,
+      selectedDate: index,
+      selectedDateIso: selected.isoDate,
       canContinue: true,
       continueButtonStyle: ACTIVE_BUTTON_STYLE,
+    });
+  },
+
+  onDatePickerChange(event) {
+    const isoDate = event.detail.value;
+    const date = new Date(`${isoDate}T00:00:00`);
+    if (!isoDate || isoDate < tomorrowIso()) return;
+    const dates = this.data.dates;
+    const existing = dates.findIndex((item) => item.isoDate === isoDate);
+    if (existing >= 0) {
+      this.setData({ selectedDate: existing, selectedDateIso: isoDate, canContinue: true, continueButtonStyle: ACTIVE_BUTTON_STYLE, showDatePicker: false });
+      return;
+    }
+    this.setData({
+      dates: [...dates, { day: DAYS[date.getDay()], date: String(date.getDate()), month: MONTHS[date.getMonth()], isoDate }],
+      selectedDate: dates.length,
+      selectedDateIso: isoDate,
+      canContinue: true,
+      continueButtonStyle: ACTIVE_BUTTON_STYLE,
+      showDatePicker: false,
     });
   },
 
@@ -129,18 +166,20 @@ Page({
       children,
       destination,
       selectedDate,
+      selectedDateIso,
       totalPrice,
     } = this.data;
     const selectedDateItem = this.data.dates[selectedDate] || null;
-    const dateLabel = selectedDateItem
-      ? `${selectedDateItem.day} ${selectedDateItem.date} ${selectedDateItem.month}`
-      : '';
+    const dateLabel = selectedDateItem ? `${selectedDateItem.day} ${selectedDateItem.date} ${selectedDateItem.month}` : '';
     const params = [
-      `destinationId=${destination && destination.id ? destination.id : 4}`,
+      `destinationId=${encodeURIComponent(destination && destination.id || '')}`,
       `adults=${adults}`,
       `children=${children}`,
       `total=${encodeURIComponent(totalPrice)}`,
       `date=${encodeURIComponent(dateLabel)}`,
+      `dateIso=${encodeURIComponent(selectedDateIso)}`,
+      `packageId=${encodeURIComponent(destination && destination.id || '')}`,
+      `travelers=${adults + children}`,
     ].join('&');
 
     wx.navigateTo({
