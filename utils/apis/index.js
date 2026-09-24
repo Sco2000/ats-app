@@ -14,6 +14,7 @@ import { mapApiReservation, mapApiReservationDetail } from '../mappers/reservati
 const ENDPOINTS = {
   CATEGORIES: '/categories',
   PACKAGES: '/packages',
+  RECOMMENDED_PACKAGES: '/packages?recommended=true',
   BOOKINGS: '/bookings',
 };
 
@@ -55,6 +56,15 @@ class BackendAPI {
     return items.map(mapApiPackageToDestination);
   }
 
+  async getRecommendedPackages() {
+    await authenticate();
+
+    const res = await this.#client.get(ENDPOINTS.RECOMMENDED_PACKAGES);
+    const body = assertSuccessResponse(res, 'Failed to fetch recommended packages');
+    const items = Array.isArray(body.data) ? body.data : [];
+
+    return items.map(mapApiPackageToDestination);
+  }
   async getPackage(id) {
     if (!id) {
       throw new Error('Package id manquant');

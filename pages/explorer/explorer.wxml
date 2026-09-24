@@ -1,5 +1,5 @@
 <app-layout
-  title="Explorer les Destinations"
+  title="Explorer les "
   showBack="{{true}}"
   logoSrc="/assets/images/logo.png"
   showLogo="{{false}}"
@@ -20,7 +20,6 @@
             bind:input="onInput"
             bind:iconTap="onSearch"
             iconPosition="left"
-
         />
       </view>
 

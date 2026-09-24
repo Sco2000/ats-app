@@ -6,6 +6,12 @@ import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 import {
   DEFAULT_FILTERS,
+  getCatalogRecommendedDestinations,
+  loadRecommendedDestinations,
+  getCatalogDestinations,
+  loadCategoryFilters,
+  syncGlobalDestinations,
+  updateDestinationLike,
 } from '../../utils/services/catalog';
 
 
@@ -40,8 +46,8 @@ Page({
     activeTab: 'home',
     tabs: MAIN_TABS,
     query: '',
-    allDestinations: [],
-    destinations: [],
+    allDestinations: app.globalData.DESTINATIONS,
+    destinationsRecommended: app.globalData.DESTINATIONS,
     filters: DEFAULT_FILTERS,
     activeFilter: 'all',
   },
@@ -50,6 +56,8 @@ Page({
     const allDestinations = Array.isArray(this.data.allDestinations)
       ? this.data.allDestinations
       : [];
+      
+    const destinationsRecommended = getCatalogRecommendedDestinations();
 
     const destinations = filterDestinations(
       allDestinations,
@@ -57,18 +65,18 @@ Page({
       this.data.activeFilter
     );
 
-    this.setData({ destinations });
+    this.setData({ destinations, destinationsRecommended });
   },
 
-  refreshDestinations() {
+  async refreshDestinations() {
     const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
 
-    const allDestinations = applyFavoritesToPackages(rawDestinations);
-    app.globalData.DESTINATIONS = allDestinations;
+    const allDestinations = getCatalogDestinations();
+    await loadRecommendedDestinations();
 
-    this.setData({ allDestinations }, () => {
+    this.setData({ allDestinations, destinationsRecommended: getCatalogRecommendedDestinations() }, () => {
       this.applyFilters();
     });
   },

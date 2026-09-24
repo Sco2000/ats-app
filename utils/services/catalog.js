@@ -1,8 +1,10 @@
 import { backendAPI } from '../apis/index';
 import {
   getDestinations,
+  getRecommendedDestinations,
   getFilters,
   setDestinations,
+  setRecommendedDestinations,
   setFilters,
   updateDestinationLike as updateStoredDestinationLike,
 } from '../stores/catalog-store';
@@ -27,6 +29,17 @@ export async function loadDestinations({ fallback = [] } = {}) {
   }
 }
 
+export async function loadRecommendedDestinations({ fallback = [] } = {}) {
+  try {
+    const destinations = await backendAPI.getRecommendedPackages();
+    return setRecommendedDestinations(destinations);
+  } catch (error) {
+    console.warn('[Catalog] Recommended packages API failed, using fallback destinations:', error);
+    return setRecommendedDestinations(fallback);
+  }
+}
+
+
 export async function loadCategoryFilters({ force = false } = {}) {
   const cachedFilters = getFilters();
 
@@ -49,6 +62,10 @@ export async function loadCategoryFilters({ force = false } = {}) {
 
 export function getCatalogDestinations() {
   return getDestinations();
+}
+
+export function getCatalogRecommendedDestinations() {
+  return getRecommendedDestinations();
 }
 
 export function updateDestinationLike(id, like) {
