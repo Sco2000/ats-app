@@ -148,7 +148,7 @@ Page({
       ? this.data.allDestinations
       : [];
     const updatedDestinations = sourceDestinations.map((item) => (
-      item.id === destination.id
+      String(item.id) === String(destination.id)
         ? { ...item, like }
         : item
     ));
@@ -175,6 +175,17 @@ Page({
 
   onShow() {
     setCustomTabBarActive(this, 'home');
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+      ? app.globalData.DESTINATIONS
+      : this.data.allDestinations;
+
+    const allDestinations = applyFavoritesToPackages(rawDestinations);
+    app.globalData.DESTINATIONS = allDestinations;
+
+    this.setData({ allDestinations }, () => {
+      this.applyFilters();
+    });
+
     this.refreshDestinations();
   }
 });

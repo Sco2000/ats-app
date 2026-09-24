@@ -30,12 +30,12 @@ export function updateDestinationLike(id, like) {
 }
 
 export function setRecommendedDestinations(nextDestinations) {
-  recommendedDestinations = normalizeList(nextDestinations);
+  recommendedDestinations = applyFavoritesToPackages(normalizeList(nextDestinations));
   return recommendedDestinations;
 }
 
 export function getRecommendedDestinations() {
-  return recommendedDestinations;
+  return applyFavoritesToPackages(recommendedDestinations);
 }
 
 export function setFilters(nextFilters) {

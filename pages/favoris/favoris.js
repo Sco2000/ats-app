@@ -94,7 +94,7 @@ Page({
       ? this.data.allDestinations
       : [];
     const updatedDestinations = sourceDestinations.map((item) => (
-      item.id === destination.id
+      String(item.id) === String(destination.id)
         ? { ...item, like }
         : item
     ));
