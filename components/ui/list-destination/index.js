@@ -6,6 +6,10 @@ Component({
       type: Array,
       value: []
     },
+    loading: {
+      type: Boolean,
+      value: false
+    },
     layout: {
       type: String,
       value: 'scroll'
@@ -53,7 +57,8 @@ Component({
   },
 
   data: {
-    computedGridItemWidth: '100%'
+    computedGridItemWidth: '100%',
+    skeletonItems: [0, 1, 2, 3]
   },
 
   observers: {

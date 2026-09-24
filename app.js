@@ -99,7 +99,11 @@ App({
 
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
     console.log('[App] Loading packages from API...');
-    const destinations = await loadDestinations({ fallback: [] });
+    this.globalData.CATALOG_ERROR = false;
+    const destinations = await loadDestinations({
+      fallback: [],
+      onError: () => { this.globalData.CATALOG_ERROR = true; },
+    });
     syncGlobalDestinations(this, destinations);
     Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
     console.log('[App] Packages loaded');
@@ -245,5 +249,6 @@ App({
     EVENTS,
 
     DESTINATIONS: [],
+    CATALOG_ERROR: false,
   },
 });

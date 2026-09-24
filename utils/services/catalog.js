@@ -19,22 +19,24 @@ const DEFAULT_FILTERS = [
   { id: 'experience-locale', label: 'Experience Locale' },
 ];
 
-export async function loadDestinations({ fallback = [] } = {}) {
+export async function loadDestinations({ fallback = [], onError } = {}) {
   try {
     const destinations = await backendAPI.getPackages();
     return setDestinations(destinations);
   } catch (error) {
     console.warn('[Catalog] Packages API failed, using fallback destinations:', error);
+    if (typeof onError === 'function') onError(error);
     return setDestinations(fallback);
   }
 }
 
-export async function loadRecommendedDestinations({ fallback = [] } = {}) {
+export async function loadRecommendedDestinations({ fallback = [], onError } = {}) {
   try {
     const destinations = await backendAPI.getRecommendedPackages();
     return setRecommendedDestinations(destinations);
   } catch (error) {
     console.warn('[Catalog] Recommended packages API failed, using fallback destinations:', error);
+    if (typeof onError === 'function') onError(error);
     return setRecommendedDestinations(fallback);
   }
 }

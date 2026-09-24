@@ -68,3 +68,11 @@
 .card-padding {
   padding: 24rpx 24rpx 32rpx 24rpx;
 }
+
+.catalog-state {
+  min-height: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+}
