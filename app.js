@@ -24,69 +24,6 @@ const STATE_KEYS = {
   USER_NAME: 'user.name',
 };
 
-const RESERVATIONS = [
-  {
-    id: 1,
-    image: '/assets/images/ile.png',
-    title: 'Au Soleil – Gorée',
-    subtitle: 'Île de Gorée',
-    dateLabel: '25 Mar 2026',
-    travelersLabel: '2 voyageurs',
-    price: '197 000 FCFA',
-    reference: 'ATS8UI9G',
-    status: 'upcoming',
-    statusLabel: 'À venir',
-    actionLabel: 'Gérer la réservation',
-    showAction: true,
-    detailActions: 'manage',
-  },
-  {
-    id: 2,
-    image: '/assets/images/bord.png',
-    title: 'Tour de Dakar',
-    subtitle: 'Dakar',
-    dateLabel: '2 Fév 2026',
-    travelersLabel: '1 voyageur',
-    price: '20 000 FCFA',
-    reference: 'ATS1VZ3C',
-    status: 'done',
-    statusLabel: 'Terminé',
-    actionLabel: 'Voir la réservation',
-    showAction: false,
-    detailActions: 'rebook',
-  },
-  {
-    id: 3,
-    image: '/assets/images/bord.png',
-    title: 'Bord de mer',
-    subtitle: 'Île de Ngor',
-    dateLabel: '22 Mars 2026',
-    travelersLabel: '4 voyageurs',
-    price: '28 500 FCFA',
-    reference: 'ATS3PL7M',
-    status: 'upcoming',
-    statusLabel: 'À venir',
-    actionLabel: 'Gérer la réservation',
-    showAction: true,
-    detailActions: 'manage',
-  },
-  {
-    id: 4,
-    image: '/assets/images/ranch.png',
-    title: 'Ranch de Bandia',
-    subtitle: 'Bandia',
-    dateLabel: '28 Fév 2026',
-    travelersLabel: '2 voyageurs',
-    price: '35 000 FCFA',
-    reference: 'ATS8WQ4N',
-    status: 'upcoming',
-    statusLabel: 'À venir',
-    actionLabel: 'Gérer la réservation',
-    showAction: true,
-    detailActions: 'manage',
-  },
-];
-
 /**
  * EventBus Event Names
  * Add your app-specific events here
@@ -308,6 +245,5 @@ App({
     EVENTS,
 
     DESTINATIONS: [],
-    RESERVATIONS,
   },
 });

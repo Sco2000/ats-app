@@ -25,7 +25,7 @@
         <view class="date-grid">
           <view
             wx:for="{{ dates }}"
-            wx:key="date"
+            wx:key="isoDate"
             wx:for-item="dateItem"
             data-index="{{ index }}"
             class="date-card {{ selectedDate === index ? 'date-card--active' : '' }}"
@@ -43,9 +43,9 @@
           </view>
         </view>
 
-        <app-typography containerClass="more-dates" fontSize="27rpx" weight="600" color="#16A34A" align="center" lineHeight="38rpx">
-          Voir Plus de Dates
-        </app-typography>
+        <picker mode="date" start="{{ minDate }}" value="{{ minDate }}" bindchange="onDatePickerChange">
+          <view class="more-dates">Voir Plus de Dates</view>
+        </picker>
       </view>
 
       <view class="booking-section booking-section--travelers">

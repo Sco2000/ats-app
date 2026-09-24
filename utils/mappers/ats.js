@@ -92,6 +92,7 @@ export function mapApiPackageToDestination(api = {}) {
 
   return {
     id: firstValue([api.id, api.package_id, api.ID]),
+    currency: firstValue([api.currency, api.currency_code]),
     title: firstValue([api.title, api.name, api.package]),
     subtitle: location,
     image,
