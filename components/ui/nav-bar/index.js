@@ -63,6 +63,22 @@ Component({
   methods: {
     goBack() {
       const pages = getCurrentPages();
+      const currentPage = pages[pages.length - 1];
+      const currentUrl = currentPage ? `/${currentPage.route}` : '';
+
+      if (isTabBarUrl(currentUrl)) {
+        const app = getApp();
+        const navHistory = app && app.globalData && app.globalData.navHistory;
+        const previousTabUrl = navHistory && navHistory.pop();
+
+        if (isTabBarUrl(previousTabUrl) && previousTabUrl !== currentUrl) {
+          wx.switchTab({ url: previousTabUrl.split('?')[0] });
+        } else {
+          wx.switchTab({ url: '/pages/home/home' });
+        }
+        return;
+      }
+
       if (pages.length > 1) {
         wx.navigateBack();
         return;
