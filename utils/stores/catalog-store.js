@@ -20,11 +20,7 @@ export function getDestinations() {
 export function updateDestinationLike(id, like) {
   toggleFavoriteId(id, like);
 
-  destinations = destinations.map((destination) => (
-    String(destination.id) === String(id)
-      ? { ...destination, like: Boolean(like) }
-      : destination
-  ));
+  destinations = applyFavoritesToPackages(destinations);
 
   return destinations;
 }

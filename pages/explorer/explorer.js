@@ -190,7 +190,14 @@ Page({
       return;
     }
 
-    const updatedDestinations = updateDestinationLike(destination.id, like);
+    toggleFavoriteId(destination.id, like);
+
+    const sourceDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+      ? app.globalData.DESTINATIONS
+      : (this.data.allDestinations || []);
+
+    const updatedDestinations = applyFavoritesToPackages(sourceDestinations);
+    app.globalData.DESTINATIONS = updatedDestinations;
 
     this.setData({
       allDestinations: updatedDestinations,
@@ -198,6 +205,6 @@ Page({
       this.applyFilters();
     });
 
-    syncGlobalDestinations(app, updatedDestinations);
+    updateDestinationLike(destination.id, like);
   },
 });

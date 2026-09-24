@@ -1,6 +1,7 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { waitForAppInit } from '../../utils/helpers/app-init';
 import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
@@ -16,8 +17,8 @@ Page({
     tabs: MAIN_TABS,
     allDestinations: [],
     favoriteDestinations: [],
-    resultsLabel: '0 destination sauvegardée',
-    loading: false,
+    resultsLabel: 'Chargement des favoris…',
+    loading: true,
   },
 
   onLoad() {
@@ -26,39 +27,74 @@ Page({
 
   onShow() {
     setCustomTabBarActive(this, 'favorites');
-    this.refreshFavorites();
-  },
 
-  async refreshFavorites() {
-    let destinations = Array.isArray(app.globalData.DESTINATIONS)
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
       ? app.globalData.DESTINATIONS
       : [];
 
-    // Si les données de l'API n'ont pas encore été chargées (ex: arrivée directe sur favoris)
-    if (destinations.length === 0) {
-      try {
-        this.setData({ loading: true });
-        const rawPackages = await backendAPI.getPackages();
-        destinations = rawPackages;
-        app.globalData.DESTINATIONS = destinations;
-      } catch (error) {
-        console.error('[Favoris] Erreur chargement packages API:', error);
-      } finally {
-        this.setData({ loading: false });
-      }
+    if (rawDestinations.length > 0) {
+      const syncedDestinations = applyFavoritesToPackages(rawDestinations);
+      app.globalData.DESTINATIONS = syncedDestinations;
+      const favoriteDestinations = syncedDestinations.filter((item) => Boolean(item.like));
+
+      this.setData({
+        allDestinations: syncedDestinations,
+        favoriteDestinations,
+        resultsLabel: formatFavoritesLabel(favoriteDestinations.length),
+        loading: false,
+      });
+      return;
     }
 
-    // Applique l'état des favoris persistés dans le stockage local
-    const syncedDestinations = applyFavoritesToPackages(destinations);
-    app.globalData.DESTINATIONS = syncedDestinations;
+    this.refreshFavorites();
+  },
 
-    const favoriteDestinations = syncedDestinations.filter((item) => Boolean(item.like));
+  onHide() {
+    if (!this.data.favoriteDestinations || this.data.favoriteDestinations.length === 0) {
+      this.setData({ loading: true, resultsLabel: 'Chargement des favoris…' });
+    }
+  },
 
-    this.setData({
-      allDestinations: syncedDestinations,
-      favoriteDestinations,
-      resultsLabel: formatFavoritesLabel(favoriteDestinations.length),
-    });
+  async refreshFavorites() {
+    if (!this.data.favoriteDestinations || this.data.favoriteDestinations.length === 0) {
+      this.setData({ loading: true, resultsLabel: 'Chargement des favoris…' });
+    }
+
+    try {
+      await waitForAppInit(app);
+
+      let destinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+        ? app.globalData.DESTINATIONS
+        : [];
+
+      // Si les données de l'API n'ont pas encore été chargées (ex: arrivée directe sur favoris)
+      if (destinations.length === 0) {
+        try {
+          const rawPackages = await backendAPI.getPackages();
+          destinations = rawPackages;
+          app.globalData.DESTINATIONS = destinations;
+        } catch (error) {
+          console.error('[Favoris] Erreur chargement packages API:', error);
+        }
+      }
+
+      // Applique l'état des favoris persistés dans le stockage local
+      const syncedDestinations = applyFavoritesToPackages(destinations);
+      app.globalData.DESTINATIONS = syncedDestinations;
+
+      const favoriteDestinations = syncedDestinations.filter((item) => Boolean(item.like));
+      this._favoritesLoaded = true;
+
+      this.setData({
+        allDestinations: syncedDestinations,
+        favoriteDestinations,
+        resultsLabel: formatFavoritesLabel(favoriteDestinations.length),
+        loading: false,
+      });
+    } catch (error) {
+      console.error('[Favoris] Erreur rafraîchissement favoris:', error);
+      this.setData({ loading: false });
+    }
   },
 
   handleCardPress(event) {
