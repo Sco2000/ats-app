@@ -3,6 +3,7 @@ import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
 import {
   DEFAULT_FILTERS,
@@ -59,7 +60,12 @@ Page({
   async refreshDestinations() {
     await waitForAppInit(app);
 
-    const destinations = getCatalogDestinations();
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+      ? app.globalData.DESTINATIONS
+      : getCatalogDestinations();
+
+    const destinations = applyFavoritesToPackages(rawDestinations);
+    app.globalData.DESTINATIONS = destinations;
 
     this.setData({
       allDestinations: destinations,
