@@ -70,7 +70,12 @@ Page({
     if (shouldShowLoading) this.setData({ loading: true, loadError: false });
     try {
       await waitForAppInit(app);
-      const destinations = getCatalogDestinations();
+      const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+        ? app.globalData.DESTINATIONS
+        : getCatalogDestinations();
+
+      const destinations = applyFavoritesToPackages(rawDestinations);
+      app.globalData.DESTINATIONS = destinations;
       this._catalogLoaded = true;
       const loadError = Boolean(app.globalData.CATALOG_ERROR);
       const visibleDestinations = getFilteredDestinations(
@@ -91,14 +96,6 @@ Page({
       this.setData({ loading: false, loadError: true, resultsLabel: 'Chargement impossible' });
     }
   },
-    await waitForAppInit(app);
-
-    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
-      ? app.globalData.DESTINATIONS
-      : getCatalogDestinations();
-
-    const destinations = applyFavoritesToPackages(rawDestinations);
-    app.globalData.DESTINATIONS = destinations;
 
   async retryLoading() {
     this.setData({ loading: true, loadError: false, resultsLabel: 'Chargement des destinations…' });
