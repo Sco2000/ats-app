@@ -1,6 +1,8 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { backendAPI } from '../../utils/apis/index';
+import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
 const app = getApp();
 
@@ -15,6 +17,7 @@ Page({
     allDestinations: [],
     favoriteDestinations: [],
     resultsLabel: '0 destination sauvegardée',
+    loading: false,
   },
 
   onLoad() {
@@ -26,15 +29,33 @@ Page({
     this.refreshFavorites();
   },
 
-  refreshFavorites() {
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
+  async refreshFavorites() {
+    let destinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
 
-    const favoriteDestinations = destinations.filter((destination) => Boolean(destination.like));
+    // Si les données de l'API n'ont pas encore été chargées (ex: arrivée directe sur favoris)
+    if (destinations.length === 0) {
+      try {
+        this.setData({ loading: true });
+        const rawPackages = await backendAPI.getPackages();
+        destinations = rawPackages;
+        app.globalData.DESTINATIONS = destinations;
+      } catch (error) {
+        console.error('[Favoris] Erreur chargement packages API:', error);
+      } finally {
+        this.setData({ loading: false });
+      }
+    }
+
+    // Applique l'état des favoris persistés dans le stockage local
+    const syncedDestinations = applyFavoritesToPackages(destinations);
+    app.globalData.DESTINATIONS = syncedDestinations;
+
+    const favoriteDestinations = syncedDestinations.filter((item) => Boolean(item.like));
 
     this.setData({
-      allDestinations: destinations,
+      allDestinations: syncedDestinations,
       favoriteDestinations,
       resultsLabel: formatFavoritesLabel(favoriteDestinations.length),
     });
@@ -65,7 +86,14 @@ Page({
       return;
     }
 
-    const updatedDestinations = (this.data.allDestinations || []).map((item) => (
+    // 1. Sauvegarder dans le stockage local persistant
+    toggleFavoriteId(destination.id, like);
+
+    // 2. Mettre à jour allDestinations global
+    const sourceDestinations = Array.isArray(this.data.allDestinations)
+      ? this.data.allDestinations
+      : [];
+    const updatedDestinations = sourceDestinations.map((item) => (
       item.id === destination.id
         ? { ...item, like }
         : item
@@ -73,6 +101,7 @@ Page({
 
     app.globalData.DESTINATIONS = updatedDestinations;
 
+    // 3. Filtrer pour la vue des favoris
     const favoriteDestinations = updatedDestinations.filter((item) => Boolean(item.like));
 
     this.setData({

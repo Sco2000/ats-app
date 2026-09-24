@@ -104,6 +104,14 @@ Component({
     hasOverlay: false
   },
 
+  observers: {
+    'src': function (newSrc) {
+      if (newSrc && newSrc !== this.data.computedSrc) {
+        this.loadImage(newSrc);
+      }
+    }
+  },
+
   lifetimes: {
     created() {
       this.data.imageId = `tc-image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -127,29 +135,19 @@ Component({
     init() {
       const src = this.properties.src;
       if (src) {
-        this.loadImage(src);
+        if (src !== this.data.computedSrc) {
+          this.loadImage(src);
+        }
       } else {
         this.setData({ loading: false, error: true });
       }
     },
 
     loadImage(src) {
-      const cacheKey = this.properties.cacheKey || src;
-      if (this.isImageCached(cacheKey)) {
-        this.setData({ computedSrc: src, loading: false, error: false });
-        return;
-      }
-
-      wx.getImageInfo({
-        src,
-        success: () => {
-          this.setData({ computedSrc: src, loading: false, error: false });
-          this.cacheImage(cacheKey);
-          this.emit('image:loaded', this.getImageInfo());
-        },
-        fail: () => {
-          this.handleImageError();
-        }
+      this.setData({
+        computedSrc: src,
+        loading: true,
+        error: false,
       });
     },
 
@@ -178,6 +176,10 @@ Component({
     },
 
     onImageLoad(e) {
+      const cacheKey = this.properties.cacheKey || this.data.computedSrc;
+      this.cacheImage(cacheKey);
+      this.setData({ loading: false, error: false, currentRetry: 0 });
+      this.emit('image:loaded', this.getImageInfo());
       this.emit('image:load', { id: this.data.imageId, detail: e.detail });
     },
 
@@ -215,11 +217,6 @@ Component({
         .exec(res => {
           this.setData({ hasOverlay: res[0] !== null });
         });
-    },
-
-    isImageCached(key) {
-      const cache = wx.getStorageSync('tc-image-cache') || {};
-      return cache[key] && (Date.now() - cache[key].timestamp < 3600000);
     },
 
     cacheImage(key) {

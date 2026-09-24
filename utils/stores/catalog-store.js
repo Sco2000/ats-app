@@ -1,3 +1,5 @@
+import { applyFavoritesToPackages, toggleFavoriteId } from '../helpers/favorites';
+
 let destinations = [];
 let recommendedDestinations = [];
 let filters = [];
@@ -7,7 +9,7 @@ function normalizeList(value) {
 }
 
 export function setDestinations(nextDestinations) {
-  destinations = normalizeList(nextDestinations);
+  destinations = applyFavoritesToPackages(normalizeList(nextDestinations));
   return destinations;
 }
 
@@ -16,6 +18,8 @@ export function getDestinations() {
 }
 
 export function updateDestinationLike(id, like) {
+  toggleFavoriteId(id, like);
+
   destinations = destinations.map((destination) => (
     String(destination.id) === String(id)
       ? { ...destination, like: Boolean(like) }
