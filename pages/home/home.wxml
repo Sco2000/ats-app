@@ -51,7 +51,7 @@
       </view>
       <view class="destination-list-body">
         <app-list-destination
-          destinations="{{ destinations }}"
+          destinations="{{ destinationsRecommended }}"
           layout="scroll"
           cardWidth="500rpx"
           imageHeight="287.98rpx"
