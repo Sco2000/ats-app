@@ -38,15 +38,7 @@ Page({
     query: '',
     allDestinations: [],
     destinations: [],
-    filters: [
-      { id: 'all', label: 'Tous' },
-      { id: 'dakar', label: 'Dakar' },
-      { id: 'saly', label: 'Saly' },
-      { id: 'sine-saloum', label: 'Sine Saloum' },
-      { id: 'saint-louis', label: 'Saint Louis' },
-      { id: 'lompoul', label: 'Lompoul' },
-      { id: 'experience-locale', label: 'Experience Locale' },
-    ],
+    filters: DEFAULT_FILTERS,
     activeFilter: 'all',
   },
 
