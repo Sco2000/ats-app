@@ -22,8 +22,6 @@ function getResponseBody(response, fallbackMessage) {
 
   return response.data || {};
 }
-  BOOKINGS: '/bookings',
-};
 
 function assertSuccessResponse(res, message) {
   const body = res && res.data ? res.data : null;

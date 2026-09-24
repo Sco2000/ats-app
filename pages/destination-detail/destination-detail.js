@@ -5,8 +5,6 @@ const app = getApp();
 
 const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter pleinement du Sénégal, entre paysages naturels, moments de détente et découvertes locales. Vous pourrez explorer les lieux emblématiques, observer la vie autour de vous et vivre une sortie simple, confortable et mémorable.";
 
-const app = getApp();
-
 function uniqueImages(images = []) {
   const seen = {};
 

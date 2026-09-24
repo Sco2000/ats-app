@@ -4,6 +4,10 @@ import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
+import {
+  DEFAULT_FILTERS,
+} from '../../utils/services/catalog';
+
 
 const app = getApp();
 
