@@ -9,12 +9,22 @@ import {
   mapApiCategoryToFilter,
   mapApiPackageToDestination,
 } from '../mappers/ats.js';
+import { mapApiReservation, mapApiReservationDetail } from '../mappers/reservation.js';
 
 const ENDPOINTS = {
   CATEGORIES: '/categories',
   PACKAGES: '/packages',
+  RECOMMENDED_PACKAGES: '/packages?recommended=true',
   BOOKINGS: '/bookings',
 };
+
+function getResponseBody(response, fallbackMessage) {
+  if (!response || !response.success) {
+    throw new Error(response?.error?.message || fallbackMessage);
+  }
+
+  return response.data || {};
+}
 
 function assertSuccessResponse(res, message) {
   const body = res && res.data ? res.data : null;
@@ -26,6 +36,12 @@ function assertSuccessResponse(res, message) {
   return body;
 }
 
+/**
+ * Service for your application's API operations.
+ * All methods automatically handle authentication.
+ *
+ * @class BackendAPI
+ */
 class BackendAPI {
   /** @type {import('./http').HttpClient} */
   #client = httpClient;
@@ -33,18 +49,49 @@ class BackendAPI {
   async getPackages(params = {}) {
     await authenticate();
 
-    const res = await this.#client.get(ENDPOINTS.PACKAGES, { query: params });
-    const body = assertSuccessResponse(res, 'Failed to fetch packages');
+    const res = await this.#client.get(ENDPOINTS.PACKAGES);
+    const body = getResponseBody(res, 'Impossible de recuperer les packages');
     const items = Array.isArray(body.data) ? body.data : [];
 
     return items.map(mapApiPackageToDestination);
+  }
+
+  async getRecommendedPackages() {
+    await authenticate();
+
+    const res = await this.#client.get(ENDPOINTS.RECOMMENDED_PACKAGES);
+    const body = assertSuccessResponse(res, 'Failed to fetch recommended packages');
+    const items = Array.isArray(body.data) ? body.data : [];
+
+    return items.map(mapApiPackageToDestination);
+  }
+  async getPackage(id) {
+    if (!id) {
+      throw new Error('Package id manquant');
+    }
+
+    await authenticate();
+
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}/${id}`);
+    const body = getResponseBody(res, 'Impossible de recuperer le detail du package');
+    const item = body.data && !Array.isArray(body.data)
+      ? body.data
+      : body;
+
+    const destination = mapApiPackageToDestination(item);
+
+    if (!destination.id) {
+      throw new Error('Detail du package incomplet');
+    }
+
+    return destination;
   }
 
   async getCategories() {
     await authenticate();
 
     const res = await this.#client.get(ENDPOINTS.CATEGORIES);
-    const body = assertSuccessResponse(res, 'Failed to fetch categories');
+    const body = getResponseBody(res, 'Impossible de recuperer les categories');
     const items = Array.isArray(body.data) ? body.data : [];
 
     return [
@@ -53,24 +100,19 @@ class BackendAPI {
     ];
   }
 
-  async getPackageDetail(id) {
+  async getBooking(reference) {
+    if (!reference) throw new Error('Référence de réservation manquante');
     await authenticate();
-    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}/${id}`);
-    const body = assertSuccessResponse(res, 'Failed to fetch package detail');
-    return mapApiPackageToDestination(body.data);
+    const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
+    const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
+    return mapApiReservationDetail(body);
   }
 
   async createBooking(payload) {
     await authenticate();
-
     const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
-    return assertSuccessResponse(res, 'Failed to create booking');
-  }
-
-  async getBooking(reference) {
-    await authenticate();
-    const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
-    return assertSuccessResponse(res, 'Failed to fetch booking');
+    const body = assertSuccessResponse(res, 'Impossible de créer la réservation');
+    return mapApiReservation(body);
   }
 
   resetSession() {

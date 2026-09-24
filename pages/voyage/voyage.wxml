@@ -40,7 +40,7 @@
             <view class="reservation-card__content">
               <view class="reservation-card__title-row">
                 <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="45rpx">
-                  {{ reservation.title }}
+                  {{ reservation.cardTitle }}
                 </app-typography>
 
                 <view class="reservation-card__status {{ reservation.status }}">
@@ -122,7 +122,7 @@
         show-scrollbar="{{false}}"
       >
         <view class="detail-content">
-          <image class="detail-image" src="{{ selectedReservation.image }}" mode="aspectFill" />
+          <image wx:if="{{ selectedReservation.image }}" class="detail-image" src="{{ selectedReservation.image }}" mode="aspectFill" />
 
           <view class="detail-title-row">
             <text class="detail-title">{{ selectedReservation.title }}</text>
@@ -135,6 +135,9 @@
             <text class="detail-reference-label">Référence de réservation</text>
             <text class="detail-reference-value">{{ selectedReservation.reference }}</text>
           </view>
+
+          <view wx:if="{{ detailLoading }}" class="detail-info-card"><text>Chargement du détail…</text></view>
+          <view wx:if="{{ detailError }}" class="detail-info-card" catchtap="retryReservationDetails"><text>Réessayer le chargement du détail</text></view>
 
           <view class="detail-info-card">
             <app-icon icon="localisation" width="{{34}}" height="{{34}}" containerStyle="padding: 0;" />

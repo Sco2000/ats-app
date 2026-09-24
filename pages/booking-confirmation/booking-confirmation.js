@@ -28,7 +28,7 @@ function createScaleAnimation(scale, opacity, duration, timingFunction) {
 
 Page({
   data: {
-    reference: 'ATS39ZY3C6',
+    reference: '',
     amount: '',
     showIntroSuccess: true,
     introDocked: false,
@@ -40,7 +40,7 @@ Page({
 
   onLoad(options = {}) {
     this.setData({
-      reference: safeDecode(options.reference) || 'ATS39ZY3C6',
+      reference: safeDecode(options.reference),
       amount: safeDecode(options.amount),
     });
 

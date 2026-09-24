@@ -4,6 +4,15 @@ import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
+import {
+  DEFAULT_FILTERS,
+  getCatalogRecommendedDestinations,
+  loadRecommendedDestinations,
+  loadCategoryFilters,
+  syncGlobalDestinations,
+  updateDestinationLike,
+} from '../../utils/services/catalog';
+
 
 const app = getApp();
 
@@ -13,12 +22,18 @@ Page({
   /**
    * Fonction appelée au chargement de la page
    */
-  async onLoad() {
+  onLoad() {
+    this.refreshPackages();
+  },
+
+  async refreshPackages() {
+    this.setData({ destinationsLoading: true, destinationsError: false });
     try {
       const rawPackages = await backendAPI.getPackages();
       const packages = applyFavoritesToPackages(rawPackages);
 
       app.globalData.DESTINATIONS = packages;
+      app.globalData.CATALOG_ERROR = false;
 
       this.setData({
         allDestinations: packages,
@@ -29,6 +44,10 @@ Page({
 
     } catch (error) {
       console.error("Erreur lors du chargement des packages :", error);
+      app.globalData.CATALOG_ERROR = true;
+      this.setData({ destinationsError: true });
+    } finally {
+      this.setData({ destinationsLoading: false });
     }
   },
 
@@ -38,15 +57,12 @@ Page({
     query: '',
     allDestinations: [],
     destinations: [],
-    filters: [
-      { id: 'all', label: 'Tous' },
-      { id: 'dakar', label: 'Dakar' },
-      { id: 'saly', label: 'Saly' },
-      { id: 'sine-saloum', label: 'Sine Saloum' },
-      { id: 'saint-louis', label: 'Saint Louis' },
-      { id: 'lompoul', label: 'Lompoul' },
-      { id: 'experience-locale', label: 'Experience Locale' },
-    ],
+    destinationsRecommended: [],
+    destinationsLoading: true,
+    recommendedLoading: true,
+    recommendedError: false,
+    destinationsError: false,
+    filters: DEFAULT_FILTERS,
     activeFilter: 'all',
   },
 
@@ -54,6 +70,8 @@ Page({
     const allDestinations = Array.isArray(this.data.allDestinations)
       ? this.data.allDestinations
       : [];
+      
+    const destinationsRecommended = getCatalogRecommendedDestinations();
 
     const destinations = filterDestinations(
       allDestinations,
@@ -61,20 +79,29 @@ Page({
       this.data.activeFilter
     );
 
-    this.setData({ destinations });
+    this.setData({ destinations, destinationsRecommended });
   },
 
-  refreshDestinations() {
-    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+  async refreshDestinations() {
+    this.setData({ recommendedLoading: true, recommendedError: false });
+    try {
+      await loadRecommendedDestinations({
+        onError: () => this.setData({ recommendedError: true }),
+      });
+      this.setData({ destinationsRecommended: getCatalogRecommendedDestinations() });
+    } catch (error) {
+      this.setData({ recommendedError: true });
+    } finally {
+      this.setData({ recommendedLoading: false });
+    }
+  },
 
-    const allDestinations = applyFavoritesToPackages(rawDestinations);
-    app.globalData.DESTINATIONS = allDestinations;
+  retryPackages() {
+    this.refreshPackages();
+  },
 
-    this.setData({ allDestinations }, () => {
-      this.applyFilters();
-    });
+  retryRecommendations() {
+    this.refreshDestinations();
   },
 
   onInput(event) {

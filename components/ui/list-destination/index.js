@@ -6,6 +6,10 @@ Component({
       type: Array,
       value: []
     },
+    loading: {
+      type: Boolean,
+      value: false
+    },
     layout: {
       type: String,
       value: 'scroll'
@@ -53,7 +57,8 @@ Component({
   },
 
   data: {
-    computedGridItemWidth: '100%'
+    computedGridItemWidth: '100%',
+    skeletonItems: [0, 1, 2, 3]
   },
 
   observers: {
@@ -80,7 +85,6 @@ Component({
       const columnsCount = Math.max(1, Number(this.data.columns) || 1);
       const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
       this.setData({ computedGridItemWidth: width });
-      console.log('ListDestination component loaded with destinations:', this.data.destinations);
     }
   },
 
