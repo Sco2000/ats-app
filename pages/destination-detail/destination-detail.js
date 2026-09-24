@@ -170,7 +170,7 @@ Page({
 
     // 2. Mettre à jour app.globalData.DESTINATIONS
     const updatedDestinations = (app.globalData.DESTINATIONS || []).map((item) => (
-      item.id === destination.id
+      String(item.id) === String(destination.id)
         ? { ...item, like: nextLiked }
         : item
     ));
