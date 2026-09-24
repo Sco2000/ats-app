@@ -7,6 +7,9 @@ import { httpClient } from './http.js';
 import { config } from '../config.js';
 import { STORAGE_KEYS, AUTH_CONFIG } from '../constants/index.js';
 
+let runtimeToken = null;
+let runtimeTokenExpiry = 0;
+
 export function setAccessToken(token) {
   if (!token) {
     return null;
@@ -21,6 +24,8 @@ export function setAccessToken(token) {
 export function clearAccessToken() {
   wx.removeStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
   wx.removeStorageSync(STORAGE_KEYS.TOKEN_EXPIRY);
+  runtimeToken = null;
+  runtimeTokenExpiry = 0;
   httpClient.setToken(null);
 }
 
@@ -32,32 +37,30 @@ export function clearAccessToken() {
  */
 export async function authenticate() {
   const now = Date.now();
-  const storedToken = wx.getStorageSync(STORAGE_KEYS.ACCESS_TOKEN);
-  const storedExp = wx.getStorageSync(STORAGE_KEYS.TOKEN_EXPIRY);
 
-  // Retourne le token en cache s'il est encore valide
-  if (storedToken && storedExp && now < storedExp) {
-    httpClient.setToken(storedToken);
-    return storedToken;
+  if (runtimeToken && now < runtimeTokenExpiry) {
+    httpClient.setToken(runtimeToken);
+    return runtimeToken;
   }
 
-  // Demande un nouveau jeton auprès de l'API ATS
-  const body = {
-    client_id: config.CLIENT_ID,
-    client_secret: config.CLIENT_SECRET,
-  };
+  const body = [
+    `client_id=${encodeURIComponent(config.CLIENT_ID)}`,
+    `client_secret=${encodeURIComponent(config.CLIENT_SECRET)}`,
+    `grant_type=${encodeURIComponent(config.GRANT_TYPE)}`,
+  ].join('&');
 
   const res = await new Promise((resolve, reject) => {
     wx.request({
       method: 'POST',
       url: `${config.BASE_URL}${config.AUTH_URL}`,
-      header: { 'Content-Type': 'application/json' },
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: body,
       success: ({ data, statusCode }) => {
         if (statusCode >= 200 && statusCode < 300 && data) {
           resolve(data);
         } else {
-          reject(new Error(`Auth failed with status ${statusCode}`));
+          const serverMessage = data?.message || data?.error || data?.detail || data?.errors;
+          reject(new Error(serverMessage || `Auth failed with status ${statusCode}`));
         }
       },
       fail: (err) => reject(new Error(err.errMsg || 'Network auth failure')),
@@ -71,11 +74,10 @@ export async function authenticate() {
     throw new Error('Access token missing from auth response');
   }
 
-  const expiry = now + (expiresIn * 1000) - AUTH_CONFIG.REFRESH_BUFFER_MS;
+  const expiry = now + (Number(expiresIn) * 1000) - AUTH_CONFIG.REFRESH_BUFFER_MS;
 
-  // Mise en cache du jeton
-  wx.setStorageSync(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
-  wx.setStorageSync(STORAGE_KEYS.TOKEN_EXPIRY, expiry);
+  runtimeToken = accessToken;
+  runtimeTokenExpiry = expiry;
   httpClient.setToken(accessToken);
 
   return accessToken;

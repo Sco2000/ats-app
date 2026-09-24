@@ -68,7 +68,7 @@ Page({
     this.setData({ destinations, destinationsRecommended });
   },
 
-  refreshDestinations() {
+  async refreshDestinations() {
     const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];

@@ -63,6 +63,7 @@ class BackendAPI {
     const items = Array.isArray(body.data) ? body.data : [];
 
     return items.map(mapApiPackageToDestination);
+  }
   async getPackage(id) {
     if (!id) {
       throw new Error('Package id manquant');
