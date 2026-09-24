@@ -1,4 +1,9 @@
 import { backendAPI } from '../../utils/apis/index';
+import { isFavorite, toggleFavoriteId } from '../../utils/helpers/favorites';
+
+const app = getApp();
+
+const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter pleinement du Sénégal, entre paysages naturels, moments de détente et découvertes locales. Vous pourrez explorer les lieux emblématiques, observer la vie autour de vous et vivre une sortie simple, confortable et mémorable.";
 
 const app = getApp();
 
@@ -113,11 +118,15 @@ Page({
       return;
     }
 
-    const normalizedDestination = normalizeDestination(destination);
+    const isLiked = isFavorite(destination.id);
+    const normalizedDestination = normalizeDestination({
+      ...destination,
+      like: isLiked,
+    });
 
     this.setData({
       destination: normalizedDestination,
-      isLiked: Boolean(normalizedDestination.like),
+      isLiked,
       hasDestination: true,
     });
   },
@@ -157,6 +166,11 @@ Page({
     }, 300);
 
     const nextLiked = !isLiked;
+
+    // 1. Sauvegarder dans le stockage persistant
+    toggleFavoriteId(destination.id, nextLiked);
+
+    // 2. Mettre à jour app.globalData.DESTINATIONS
     const updatedDestinations = (app.globalData.DESTINATIONS || []).map((item) => (
       item.id === destination.id
         ? { ...item, like: nextLiked }

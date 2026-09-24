@@ -5,7 +5,10 @@
 
 import { Bus } from './utils/event/index';
 import { nativeService } from './utils/apis/native';
-import { backendAPI } from './utils/apis/index';
+import {
+  loadDestinations,
+  syncGlobalDestinations,
+} from './utils/services/catalog';
 
 /**
  * EventBus State Keys
@@ -158,14 +161,11 @@ App({
     console.log('[App] User:', fullName, '| ID:', msisdn);
 
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
-    try {
-      const destinations = await backendAPI.getPackages();
-      this.globalData.DESTINATIONS = destinations;
-      Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
-    } catch (error) {
-      this.globalData.DESTINATIONS = [];
-      Bus.emit(EVENTS.APP_ERROR, { type: 'catalog', message: error.message });
-    }
+    console.log('[App] Loading packages from API...');
+    const destinations = await loadDestinations({ fallback: [] });
+    syncGlobalDestinations(this, destinations);
+    Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
+    console.log('[App] Packages loaded');
 
     // Mark app as initialized after user and catalog data are ready.
     Bus.setState(STATE_KEYS.APP_INITIALIZED, true);

@@ -27,14 +27,24 @@
           </view>
 
           <view class="detail-floating-button detail-floating-button--favorite" catchtap="handleToggleLike">
-            <app-icon
-              icon="{{ isLiked ? 'heartRed' : 'heart' }}"
-              width="{{38}}"
-              height="{{36}}"
-              enableBg="{{false}}"
-              containerStyle="padding: 0 !important; transform: translateY(2rpx);"
-              bind:iconTap="handleToggleLike"
-            />
+            <block wx:if="{{ isLiked }}">
+              <app-icon
+                icon="heartRed"
+                width="{{38}}"
+                height="{{36}}"
+                enableBg="{{false}}"
+                containerStyle="padding: 0 !important; transform: translateY(2rpx);"
+              />
+            </block>
+            <block wx:else>
+              <app-icon
+                icon="heart"
+                width="{{38}}"
+                height="{{36}}"
+                enableBg="{{false}}"
+                containerStyle="padding: 0 !important; transform: translateY(2rpx);"
+              />
+            </block>
           </view>
         </view>
       </view>

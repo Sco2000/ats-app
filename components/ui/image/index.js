@@ -105,15 +105,9 @@ Component({
   },
 
   observers: {
-    src(src) {
-      if (!src) {
-        this.setData({ computedSrc: '', loading: false, error: true, currentRetry: 0 });
-        return;
-      }
-
-      if (src !== this.data.computedSrc) {
-        this.setData({ loading: true, error: false, currentRetry: 0 });
-        this.loadImage(src);
+    'src': function (newSrc) {
+      if (newSrc && newSrc !== this.data.computedSrc) {
+        this.loadImage(newSrc);
       }
     }
   },

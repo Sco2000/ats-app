@@ -1,19 +1,14 @@
 // ============================================================================
-// BACKEND API SERVICE
-// Business logic layer for your application's API operations
+// ATS BACKEND API SERVICE
+// Centralized access to ATS REST endpoints.
 // ============================================================================
 
 import { httpClient } from './http.js';
 import { authenticate } from './auth.js';
-
 import {
-  mapApiPackageToDestination,
   mapApiCategoryToFilter,
+  mapApiPackageToDestination,
 } from '../mappers/ats.js';
-
-// ============================================================================
-// API ENDPOINTS - Define your API paths here
-// ============================================================================
 
 const ENDPOINTS = {
   CATEGORIES: '/categories',
@@ -27,10 +22,18 @@ function getResponseBody(response, fallbackMessage) {
 
   return response.data || {};
 }
+  BOOKINGS: '/bookings',
+};
 
-// ============================================================================
-// BACKEND API CLASS
-// ============================================================================
+function assertSuccessResponse(res, message) {
+  const body = res && res.data ? res.data : null;
+
+  if (!body || body.success !== true) {
+    throw new Error(message);
+  }
+
+  return body;
+}
 
 /**
  * Service for your application's API operations.
@@ -42,7 +45,7 @@ class BackendAPI {
   /** @type {import('./http').HttpClient} */
   #client = httpClient;
 
-  async getPackages() {
+  async getPackages(params = {}) {
     await authenticate();
 
     const res = await this.#client.get(ENDPOINTS.PACKAGES);
@@ -87,24 +90,17 @@ class BackendAPI {
     ];
   }
 
-  // ==========================================================================
-  // UTILITY METHODS
-  // ==========================================================================
+  async getBooking(reference) {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
+    return assertSuccessResponse(res, 'Failed to fetch booking');
+  }
 
-  /**
-   * Resets the HTTP client session.
-   * Call when starting a new user flow.
-   */
   resetSession() {
     this.#client.resetSession();
   }
 }
 
-// ============================================================================
-// SINGLETON EXPORT
-// ============================================================================
-
-/** @type {BackendAPI} */
 export const backendAPI = new BackendAPI();
 
 export { BackendAPI };
