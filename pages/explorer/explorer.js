@@ -28,6 +28,7 @@ Page({
     filters: DEFAULT_FILTERS,
     allDestinations: [],
     visibleDestinations: [],
+    loading: true,
     resultsLabel: '0 destination disponible',
   },
 
@@ -80,6 +81,7 @@ Page({
     this.setData({
       visibleDestinations,
       resultsLabel: formatResultsLabel(visibleDestinations.length),
+      loading: false,
     });
   },
 

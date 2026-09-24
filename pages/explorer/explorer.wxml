@@ -60,7 +60,7 @@
         />
       </view>
 
-      <view wx:else class="explorer-page__empty px-3">
+      <view wx:elif="{{ !loading }}" class="explorer-page__empty px-3">
         <app-typography size="18" weight="600" color="#1C1C1C">
           Aucune destination trouvée
         </app-typography>

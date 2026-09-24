@@ -8,6 +8,7 @@ Page({
     activeTab: 'voyages',
     tabs: MAIN_TABS,
     reservations: [],
+    loading: true,
     resultsLabel: '15 réservations',
     showReservationPopup: false,
     selectedReservation: null,
@@ -33,6 +34,7 @@ Page({
     this.setData({
       reservations,
       resultsLabel: `${total} réservation${total > 1 ? 's' : ''}`,
+      loading: false,
     });
   },
 

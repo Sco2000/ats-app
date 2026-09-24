@@ -1,6 +1,7 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { waitForAppInit } from '../../utils/helpers/app-init';
 import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
@@ -16,8 +17,9 @@ Page({
     tabs: MAIN_TABS,
     allDestinations: [],
     favoriteDestinations: [],
-    resultsLabel: '0 destination sauvegardée',
-    loading: false,
+    resultsLabel: '',
+    loading: true,
+    isReady: false,
   },
 
   onLoad() {
@@ -30,6 +32,12 @@ Page({
   },
 
   async refreshFavorites() {
+    if (!this.data.favoriteDestinations.length) {
+      this.setData({ loading: true });
+    }
+
+    await waitForAppInit(app);
+
     let destinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
@@ -43,8 +51,6 @@ Page({
         app.globalData.DESTINATIONS = destinations;
       } catch (error) {
         console.error('[Favoris] Erreur chargement packages API:', error);
-      } finally {
-        this.setData({ loading: false });
       }
     }
 
@@ -58,6 +64,8 @@ Page({
       allDestinations: syncedDestinations,
       favoriteDestinations,
       resultsLabel: formatFavoritesLabel(favoriteDestinations.length),
+      loading: false,
+      isReady: true,
     });
   },
 
