@@ -40,9 +40,10 @@
         </app-typography>
       </view>
 
-      <view wx:if="{{visibleDestinations.length}}" class="destination-list px-3">
+      <view wx:if="{{ loading || visibleDestinations.length }}" class="destination-list px-3">
         <app-list-destination
           destinations="{{ visibleDestinations }}"
+          loading="{{ loading }}"
           layout="grid"
           columns="2"
           cardWidth="100%"
@@ -57,6 +58,13 @@
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress"
         />
+      </view>
+
+      <view wx:elif="{{ loadError }}" class="explorer-page__empty px-3">
+        <app-typography size="18" weight="600" color="#1C1C1C">
+          Impossible de charger les destinations
+        </app-typography>
+        <app-typography size="14" color="#01953E" bindtap="retryLoading">Réessayer</app-typography>
       </view>
 
       <view wx:else class="explorer-page__empty px-3">

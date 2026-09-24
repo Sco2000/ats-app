@@ -8,7 +8,6 @@ import {
   DEFAULT_FILTERS,
   getCatalogRecommendedDestinations,
   loadRecommendedDestinations,
-  getCatalogDestinations,
   loadCategoryFilters,
   syncGlobalDestinations,
   updateDestinationLike,
@@ -23,12 +22,18 @@ Page({
   /**
    * Fonction appelée au chargement de la page
    */
-  async onLoad() {
+  onLoad() {
+    this.refreshPackages();
+  },
+
+  async refreshPackages() {
+    this.setData({ destinationsLoading: true, destinationsError: false });
     try {
       const rawPackages = await backendAPI.getPackages();
       const packages = applyFavoritesToPackages(rawPackages);
 
       app.globalData.DESTINATIONS = packages;
+      app.globalData.CATALOG_ERROR = false;
 
       this.setData({
         allDestinations: packages,
@@ -39,6 +44,10 @@ Page({
 
     } catch (error) {
       console.error("Erreur lors du chargement des packages :", error);
+      app.globalData.CATALOG_ERROR = true;
+      this.setData({ destinationsError: true });
+    } finally {
+      this.setData({ destinationsLoading: false });
     }
   },
 
@@ -46,8 +55,13 @@ Page({
     activeTab: 'home',
     tabs: MAIN_TABS,
     query: '',
-    allDestinations: app.globalData.DESTINATIONS,
-    destinationsRecommended: app.globalData.DESTINATIONS,
+    allDestinations: [],
+    destinations: [],
+    destinationsRecommended: [],
+    destinationsLoading: true,
+    recommendedLoading: true,
+    recommendedError: false,
+    destinationsError: false,
     filters: DEFAULT_FILTERS,
     activeFilter: 'all',
   },
@@ -69,16 +83,25 @@ Page({
   },
 
   async refreshDestinations() {
-    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS)
-      ? app.globalData.DESTINATIONS
-      : [];
+    this.setData({ recommendedLoading: true, recommendedError: false });
+    try {
+      await loadRecommendedDestinations({
+        onError: () => this.setData({ recommendedError: true }),
+      });
+      this.setData({ destinationsRecommended: getCatalogRecommendedDestinations() });
+    } catch (error) {
+      this.setData({ recommendedError: true });
+    } finally {
+      this.setData({ recommendedLoading: false });
+    }
+  },
 
-    const allDestinations = getCatalogDestinations();
-    await loadRecommendedDestinations();
+  retryPackages() {
+    this.refreshPackages();
+  },
 
-    this.setData({ allDestinations, destinationsRecommended: getCatalogRecommendedDestinations() }, () => {
-      this.applyFilters();
-    });
+  retryRecommendations() {
+    this.refreshDestinations();
   },
 
   onInput(event) {

@@ -1,4 +1,56 @@
 <view class="h-100">
+    <block wx:if="{{ loading }}">
+        <scroll-view
+            wx:if="{{ layout === 'scroll' }}"
+            class="menu-tabs {{ containerClass }}"
+            scroll-x="{{true}}"
+            enhanced="{{true}}"
+            show-scrollbar="{{false}}">
+            <view
+                class="menu-tabs__item menu-tabs__item--scroll {{index === 0 ? 'menu-tabs__item--first' : ''}} {{index === skeletonItems.length - 1 ? 'menu-tabs__item--last' : ''}}"
+                wx:for="{{ skeletonItems }}"
+                wx:key="*this"
+                style="width: {{ cardWidth }};"
+            >
+                <app-destination-card-skeleton
+                    cardWidth="{{ cardWidth }}"
+                    imageHeight="{{ imageHeight }}"
+                    cardPaddingClass="{{ cardPaddingClass }}"
+                    cardStyle="{{ cardStyle }}"
+                    cardContainerStyle="{{ cardContainerStyle }}"
+                    imageRadius="{{ imageRadius }}"
+                    showDetailsButton="{{ showDetailsButton }}" />
+            </view>
+        </scroll-view>
+
+        <view wx:elif="{{ layout === 'grid' }}" class="grid-container {{ containerClass }}">
+            <view class="grid-item" wx:for="{{ skeletonItems }}" wx:key="*this" style="flex: 0 0 {{ computedGridItemWidth }};">
+                <app-destination-card-skeleton
+                    cardWidth="100%"
+                    imageHeight="{{ imageHeight }}"
+                    cardPaddingClass="{{ cardPaddingClass }}"
+                    cardStyle="{{ cardStyle }}"
+                    cardContainerStyle="{{ cardContainerStyle }}"
+                    imageRadius="{{ imageRadius }}"
+                    showDetailsButton="{{ showDetailsButton }}" />
+            </view>
+        </view>
+
+        <view wx:else class="vertical-list">
+            <view class="menu-tabs__item" wx:for="{{ skeletonItems }}" wx:key="*this" style="width: 100%;">
+                <app-destination-card-skeleton
+                    cardWidth="100%"
+                    imageHeight="{{ imageHeight }}"
+                    cardPaddingClass="{{ cardPaddingClass }}"
+                    cardStyle="{{ cardStyle }}"
+                    cardContainerStyle="{{ cardContainerStyle }}"
+                    imageRadius="{{ imageRadius }}"
+                    showDetailsButton="{{ showDetailsButton }}" />
+            </view>
+        </view>
+    </block>
+
+    <block wx:else>
     <scroll-view
         wx:if="{{ layout === 'scroll' }}"
         class="menu-tabs {{ containerClass }}"
@@ -57,4 +109,5 @@
                 bind:onCardPress="handleCardPress" />
         </view>
     </view>
+    </block>
 </view>

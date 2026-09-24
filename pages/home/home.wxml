@@ -51,7 +51,9 @@
       </view>
       <view class="destination-list-body">
         <app-list-destination
-          destinations="{{ destinationsRecommended }}"
+          wx:if="{{ destinationsLoading || destinations.length }}"
+          destinations="{{ destinations }}"
+          loading="{{ destinationsLoading }}"
           layout="scroll"
           cardWidth="500rpx"
           imageHeight="287.98rpx"
@@ -61,13 +63,22 @@
           showDetailsButton="{{ true }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
+        <view wx:elif="{{ destinationsError }}" class="catalog-state">
+          <app-typography size="14" color="#667085">Impossible de charger les destinations.</app-typography>
+          <app-typography size="14" weight="600" color="#01953E" bindtap="retryPackages">Réessayer</app-typography>
+        </view>
+        <view wx:else class="catalog-state">
+          <app-typography size="14" color="#667085">Aucune destination disponible.</app-typography>
+        </view>
       </view>
     </view>
     <view class="recomandation-list-container d-flex flex-column px-3 py-3 pt-4">
         <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="52rpx" class="">Recommandations</app-typography>
         <view class="recomandation-list-body">
           <app-list-destination
-          destinations="{{ destinations }}"
+          wx:if="{{ recommendedLoading || destinationsRecommended.length }}"
+          destinations="{{ destinationsRecommended }}"
+          loading="{{ recommendedLoading }}"
           layout="grid"
           cardWidth="100%"
           imageHeight="288rpx"
@@ -78,6 +89,13 @@
           showDetailsButton="{{ false }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
+          <view wx:elif="{{ recommendedError }}" class="catalog-state">
+            <app-typography size="14" color="#667085">Impossible de charger les recommandations.</app-typography>
+            <app-typography size="14" weight="600" color="#01953E" bindtap="retryRecommendations">Réessayer</app-typography>
+          </view>
+          <view wx:else class="catalog-state">
+            <app-typography size="14" color="#667085">Aucune recommandation disponible.</app-typography>
+          </view>
         </view>
     </view>
   </scroll-view>

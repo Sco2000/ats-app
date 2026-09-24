@@ -7,6 +7,7 @@ import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import {
   DEFAULT_FILTERS,
   getCatalogDestinations,
+  loadDestinations,
   loadCategoryFilters,
   syncGlobalDestinations,
   updateDestinationLike,
@@ -16,6 +17,11 @@ const app = getApp();
 
 function formatResultsLabel(count) {
   return `${count} destination${count === 1 ? '' : 's'} disponible${count === 1 ? '' : 's'}`;
+}
+
+function getFilteredDestinations(destinations, query, searchValue, activeFilter) {
+  const currentQuery = query === undefined || query === null ? searchValue : query;
+  return filterDestinations(destinations, currentQuery, activeFilter);
 }
 
 Page({
@@ -28,7 +34,9 @@ Page({
     filters: DEFAULT_FILTERS,
     allDestinations: [],
     visibleDestinations: [],
-    resultsLabel: '0 destination disponible',
+    resultsLabel: 'Chargement des destinations…',
+    loading: true,
+    loadError: false,
   },
 
   onLoad() {
@@ -57,15 +65,60 @@ Page({
   },
 
   async refreshDestinations() {
-    await waitForAppInit(app);
+    const shouldShowLoading = !this._catalogLoaded;
+    if (shouldShowLoading) this.setData({ loading: true, loadError: false });
+    try {
+      await waitForAppInit(app);
+      const destinations = getCatalogDestinations();
+      this._catalogLoaded = true;
+      const loadError = Boolean(app.globalData.CATALOG_ERROR);
+      const visibleDestinations = getFilteredDestinations(
+        destinations,
+        this.data.query,
+        this.data.searchValue,
+        this.data.activeFilter
+      );
+      this.setData({
+        allDestinations: destinations,
+        visibleDestinations,
+        resultsLabel: formatResultsLabel(visibleDestinations.length),
+        loading: false,
+        loadError,
+      });
+    } catch (error) {
+      console.error('[Explorer] Erreur chargement destinations:', error);
+      this.setData({ loading: false, loadError: true, resultsLabel: 'Chargement impossible' });
+    }
+  },
 
-    const destinations = getCatalogDestinations();
-
-    this.setData({
-      allDestinations: destinations,
-    }, () => {
-      this.applyFilters();
-    });
+  async retryLoading() {
+    this.setData({ loading: true, loadError: false, resultsLabel: 'Chargement des destinations…' });
+    app.globalData.CATALOG_ERROR = false;
+    try {
+      const destinations = await loadDestinations({
+        fallback: [],
+        onError: () => { app.globalData.CATALOG_ERROR = true; },
+      });
+      syncGlobalDestinations(app, destinations);
+      this._catalogLoaded = true;
+      const loadError = Boolean(app.globalData.CATALOG_ERROR);
+      const visibleDestinations = getFilteredDestinations(
+        destinations,
+        this.data.query,
+        this.data.searchValue,
+        this.data.activeFilter
+      );
+      this.setData({
+        allDestinations: destinations,
+        visibleDestinations,
+        resultsLabel: formatResultsLabel(visibleDestinations.length),
+        loading: false,
+        loadError,
+      });
+    } catch (error) {
+      console.error('[Explorer] Erreur chargement destinations:', error);
+      this.setData({ loading: false, loadError: true, resultsLabel: 'Chargement impossible' });
+    }
   },
 
   applyFilters() {
