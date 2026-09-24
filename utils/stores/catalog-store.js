@@ -14,7 +14,7 @@ export function setDestinations(nextDestinations) {
 }
 
 export function getDestinations() {
-  return destinations;
+  return applyFavoritesToPackages(destinations);
 }
 
 export function updateDestinationLike(id, like) {

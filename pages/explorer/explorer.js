@@ -3,6 +3,7 @@ import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { waitForAppInit } from '../../utils/helpers/app-init';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
+import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 
 import {
   DEFAULT_FILTERS,
@@ -90,6 +91,14 @@ Page({
       this.setData({ loading: false, loadError: true, resultsLabel: 'Chargement impossible' });
     }
   },
+    await waitForAppInit(app);
+
+    const rawDestinations = Array.isArray(app.globalData.DESTINATIONS) && app.globalData.DESTINATIONS.length
+      ? app.globalData.DESTINATIONS
+      : getCatalogDestinations();
+
+    const destinations = applyFavoritesToPackages(rawDestinations);
+    app.globalData.DESTINATIONS = destinations;
 
   async retryLoading() {
     this.setData({ loading: true, loadError: false, resultsLabel: 'Chargement des destinations…' });
