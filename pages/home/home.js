@@ -5,6 +5,8 @@ import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import {
   DEFAULT_FILTERS,
+  getCatalogRecommendedDestinations,
+  loadRecommendedDestinations,
   getCatalogDestinations,
   loadCategoryFilters,
   syncGlobalDestinations,
@@ -19,7 +21,7 @@ Page({
     tabs: MAIN_TABS,
     query: '',
     allDestinations: app.globalData.DESTINATIONS,
-    destinations: app.globalData.DESTINATIONS,
+    destinationsRecommended: app.globalData.DESTINATIONS,
     filters: DEFAULT_FILTERS,
     activeFilter: 'all',
   },
@@ -47,6 +49,8 @@ Page({
     const allDestinations = Array.isArray(this.data.allDestinations)
       ? this.data.allDestinations
       : [];
+      
+    const destinationsRecommended = getCatalogRecommendedDestinations();
 
     const destinations = filterDestinations(
       allDestinations,
@@ -54,15 +58,16 @@ Page({
       this.data.activeFilter
     );
 
-    this.setData({ destinations });
+    this.setData({ destinations, destinationsRecommended });
   },
 
   async refreshDestinations() {
     await waitForAppInit(app);
 
     const allDestinations = getCatalogDestinations();
+    await loadRecommendedDestinations();
 
-    this.setData({ allDestinations }, () => {
+    this.setData({ allDestinations, destinationsRecommended: getCatalogRecommendedDestinations() }, () => {
       this.applyFilters();
     });
   },
