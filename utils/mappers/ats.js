@@ -20,6 +20,16 @@ function formatFcfa(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
 }
 
+function normalizeRating(value) {
+  const rating = Number(value);
+
+  if (!Number.isFinite(rating)) {
+    return 0;
+  }
+
+  return Math.min(5, Math.max(0, rating));
+}
+
 function normalizeGallery(gallery) {
   if (!Array.isArray(gallery)) {
     return [];
@@ -105,7 +115,13 @@ export function mapApiPackageToDestination(api = {}) {
     city: location || category,
     tags: ['all', ...categories.map(slugify), slugify(category)].filter(Boolean),
     like: false,
-    rating: firstValue([api.rating, api.average_rating], '0'),
+    rating: normalizeRating(firstValue([
+      api.rating,
+      api.average_rating,
+      api.rating_average,
+      api.note,
+      api.stars,
+    ], 0)),
     reviewCount: Number(firstValue([api.review_count, api.reviews_count], 0)) || 0,
     description: firstValue([api.description, api.content, api.excerpt]),
     gallery: normalizeGallery(firstValue([api.gallery, api.images, api.photos], [])),
