@@ -90,6 +90,20 @@ page {
   gap: 4rpx;
 }
 
+.detail-star {
+  font-size: 32rpx;
+  font-weight: 700;
+  line-height: 36rpx;
+}
+
+.detail-star--active {
+  color: #fad700;
+}
+
+.detail-star--inactive {
+  color: #d0d5dd;
+}
+
 .detail-rating-score {
   margin-left: 14rpx;
 }
@@ -181,6 +195,10 @@ page {
   border-radius: 24rpx;
   overflow: hidden;
   background: #f3f4f6;
+}
+
+.detail-gallery__grid-item--full {
+  width: 100%;
 }
 
 .detail-booking-bar {

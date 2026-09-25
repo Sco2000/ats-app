@@ -39,15 +39,55 @@ function getGalleryMode(count) {
   return 'mosaic';
 }
 
+function normalizeRating(value) {
+  const rating = Number(value);
+
+  if (!Number.isFinite(rating)) {
+    return 0;
+  }
+
+  return Math.min(5, Math.max(0, rating));
+}
+
+function formatRatingLabel(rating) {
+  return Number.isInteger(rating)
+    ? String(rating)
+    : rating.toFixed(1);
+}
+
+function buildStars(rating) {
+  const roundedRating = Math.round(rating);
+
+  return [1, 2, 3, 4, 5].map((value) => ({
+    value,
+    icon: '★',
+    active: value <= roundedRating,
+  }));
+}
+
+function buildRemainingGalleryItems(images) {
+  const hasSingleLastImage = images.length % 2 === 1;
+
+  return images.map((src, index) => ({
+    src,
+    index: index + 1,
+    fullWidth: hasSingleLastImage && index === images.length - 1,
+  }));
+}
+
 function normalizeDestination(destination) {
   const gallery = buildGallery(destination);
   const reviewCount = Number(destination.reviewCount || 0);
+  const rating = normalizeRating(destination.rating);
+  const remainingGalleryImages = gallery.slice(1);
 
   return {
     ...destination,
     heroImage: destination.heroImage || destination.image,
     description: destination.description || '',
-    rating: destination.rating || '',
+    rating,
+    ratingLabel: formatRatingLabel(rating),
+    stars: buildStars(rating),
     reviewCount,
     reviewLabel: `(${reviewCount} avis)`,
     duration: destination.duration || '',
@@ -55,7 +95,8 @@ function normalizeDestination(destination) {
     gallery,
     galleryMode: getGalleryMode(gallery.length),
     mainGalleryImage: gallery[0] || '',
-    remainingGalleryImages: gallery.slice(1),
+    remainingGalleryImages,
+    remainingGalleryItems: buildRemainingGalleryItems(remainingGalleryImages),
   };
 }
 
@@ -63,7 +104,6 @@ Page({
   data: {
     destination: null,
     isLiked: false,
-    stars: [1, 2, 3, 4, 5],
     hasDestination: false,
     isLoading: false,
     pageTopOffset: 32,
