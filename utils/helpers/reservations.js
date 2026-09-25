@@ -31,10 +31,20 @@ export function getLocalReservations() {
 export function getReservationByReference(reference) {
   const local = reservationStorage.getByReference(reference);
   return backendAPI.getBooking(reference).then((remote) => {
+    const app = getApp();
+    const packageInApp = ((app && app.globalData && app.globalData.DESTINATIONS) || [])
+      .find((item) => String(item.id) === String(local && local.package && local.package.id));
     const merged = {
       ...(local || {}),
       bookingRef: remote.bookingRef || reference,
       package: {
+        ...((packageInApp && {
+          id: packageInApp.id,
+          title: packageInApp.title,
+          image: packageInApp.image,
+          location: packageInApp.location || packageInApp.subtitle,
+          currency: packageInApp.currency,
+        }) || {}),
         ...((local && local.package) || {}),
         title: (local && local.package && local.package.title) || remote.packageTitle,
         currency: (local && local.package && local.package.currency) || remote.currency,

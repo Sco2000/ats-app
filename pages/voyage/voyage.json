@@ -1,8 +1,7 @@
 {
   "usingComponents": {
-    "app-card": "/components/ui/card/index",
-    "app-icon": "/components/ui/icons/base/index",
     "app-typography": "/components/ui/typography/index",
-    "osn-image": "/components/ui/image/index"
+    "reservation-card": "/components/ui/reservation-card/index",
+    "reservation-card-skeleton": "/components/ui/reservation-card-skeleton/index"
   }
 }

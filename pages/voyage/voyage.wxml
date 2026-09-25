@@ -14,87 +14,21 @@
       </app-typography>
     </view>
 
-    <view wx:if="{{ reservations.length }}" class="voyages-page__list">
-      <view
+    <view wx:if="{{ loading }}" class="voyages-page__list">
+      <reservation-card-skeleton wx:for="{{ [1, 2, 3, 4] }}" wx:key="*this" />
+    </view>
+
+    <view wx:elif="{{ reservations.length }}" class="voyages-page__list">
+      <reservation-card
         wx:for="{{ reservations }}"
         wx:key="id"
         wx:for-item="reservation"
-        class="reservation-card"
-        data-id="{{ reservation.id }}"
-        bindtap="openReservationDetails"
-      >
-        <app-card
-          containerClass="reservation-card__shell {{ reservation.showAction ? 'reservation-card__shell--with-action' : 'reservation-card__shell--compact' }}"
-          containerStyle="padding: 2rpx; border: 2rpx solid #E5E7EB; border-radius: 32rpx !important; background: #FFFFFF; box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.06); overflow: hidden; gap: 0 !important; {{ reservation.showAction ? 'min-height: 365rpx;' : 'min-height: 0;' }}"
-        >
-          <view class="reservation-card__body">
-            <view class="reservation-card__image-wrap">
-              <osn-image
-                src="{{ reservation.image }}"
-                mode="aspectFill"
-                containerStyle="width: 100%; height: 100%; display: block;"
-                imageStyle="width: 100%; height: 100%; border-radius: 26rpx;"
-              />
-            </view>
-
-            <view class="reservation-card__content">
-              <view class="reservation-card__title-row">
-                <app-typography size="18" weight="600" color="#1C1C1C" lineHeight="45rpx">
-                  {{ reservation.cardTitle }}
-                </app-typography>
-
-                <view class="reservation-card__status {{ reservation.status }}">
-                  <text class="reservation-card__status-text">{{ reservation.statusLabel }}</text>
-                </view>
-              </view>
-
-              <view class="reservation-card__meta">
-                <view class="reservation-card__meta-row">
-                  <view class="reservation-card__location-pin"></view>
-                  <app-typography size="14" color="#667085">
-                    {{ reservation.subtitle }}
-                  </app-typography>
-                </view>
-
-                <view class="reservation-card__meta-row">
-                  <app-icon icon="calendrier" width="{{20}}" height="{{20}}" containerStyle="padding: 0;" />
-                  <app-typography size="14" color="#667085">
-                    {{ reservation.dateLabel }}
-                  </app-typography>
-                </view>
-
-                <view class="reservation-card__meta-row">
-                  <app-icon icon="users" width="{{20}}" height="{{20}}" containerStyle="padding: 0;" />
-                  <app-typography size="14" color="#667085">
-                    {{ reservation.travelersLabel }}
-                  </app-typography>
-                </view>
-              </view>
-
-              <view class="reservation-card__price-row">
-                <app-typography size="16" weight="700" color="#0AA347">
-                  {{ reservation.price }}
-                </app-typography>
-                <app-typography size="13" color="#667085">
-                  Réf: {{ reservation.reference }}
-                </app-typography>
-              </view>
-            </view>
-          </view>
-
-          <view wx:if="{{ reservation.showAction }}" class="reservation-card__footer">
-            <view class="reservation-card__action">
-              <app-typography size="14" weight="600" color="#0AA347">
-                {{ reservation.actionLabel }}
-              </app-typography>
-              <text class="reservation-card__action-arrow">›</text>
-            </view>
-          </view>
-        </app-card>
-      </view>
+        reservation="{{ reservation }}"
+        bind:select="openReservationDetails"
+      />
     </view>
 
-    <view wx:else class="voyages-page__empty">
+    <view wx:elif="{{ !loading }}" class="voyages-page__empty">
       <app-typography size="18" weight="600" color="#1C1C1C">
         Aucune réservation pour le moment
       </app-typography>
@@ -102,103 +36,7 @@
         Vos réservations apparaîtront ici après confirmation.
       </app-typography>
     </view>
+
   </scroll-view>
 
-  <view wx:if="{{ showReservationPopup }}" class="reservation-popup">
-    <view class="reservation-popup__panel">
-      <view class="detail-header">
-        <text class="detail-heading">Détails de la Réservation</text>
-        <view class="detail-close" catchtap="closeReservationPopup">
-          <view class="detail-close-line detail-close-line-a"></view>
-          <view class="detail-close-line detail-close-line-b"></view>
-        </view>
-      </view>
-
-      <scroll-view
-        class="detail-scroll"
-        scroll-y="{{true}}"
-        enhanced="{{true}}"
-        enable-flex="{{true}}"
-        show-scrollbar="{{false}}"
-      >
-        <view class="detail-content">
-          <image wx:if="{{ selectedReservation.image }}" class="detail-image" src="{{ selectedReservation.image }}" mode="aspectFill" />
-
-          <view class="detail-title-row">
-            <text class="detail-title">{{ selectedReservation.title }}</text>
-            <view class="detail-status {{ selectedReservation.status }}">
-              <text>{{ selectedReservation.statusLabel }}</text>
-            </view>
-          </view>
-
-          <view class="detail-reference">
-            <text class="detail-reference-label">Référence de réservation</text>
-            <text class="detail-reference-value">{{ selectedReservation.reference }}</text>
-          </view>
-
-          <view wx:if="{{ detailLoading }}" class="detail-info-card"><text>Chargement du détail…</text></view>
-          <view wx:if="{{ detailError }}" class="detail-info-card" catchtap="retryReservationDetails"><text>Réessayer le chargement du détail</text></view>
-
-          <view class="detail-info-card">
-            <app-icon icon="localisation" width="{{34}}" height="{{34}}" containerStyle="padding: 0;" />
-            <view class="detail-info-copy">
-              <text class="detail-info-label">Destination</text>
-              <text class="detail-info-value">{{ selectedReservation.subtitle }}</text>
-            </view>
-          </view>
-
-          <view class="detail-info-card">
-            <app-icon icon="calendrier" width="{{34}}" height="{{34}}" containerStyle="padding: 0;" />
-            <view class="detail-info-copy">
-              <text class="detail-info-label">Date du voyage</text>
-              <text class="detail-info-value">{{ selectedReservation.dateLabel }}</text>
-            </view>
-          </view>
-
-          <view class="detail-info-card">
-            <app-icon icon="users" width="{{34}}" height="{{34}}" containerStyle="padding: 0;" />
-            <view class="detail-info-copy">
-              <text class="detail-info-label">Nombre de voyageurs</text>
-              <text class="detail-info-value">{{ selectedReservation.travelersLabel }}</text>
-            </view>
-          </view>
-
-          <view class="detail-divider"></view>
-
-          <view class="detail-total-row">
-            <text class="detail-total-label">Montant total</text>
-            <text class="detail-total-value">{{ selectedReservation.price }}</text>
-          </view>
-
-          <view class="detail-support">
-            <text class="detail-support-title">Besoin d'aide ?</text>
-            <view class="detail-support-button detail-support-button-active" bindtap="callSupport">
-              <text class="detail-support-icon">☎</text>
-              <text class="detail-support-text">Appeler le support</text>
-            </view>
-            <view class="detail-support-button" bindtap="sendEmail">
-              <text class="detail-support-icon">✉</text>
-              <text class="detail-support-text">Envoyer un email</text>
-            </view>
-          </view>
-
-          <view wx:if="{{ selectedReservationIsUpcoming }}" class="detail-actions">
-            <view class="detail-action-button detail-primary" bindtap="downloadTicket">
-              <text class="detail-download">⇩</text>
-              <text>Télécharger le billet</text>
-            </view>
-            <view class="detail-action-button detail-action-button--last detail-danger" bindtap="cancelReservation">
-              <text>Annuler la réservation</text>
-            </view>
-          </view>
-
-          <view wx:else class="detail-actions">
-            <view class="detail-action-button detail-action-button--last detail-primary" bindtap="rebook">
-              <text>Réserver à nouveau</text>
-            </view>
-          </view>
-        </view>
-      </scroll-view>
-    </view>
-  </view>
 </app-layout>

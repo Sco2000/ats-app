@@ -8,6 +8,7 @@
     "pages/booking-confirmation/booking-confirmation",
     "pages/favoris/favoris",
     "pages/voyage/voyage",
+    "pages/reservation-detail/reservation-detail",
     "pages/index/index"
   ],
   "usingComponents": {

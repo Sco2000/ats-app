@@ -1,6 +1,6 @@
 import { MAIN_TABS } from '../../utils/constants/index';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
-import { getLocalReservations, getReservationByReference } from '../../utils/helpers/reservations.js';
+import { getLocalReservations } from '../../utils/helpers/reservations.js';
 
 function truncateTitle(title, maxLength = 15) {
   const characters = Array.from(String(title || ''));
@@ -14,10 +14,8 @@ Page({
     activeTab: 'voyages',
     tabs: MAIN_TABS,
     reservations: [],
+    loading: true,
     resultsLabel: '0 réservation',
-    showReservationPopup: false,
-    selectedReservation: null,
-    selectedReservationIsUpcoming: true,
   },
 
   onLoad() {
@@ -30,11 +28,13 @@ Page({
   },
 
   refreshReservations() {
+    this.setData({ loading: true });
     const reservations = getLocalReservations().map((item) => this.toCardModel(item));
     const total = reservations.length;
 
     this.setData({
       reservations,
+      loading: false,
       resultsLabel: `${total} réservation${total > 1 ? 's' : ''}`,
     });
   },
@@ -64,75 +64,8 @@ Page({
   },
 
   openReservationDetails(event) {
-    const { id } = event.currentTarget.dataset;
-    const reservation = this.data.reservations.find((item) => item.id === id);
-
-    if (!reservation) {
-      return;
-    }
-
-    this.setData({
-      selectedReservation: reservation,
-      selectedReservationIsUpcoming: reservation.status === 'upcoming',
-      showReservationPopup: true,
-    });
-    this.loadReservationDetails(reservation.reference);
-  },
-
-  async loadReservationDetails(reference) {
-    this.setData({ detailLoading: true, detailError: false });
-    try {
-      const result = await getReservationByReference(reference);
-      if (this.data.selectedReservation && this.data.selectedReservation.reference === reference) {
-        this.setData({ selectedReservation: this.toCardModel(result.reservation), detailError: !result.fromApi });
-      }
-      if (!result.fromApi) wx.showToast({ title: 'Détail indisponible. Données locales affichées.', icon: 'none' });
-    } catch (error) {
-      wx.showToast({ title: 'Impossible de charger le détail. Réessayez.', icon: 'none' });
-      this.setData({ detailError: true });
-    } finally {
-      this.setData({ detailLoading: false });
-    }
-  },
-
-  retryReservationDetails() {
-    const item = this.data.selectedReservation;
-    if (item && item.reference) this.loadReservationDetails(item.reference);
-  },
-
-  closeReservationPopup() {
-    this.setData({
-      showReservationPopup: false,
-      selectedReservation: null,
-    });
-  },
-
-  callSupport() {
-    wx.showToast({
-      title: 'Appel du support',
-      icon: 'none',
-    });
-  },
-
-  sendEmail() {
-    wx.showToast({
-      title: 'Email au support',
-      icon: 'none',
-    });
-  },
-
-  downloadTicket() {
-    wx.showToast({
-      title: 'Billet téléchargé',
-      icon: 'success',
-    });
-  },
-
-  cancelReservation() {},
-
-  rebook() {
-    wx.navigateTo({
-      url: '/pages/booking/booking',
-    });
+    const bookingRef = event.detail.bookingRef;
+    if (!bookingRef) return;
+    wx.navigateTo({ url: `/pages/reservation-detail/reservation-detail?bookingRef=${encodeURIComponent(bookingRef)}` });
   },
 });
