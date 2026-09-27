@@ -26,11 +26,16 @@ export const UserSchema = {
 ## Usage
 
 ```javascript
-import { sculpt } from '../json-sculpt/sculpt';
+import { sculpt } from '../json-sculpt/sculpt.js';
 import { UserSchema } from '../mappers/example.sculpt.js';
 
 const user = sculpt.data({ data: apiResponse, to: UserSchema });
 ```
+
+For application API requests, keep this call inside `utils/apis/index.js` (the
+project's `BackendAPI` implementation). Pages and helpers call `backendAPI`;
+they do not apply schemas themselves. The boilerplate exposes this mechanism
+as `sculpt.data(...)`; there is no separate `jsonSculpt` function.
 
 ## See Also
 

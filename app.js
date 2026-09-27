@@ -8,7 +8,7 @@ import { nativeService } from './utils/apis/native';
 import {
   loadDestinations,
   syncGlobalDestinations,
-} from './utils/services/catalog';
+} from './utils/helpers/catalog';
 
 /**
  * EventBus State Keys

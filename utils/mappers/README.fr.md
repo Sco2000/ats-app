@@ -26,11 +26,17 @@ export const UserSchema = {
 ## Utilisation
 
 ```javascript
-import { sculpt } from '../json-sculpt/sculpt';
+import { sculpt } from '../json-sculpt/sculpt.js';
 import { UserSchema } from '../mappers/example.sculpt.js';
 
 const user = sculpt.data({ data: apiResponse, to: UserSchema });
 ```
+
+Pour les appels API de l'application, cet appel reste dans
+`utils/apis/index.js` (l'implémentation `BackendAPI` du projet). Les Pages et
+les Helpers appellent `backendAPI` sans appliquer eux-mêmes les schémas. Le
+boilerplate expose ce mécanisme sous la forme `sculpt.data(...)` ; il n'existe
+pas de fonction `jsonSculpt` distincte.
 
 ## Voir aussi
 

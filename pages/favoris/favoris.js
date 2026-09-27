@@ -2,8 +2,8 @@ import { MAIN_TABS } from '../../utils/constants/index';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { waitForAppInit } from '../../utils/helpers/app-init';
-import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
+import { loadDestinations } from '../../utils/helpers/catalog';
 
 const app = getApp();
 
@@ -70,8 +70,7 @@ Page({
       // Si les données de l'API n'ont pas encore été chargées (ex: arrivée directe sur favoris)
       if (destinations.length === 0) {
         try {
-          const rawPackages = await backendAPI.getPackages();
-          destinations = rawPackages;
+          destinations = await loadDestinations();
           app.globalData.DESTINATIONS = destinations;
         } catch (error) {
           console.error('[Favoris] Erreur chargement packages API:', error);

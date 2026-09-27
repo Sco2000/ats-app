@@ -5,11 +5,10 @@
 
 import { httpClient } from './http.js';
 import { authenticate } from './auth.js';
-import {
-  mapApiCategoryToFilter,
-  mapApiPackageToDestination,
-} from '../mappers/ats.js';
-import { mapApiReservation, mapApiReservationDetail } from '../mappers/reservation.js';
+import { sculpt } from '../json-sculpt/sculpt.js';
+import { CategorySchema } from '../mappers/category.sculpt.js';
+import { PackageSchema } from '../mappers/package.sculpt.js';
+import { ReservationDetailSchema, ReservationSchema } from '../mappers/reservation.sculpt.js';
 
 const ENDPOINTS = {
   CATEGORIES: '/categories',
@@ -53,7 +52,7 @@ class BackendAPI {
     const body = getResponseBody(res, 'Impossible de recuperer les packages');
     const items = Array.isArray(body.data) ? body.data : [];
 
-    return items.map(mapApiPackageToDestination);
+    return sculpt.data({ data: items, to: PackageSchema });
   }
 
   async getRecommendedPackages() {
@@ -63,7 +62,7 @@ class BackendAPI {
     const body = assertSuccessResponse(res, 'Failed to fetch recommended packages');
     const items = Array.isArray(body.data) ? body.data : [];
 
-    return items.map(mapApiPackageToDestination);
+    return sculpt.data({ data: items, to: PackageSchema });
   }
   async getPackage(id) {
     if (!id) {
@@ -78,7 +77,7 @@ class BackendAPI {
       ? body.data
       : body;
 
-    const destination = mapApiPackageToDestination(item);
+    const destination = sculpt.data({ data: item, to: PackageSchema });
 
     if (!destination.id) {
       throw new Error('Detail du package incomplet');
@@ -96,7 +95,7 @@ class BackendAPI {
 
     return [
       { id: 'all', label: 'Tous' },
-      ...items.map(mapApiCategoryToFilter),
+      ...sculpt.data({ data: items, to: CategorySchema }),
     ];
   }
 
@@ -105,14 +104,14 @@ class BackendAPI {
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
     const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
-    return mapApiReservationDetail(body);
+    return sculpt.data({ data: body.data, to: ReservationDetailSchema });
   }
 
   async createBooking(payload) {
     await authenticate();
     const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
     const body = assertSuccessResponse(res, 'Impossible de créer la réservation');
-    return mapApiReservation(body);
+    return sculpt.data({ data: body, to: ReservationSchema });
   }
 
   resetSession() {

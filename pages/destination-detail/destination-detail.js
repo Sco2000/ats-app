@@ -1,104 +1,8 @@
-import { backendAPI } from '../../utils/apis/index';
-import { isFavorite, toggleFavoriteId } from '../../utils/helpers/favorites';
+import { toggleFavoriteId } from '../../utils/helpers/favorites';
+import { prepareDestinationDetail } from '../../utils/helpers/destinations.js';
+import { loadDestination } from '../../utils/helpers/catalog';
 
 const app = getApp();
-
-const DEFAULT_DESCRIPTION = "Découvrez cette expérience pensée pour profiter pleinement du Sénégal, entre paysages naturels, moments de détente et découvertes locales. Vous pourrez explorer les lieux emblématiques, observer la vie autour de vous et vivre une sortie simple, confortable et mémorable.";
-
-function uniqueImages(images = []) {
-  const seen = {};
-
-  return images.filter((image) => {
-    if (!image || seen[image]) {
-      return false;
-    }
-
-    seen[image] = true;
-    return true;
-  });
-}
-
-function buildGallery(destination) {
-  const customGallery = Array.isArray(destination.gallery) ? destination.gallery : [];
-  const gallery = customGallery.length
-    ? customGallery
-    : [destination.image];
-
-  return uniqueImages(gallery);
-}
-
-function getGalleryMode(count) {
-  if (count <= 1) {
-    return 'single';
-  }
-
-  if (count === 2) {
-    return 'double';
-  }
-
-  return 'mosaic';
-}
-
-function normalizeRating(value) {
-  const rating = Number(value);
-
-  if (!Number.isFinite(rating)) {
-    return 0;
-  }
-
-  return Math.min(5, Math.max(0, rating));
-}
-
-function formatRatingLabel(rating) {
-  return Number.isInteger(rating)
-    ? String(rating)
-    : rating.toFixed(1);
-}
-
-function buildStars(rating) {
-  const roundedRating = Math.round(rating);
-
-  return [1, 2, 3, 4, 5].map((value) => ({
-    value,
-    icon: '★',
-    active: value <= roundedRating,
-  }));
-}
-
-function buildRemainingGalleryItems(images) {
-  const hasSingleLastImage = images.length % 2 === 1;
-
-  return images.map((src, index) => ({
-    src,
-    index: index + 1,
-    fullWidth: hasSingleLastImage && index === images.length - 1,
-  }));
-}
-
-function normalizeDestination(destination) {
-  const gallery = buildGallery(destination);
-  const reviewCount = Number(destination.reviewCount || 0);
-  const rating = normalizeRating(destination.rating);
-  const remainingGalleryImages = gallery.slice(1);
-
-  return {
-    ...destination,
-    heroImage: destination.heroImage || destination.image,
-    description: destination.description || '',
-    rating,
-    ratingLabel: formatRatingLabel(rating),
-    stars: buildStars(rating),
-    reviewCount,
-    reviewLabel: `(${reviewCount} avis)`,
-    duration: destination.duration || '',
-    category: destination.category || destination.city || '',
-    gallery,
-    galleryMode: getGalleryMode(gallery.length),
-    mainGalleryImage: gallery[0] || '',
-    remainingGalleryImages,
-    remainingGalleryItems: buildRemainingGalleryItems(remainingGalleryImages),
-  };
-}
 
 Page({
   data: {
@@ -137,7 +41,7 @@ Page({
     let destination = null;
 
     try {
-      destination = await backendAPI.getPackage(options.id);
+      destination = await loadDestination(options.id);
     } catch (error) {
       wx.showToast({
         title: error.message || 'Detail indisponible',
@@ -156,11 +60,8 @@ Page({
       return;
     }
 
-    const isLiked = isFavorite(destination.id);
-    const normalizedDestination = normalizeDestination({
-      ...destination,
-      like: isLiked,
-    });
+    const normalizedDestination = prepareDestinationDetail(destination);
+    const isLiked = normalizedDestination.like;
 
     this.setData({
       destination: normalizedDestination,

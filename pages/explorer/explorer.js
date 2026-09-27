@@ -12,7 +12,7 @@ import {
   loadCategoryFilters,
   syncGlobalDestinations,
   updateDestinationLike,
-} from '../../utils/services/catalog';
+} from '../../utils/helpers/catalog';
 
 const app = getApp();
 

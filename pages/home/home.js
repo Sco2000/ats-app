@@ -2,16 +2,13 @@ import { MAIN_TABS } from '../../utils/constants/index';
 import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
-import { backendAPI } from '../../utils/apis/index';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 import {
   DEFAULT_FILTERS,
   getCatalogRecommendedDestinations,
   loadRecommendedDestinations,
-  loadCategoryFilters,
-  syncGlobalDestinations,
-  updateDestinationLike,
-} from '../../utils/services/catalog';
+  loadDestinations,
+} from '../../utils/helpers/catalog';
 
 
 const app = getApp();
@@ -29,8 +26,7 @@ Page({
   async refreshPackages() {
     this.setData({ destinationsLoading: true, destinationsError: false });
     try {
-      const rawPackages = await backendAPI.getPackages();
-      const packages = applyFavoritesToPackages(rawPackages);
+      const packages = await loadDestinations({ throwOnError: true });
 
       app.globalData.DESTINATIONS = packages;
       app.globalData.CATALOG_ERROR = false;
