@@ -164,6 +164,18 @@ Page({
   },
 
   handleShowAll() {
+    const app = getApp();
+    if (app) {
+      if (!app.globalData.navHistory) {
+        app.globalData.navHistory = [];
+      }
+
+      const lastHistory = app.globalData.navHistory[app.globalData.navHistory.length - 1];
+      if (lastHistory !== '/pages/home/home') {
+        app.globalData.navHistory.push('/pages/home/home');
+      }
+    }
+
     wx.switchTab({
       url: '/pages/explorer/explorer',
     });
