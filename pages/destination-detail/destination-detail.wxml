@@ -22,7 +22,6 @@
               height="{{40}}"
               enableBg="{{false}}"
               containerStyle="padding: 0 !important;"
-              bind:iconTap="handleBack"
             />
           </view>
 

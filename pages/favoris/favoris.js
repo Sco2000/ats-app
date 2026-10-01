@@ -8,6 +8,7 @@ import { loadDestinations } from '../../utils/helpers/catalog';
 const app = getApp();
 
 function formatFavoritesLabel(count) {
+  if (!count || count <= 0) return '';
   return `${count} destination${count === 1 ? '' : 's'} sauvegardée${count === 1 ? '' : 's'}`;
 }
 
@@ -17,7 +18,7 @@ Page({
     tabs: MAIN_TABS,
     allDestinations: [],
     favoriteDestinations: [],
-    resultsLabel: 'Chargement des favoris…',
+    resultsLabel: '',
     loading: true,
   },
 
@@ -51,13 +52,13 @@ Page({
 
   onHide() {
     if (!this.data.favoriteDestinations || this.data.favoriteDestinations.length === 0) {
-      this.setData({ loading: true, resultsLabel: 'Chargement des favoris…' });
+      this.setData({ loading: true, resultsLabel: '' });
     }
   },
 
   async refreshFavorites() {
     if (!this.data.favoriteDestinations || this.data.favoriteDestinations.length === 0) {
-      this.setData({ loading: true, resultsLabel: 'Chargement des favoris…' });
+      this.setData({ loading: true, resultsLabel: '' });
     }
 
     try {

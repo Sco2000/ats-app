@@ -124,9 +124,4 @@ Component({
       });
     },
   },
-  lifetimes:({
-    attached(){
-      console.log("le composant tab nar  est charge  dans ma page");
-    }
-  })
 });

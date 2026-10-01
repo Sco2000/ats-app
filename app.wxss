@@ -51,37 +51,8 @@ page {
    2. FONT FACE
    ========================================================================== */
 
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/app-fonts/Inter_18pt-Regular.ttf');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/app-fonts/Inter_18pt-Medium.ttf');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/app-fonts/Inter_18pt-SemiBold.ttf');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/app-fonts/Inter_18pt-Bold.ttf');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Polices locales désactivées pour éviter l'erreur 404 (-do-not-use-local-path-)
+   L'application utilise directement les polices système natives déclarées dans page { font-family: ... } */
 
 /* ==========================================================================
    3. BASE STYLES

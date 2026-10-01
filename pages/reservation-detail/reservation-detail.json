@@ -4,6 +4,6 @@
     "app-icon": "/components/ui/icons/base/index",
     "app-typography": "/components/ui/typography/index",
     "osn-image": "/components/ui/image/index",
-    "reservation-detail-skeleton": "/components/ui/reservation-detail-skeleton/index"
+    "reservation-detail-skeleton": "/components/ux/reservation-detail-skeleton/index"
   }
 }

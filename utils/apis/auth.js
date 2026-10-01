@@ -43,18 +43,15 @@ export async function authenticate() {
     return runtimeToken;
   }
 
-  const body = [
-    `client_id=${encodeURIComponent(config.CLIENT_ID)}`,
-    `client_secret=${encodeURIComponent(config.CLIENT_SECRET)}`,
-    `grant_type=${encodeURIComponent(config.GRANT_TYPE)}`,
-  ].join('&');
-
   const res = await new Promise((resolve, reject) => {
     wx.request({
       method: 'POST',
       url: `${config.BASE_URL}${config.AUTH_URL}`,
-      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      data: body,
+      header: { 'Content-Type': 'application/json' },
+      data: {
+        client_id: config.CLIENT_ID,
+        client_secret: config.CLIENT_SECRET,
+      },
       success: ({ data, statusCode }) => {
         if (statusCode >= 200 && statusCode < 300 && data) {
           resolve(data);

@@ -83,7 +83,7 @@ Page({
     const pages = getCurrentPages();
 
     if (pages.length > 1) {
-      wx.navigateBack();
+      wx.navigateBack({ delta: 1 });
       return;
     }
 

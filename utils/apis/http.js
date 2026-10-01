@@ -16,6 +16,24 @@ const generateSessionId = () => {
 };
 
 /**
+ * Safe query parameter serializer compatible with all mini-program runtimes
+ * @param {Object|string} [query]
+ * @returns {string}
+ */
+const formatQuery = (query) => {
+  if (!query) return '';
+  if (typeof query === 'string') return query.startsWith('?') ? query : `?${query}`;
+  try {
+    const parts = Object.keys(query)
+      .filter((k) => query[k] !== undefined && query[k] !== null)
+      .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(query[k])}`);
+    return parts.length > 0 ? `?${parts.join('&')}` : '';
+  } catch (e) {
+    return '';
+  }
+};
+
+/**
  * A typed API client for interacting with backend services over HTTP.
  * Features session tracking, unified response format, and all HTTP verbs.
  *
@@ -51,10 +69,7 @@ export class HttpClient {
    * @returns {Promise<IUnifiedResponse>}
    */
   async get(path, options = {}) {
-    const queryParams = options.query
-      ? new URLSearchParams(options.query).toString()
-      : '';
-    const query = queryParams ? `?${queryParams}` : '';
+    const query = formatQuery(options.query);
     return this.#request(`${this.#base}${path}${query}`, 'GET', null, options);
   }
 
@@ -98,10 +113,7 @@ export class HttpClient {
    * @returns {Promise<IUnifiedResponse>}
    */
   async delete(path, options = {}) {
-    const queryParams = options.query
-      ? new URLSearchParams(options.query).toString()
-      : '';
-    const query = queryParams ? `?${queryParams}` : '';
+    const query = formatQuery(options.query);
     return this.#request(`${this.#base}${path}${query}`, 'DELETE', null, options);
   }
 

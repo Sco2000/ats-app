@@ -1,5 +1,7 @@
 const app = getApp();
 import { createReservation } from '../../utils/helpers/reservations.js';
+import { Bus } from '../../utils/event/index.js';
+import { STATE_KEYS } from '../../utils/constants/index.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -69,8 +71,14 @@ Page({
     this._payLocked = true;
     this.setData({ isPaying: true });
     try {
+      const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
+      const phone = userData.msisdn || '770000000';
       const created = await createReservation({
-        package_id: Number(packageId), date, travelers, total,
+        package_id: Number(packageId),
+        date,
+        travelers,
+        total,
+        phone,
       }, packageInfo);
       wx.redirectTo({
         url: `/pages/booking-confirmation/booking-confirmation?reference=${encodeURIComponent(created.bookingRef)}`,

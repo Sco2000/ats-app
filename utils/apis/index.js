@@ -59,8 +59,8 @@ class BackendAPI {
     await authenticate();
 
     const res = await this.#client.get(ENDPOINTS.RECOMMENDED_PACKAGES);
-    const body = assertSuccessResponse(res, 'Failed to fetch recommended packages');
-    const items = Array.isArray(body.data) ? body.data : [];
+    const body = getResponseBody(res, 'Impossible de récupérer les packages recommandés');
+    const items = Array.isArray(body) ? body : (Array.isArray(body.data) ? body.data : []);
 
     return sculpt.data({ data: items, to: PackageSchema });
   }
@@ -105,6 +105,15 @@ class BackendAPI {
     const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
     const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
     return sculpt.data({ data: body.data, to: ReservationDetailSchema });
+  }
+
+  async getBookings(phone) {
+    if (!phone) throw new Error('Numéro de téléphone manquant');
+    await authenticate();
+    const res = await this.#client.get(ENDPOINTS.BOOKINGS, { query: { phone } });
+    const body = getResponseBody(res, 'Impossible de récupérer les réservations');
+    const items = Array.isArray(body) ? body : (Array.isArray(body.data) ? body.data : []);
+    return items;
   }
 
   async createBooking(payload) {

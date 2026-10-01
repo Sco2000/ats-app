@@ -59,12 +59,35 @@ Page({
   },
 
   onLoad(options = {}) {
+    const rawId = options.destinationId;
+    const destinationId = rawId ? Number(rawId) : null;
+
+    if (!destinationId || Number.isNaN(destinationId)) {
+      wx.showToast({
+        title: 'Destination invalide',
+        icon: 'none',
+        duration: 2000,
+      });
+      setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
+      return;
+    }
+
     const destinations = Array.isArray(app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
-    const destinationId = Number(options.destinationId);
     const destination = destinations.find((item) => Number(item.id) === destinationId) || null;
-    const basePrice = destination ? parsePrice(destination.price) : 0;
+
+    if (!destination) {
+      wx.showToast({
+        title: 'Destination non trouvée',
+        icon: 'none',
+        duration: 2000,
+      });
+      setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
+      return;
+    }
+
+    const basePrice = parsePrice(destination.price);
 
     this.setData({
       destination,

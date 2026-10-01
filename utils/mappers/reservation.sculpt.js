@@ -13,7 +13,11 @@ export const ReservationDetailSchema = {
   date: '@link.date',
   travelers: '@link.travelers',
   packageTitle: '@link.package',
+  image: '@link.image',
+  location: '@link.location',
+  categories: '@link.categories',
   total: '@link.total',
   currency: '@link.currency',
+  transactionId: '@link.transaction_id',
   note: '@link.note',
 };

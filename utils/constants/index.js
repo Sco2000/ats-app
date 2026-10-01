@@ -35,6 +35,27 @@ export const STORAGE_KEYS = {
 };
 
 // ============================================================================
+// STATE KEYS (EventBus)
+// ============================================================================
+
+export const STATE_KEYS = {
+  APP_INITIALIZED: 'app.initialized',
+  APP_LOADING: 'app.loading',
+  NETWORK_CONNECTED: 'network.connected',
+  NETWORK_TYPE: 'network.type',
+  USER_DATA: 'user.data',
+  USER_NAME: 'user.name',
+};
+
+export const EVENTS = {
+  USER_LOADED: 'user.loaded',
+  USER_NOT_FOUND: 'user.not_found',
+  DATA_REFRESH: 'data.refresh',
+  NETWORK_CHANGE: 'network.change',
+  APP_ERROR: 'app.error',
+};
+
+// ============================================================================
 // AUTH CONFIGURATION
 // ============================================================================
 

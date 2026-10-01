@@ -134,9 +134,23 @@ Page({
   },
 
   handleDownloadReceipt() {
-    wx.showToast({
-      title: 'Reçu en préparation',
-      icon: 'none',
+    const { reference, amount } = this.data;
+    wx.showModal({
+      title: 'Reçu de Paiement',
+      content: `Référence : ${reference || '—'}\nMontant : ${amount ? `${amount} FCFA` : 'Payé'}\nStatut : Confirmé\n\nLe reçu officiel et le billet électronique vous sont envoyés par email/SMS par le partenaire ATS.`,
+      confirmText: 'Copier Réf.',
+      cancelText: 'Fermer',
+      confirmColor: '#0AA347',
+      success: (res) => {
+        if (res.confirm && reference) {
+          wx.setClipboardData({
+            data: reference,
+            success: () => {
+              wx.showToast({ title: 'Référence copiée !', icon: 'success' });
+            },
+          });
+        }
+      },
     });
   },
 

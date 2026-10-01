@@ -58,6 +58,22 @@ async onLoad() {
 **Cause:** Using ES6 syntax in WXS, or passing wrong data type.
 **Fix:** WXS is ES5 only. Check: no arrow functions, no `let`/`const`, no template literals. Use `getDate()` instead of `new Date()`.
 
+### Font 404: "...-do-not-use-local-path-..."
+
+**Error:**
+```text
+Request URL: http://.../assets/app-fonts/Inter_18pt-Bold.ttf-do-not-use-local-path-./app.wxss&80&7
+Status Code: 404 Not Found
+```
+
+**Cause:**
+WeChat / TCMPP Mini-Programs explicitly forbid loading local font files (`.ttf`, `.otf`, `.woff`) via relative or absolute paths in `@font-face` inside `.wxss` files. The compiler intercepts local paths, appends `-do-not-use-local-path-`, and fails with 404.
+
+**Fix:**
+1. **Recommended (System Fonts):** Remove or comment out the `@font-face` blocks in `app.wxss` and use system fonts (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`).
+2. **Remote CDN:** Host font files on an HTTPS server with CORS headers and load them dynamically in `app.js` via `wx.loadFontFace({ family: 'Inter', source: 'url("https://...")' })`.
+3. **Base64 (Small fonts only):** Convert font to inline Base64 data URI in `@font-face`.
+
 ## Debugging Tips
 
 ### EventBus Debug Mode

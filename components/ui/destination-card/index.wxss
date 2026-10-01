@@ -119,3 +119,31 @@
   flex: 0 0 176rpx;
   width: 176rpx;
 }
+
+.destination-card__rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 4rpx;
+  margin-bottom: 8rpx;
+}
+
+.destination-card__star {
+  color: #F59E0B;
+  font-size: 26rpx;
+  line-height: 1;
+}
+
+.destination-card__score {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #1C1C1C;
+  line-height: 1;
+}
+
+.destination-card__reviews {
+  font-size: 22rpx;
+  color: #667085;
+  line-height: 1;
+}
+
