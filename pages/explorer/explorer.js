@@ -179,6 +179,11 @@ Page({
       }, 500);
     };
 
+    const app = getApp();
+    if (app && destination) {
+      app.globalData.CURRENT_DESTINATION = destination;
+    }
+
     navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
       .then(releaseNavigation, releaseNavigation);
   },

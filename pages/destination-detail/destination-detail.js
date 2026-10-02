@@ -33,42 +33,51 @@ Page({
       return;
     }
 
-    wx.showLoading({
-      title: 'Chargement',
-      mask: true,
-    });
-    this.setData({ isLoading: true });
+    // 1. Récupération instantanée depuis la mémoire pour un affichage immédiat et naturel
+    const currentDest = app && app.globalData && app.globalData.CURRENT_DESTINATION;
+    const isCurrentMatch = currentDest && String(currentDest.id) === String(options.id);
+    const catalogDestinations = (app && app.globalData && Array.isArray(app.globalData.DESTINATIONS))
+      ? app.globalData.DESTINATIONS
+      : [];
+    const matchedDest = isCurrentMatch
+      ? currentDest
+      : catalogDestinations.find((d) => String(d.id) === String(options.id));
 
-    let destination = null;
-
-    try {
-      destination = await loadDestination(options.id);
-    } catch (error) {
-      wx.showToast({
-        title: error.message || 'Detail indisponible',
-        icon: 'none',
+    if (matchedDest) {
+      const normalizedDestination = prepareDestinationDetail(matchedDest);
+      this.setData({
+        destination: normalizedDestination,
+        isLiked: Boolean(normalizedDestination.like),
+        hasDestination: true,
       });
+    }
+
+    // 2. Si aucune donnée en mémoire, activer l'état de chargement local sans modal bloquant
+    if (!matchedDest) {
+      this.setData({ isLoading: true });
+    }
+
+    // 3. Charger les détails complets (galerie, description) en arrière-plan
+    try {
+      const destination = await loadDestination(options.id);
+      if (destination) {
+        const normalizedDestination = prepareDestinationDetail(destination);
+        this.setData({
+          destination: normalizedDestination,
+          isLiked: Boolean(normalizedDestination.like),
+          hasDestination: true,
+        });
+      }
+    } catch (error) {
+      if (!this.data.hasDestination) {
+        wx.showToast({
+          title: error.message || 'Détail indisponible',
+          icon: 'none',
+        });
+      }
     } finally {
-      wx.hideLoading();
       this.setData({ isLoading: false });
     }
-
-    if (!destination) {
-      wx.showToast({
-        title: 'Destination introuvable',
-        icon: 'none',
-      });
-      return;
-    }
-
-    const normalizedDestination = prepareDestinationDetail(destination);
-    const isLiked = normalizedDestination.like;
-
-    this.setData({
-      destination: normalizedDestination,
-      isLiked,
-      hasDestination: true,
-    });
   },
 
   handleBack: withLock(function () {
