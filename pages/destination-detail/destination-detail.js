@@ -10,8 +10,8 @@ Page({
     destination: null,
     isLiked: false,
     hasDestination: false,
-    isLoading: false,
-    pageTopOffset: 32,
+    isLoading: true,
+    pageTopOffset: 36,
     showPreview: false,
     previewIndex: 0,
     previewGallery: [],
@@ -20,12 +20,14 @@ Page({
   async onLoad(options = {}) {
     const sysInfo = wx.getSystemInfoSync();
     const statusBarHeight = sysInfo.statusBarHeight || 20;
-
-    this.setData({
-      pageTopOffset: statusBarHeight + 16,
-    });
+    const pageTopOffset = statusBarHeight + 16;
 
     if (!options.id) {
+      this.setData({
+        pageTopOffset,
+        isLoading: false,
+        hasDestination: false,
+      });
       wx.showToast({
         title: 'Destination introuvable',
         icon: 'none',
@@ -54,21 +56,25 @@ Page({
 
     const matchedDest = allSources.find((item) => String(item.id) === targetId);
 
+    // UN SEUL setData synchrone dès la première frame : élimine le flash blanc
     if (matchedDest) {
       const normalizedDestination = prepareDestinationDetail(matchedDest);
       this.setData({
+        pageTopOffset,
         destination: normalizedDestination,
         isLiked: Boolean(normalizedDestination.like),
         hasDestination: true,
+        isLoading: false,
+      });
+    } else {
+      this.setData({
+        pageTopOffset,
+        isLoading: true,
+        hasDestination: false,
       });
     }
 
-    // 2. Si aucune donnée en mémoire, activer l'état de chargement local sans modal bloquant
-    if (!matchedDest) {
-      this.setData({ isLoading: true });
-    }
-
-    // 3. Charger les détails complets (galerie, description) en arrière-plan
+    // 2. Charger les détails complets (galerie, description) en arrière-plan
     try {
       const destination = await loadDestination(options.id);
       if (destination) {
@@ -113,13 +119,20 @@ Page({
     toggleFavoriteId(destination.id, nextLiked);
 
     // 2. Mettre à jour app.globalData.DESTINATIONS
-    const updatedDestinations = (app.globalData.DESTINATIONS || []).map((item) => (
+    const app = getApp();
+    const currentDestinations = (app && app.globalData && Array.isArray(app.globalData.DESTINATIONS))
+      ? app.globalData.DESTINATIONS
+      : [];
+
+    const updatedDestinations = currentDestinations.map((item) => (
       String(item.id) === String(destination.id)
         ? { ...item, like: nextLiked }
         : item
     ));
 
-    app.globalData.DESTINATIONS = updatedDestinations;
+    if (app && app.globalData) {
+      app.globalData.DESTINATIONS = updatedDestinations;
+    }
 
     this.setData({
       isLiked: nextLiked,
