@@ -4,7 +4,7 @@ import { backendAPI } from '../../utils/apis/index.js';
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
 import { withLock } from '../../utils/helpers/interaction.js';
-import { handleAppError } from '../../utils/helpers/error-handler.js';
+import { handleAppError, handleCriticalError } from '../../utils/helpers/error-handler.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -97,9 +97,13 @@ Page({
       try {
         await backendAPI.confirmBookingPayment(bookingRef, transactionId);
       } catch (paymentError) {
-        // La confirmation échoue (réseau, env. test) : on continue quand même,
-        // le statut restera pending_payment côté serveur, ATS le verra.
-        console.warn('[Paiement] confirmBookingPayment failed (non bloquant):', paymentError);
+        // Non bloquant — on redirige quand même, mais on prévient l'utilisateur
+        console.warn('[Paiement] confirmBookingPayment failed:', paymentError);
+        handleCriticalError(
+          paymentError,
+          'payment',
+          `Référence : ${bookingRef}\nVotre réservation a été créée mais le paiement n'a pas été confirmé. Conservez votre référence et contactez le support si nécessaire.`,
+        );
       }
 
       // ── Étape 3 : Rediriger vers la confirmation ──────────────────────────
@@ -107,7 +111,7 @@ Page({
         url: `/pages/booking-confirmation/booking-confirmation?reference=${encodeURIComponent(bookingRef)}`,
       });
     } catch (error) {
-      handleAppError(error, 'Échec de la réservation. Réessayez.');
+      handleAppError(error, { context: 'booking' });
     } finally {
       this.setData({ isPaying: false });
     }

@@ -182,7 +182,10 @@ Page({
             'reservation.isUpcoming': false,
           });
 
-          handleAppError(error, 'Demande enregistrée localement. Contactez le support si besoin.');
+          handleAppError(error, {
+            context: 'cancel',
+            fallback: 'Demande enregistrée localement. Contactez le support si besoin.',
+          });
         }
       },
     });
