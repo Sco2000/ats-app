@@ -51,6 +51,8 @@
  * @method reload - Force reload the image from source
  * @method getImageInfo - Returns { id, src, loading, error }
  */
+import { storage } from '../../utils/storage.js';
+
 Component({
   options: {
     virtualHost: true,
@@ -220,9 +222,9 @@ Component({
     },
 
     cacheImage(key) {
-      const cache = wx.getStorageSync('tc-image-cache') || {};
+      const cache = storage.get('tc-image-cache', {}) || {};
       cache[key] = { timestamp: Date.now() };
-      wx.setStorageSync('tc-image-cache', cache);
+      storage.set('tc-image-cache', cache);
     },
 
     emit(event, payload) {
