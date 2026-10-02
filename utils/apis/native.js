@@ -138,11 +138,17 @@ export const getUserInfos = async () => {
   } catch (error) {
     console.warn('[Native] getUserInfos failed after retries:', error.message);
 
-    if (__DEV__) {
-      return {
-        msisdn: '770000000',
-        fullName: 'Dev User',
-      };
+    try {
+      const envInfo = wx.getAccountInfoSync();
+      const envVersion = envInfo.miniProgram.envVersion;
+      if (envVersion === 'develop' || envVersion === 'trial') {
+        return {
+          msisdn: '770000000',
+          fullName: 'Dev User',
+        };
+      }
+    } catch (e) {
+      // Ignore
     }
 
     return { msisdn: null, fullName: null };

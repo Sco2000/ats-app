@@ -87,15 +87,13 @@ App({
     if (!msisdn) {
       console.log('[App] No user found, emitting user.not_found');
       Bus.emit(EVENTS.USER_NOT_FOUND);
-      // Optionally redirect to onboarding:
-      // wx.reLaunch({ url: '/pages/onboarding/index' });
-      return;
+      // On continue quand même pour charger le catalogue (navigation anonyme)
+    } else {
+      // Store user info in EventBus
+      Bus.setState(STATE_KEYS.USER_DATA, { msisdn, fullName });
+      Bus.setState(STATE_KEYS.USER_NAME, fullName);
+      console.log('[App] User:', fullName, '| ID:', msisdn);
     }
-
-    // Store user info in EventBus
-    Bus.setState(STATE_KEYS.USER_DATA, { msisdn, fullName });
-    Bus.setState(STATE_KEYS.USER_NAME, fullName);
-    console.log('[App] User:', fullName, '| ID:', msisdn);
 
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
     console.log('[App] Loading packages from API...');
