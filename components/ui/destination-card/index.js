@@ -59,14 +59,12 @@ Component({
       });
     },
 
-    'cardPaddingClass, cardStyle, cardPaddingStyle': function (cardPaddingClass, cardStyle, cardPaddingStyle) {
-      this.setData({
-        resolvedCardStyle: this.buildCardStyle(cardPaddingClass, cardStyle, cardPaddingStyle),
-      });
+    'cardPaddingClass, cardStyle, cardPaddingStyle': function () {
+      this.updateResolvedCardStyle();
     }
   },
-  lifetimes: {
-    attached() {
+  methods: {
+    updateResolvedCardStyle() {
       this.setData({
         resolvedCardStyle: this.buildCardStyle(
           this.properties.cardPaddingClass,
@@ -75,8 +73,6 @@ Component({
         ),
       });
     },
-  },
-  methods: {
     buildCardStyle(cardPaddingClass, cardStyle, cardPaddingStyle) {
       const baseStyle = this.normalizeStyle(cardStyle);
       const explicitPadding = this.normalizeStyle(cardPaddingStyle);
@@ -113,7 +109,7 @@ Component({
       return tokens.reduce((style, token) => paddingMap[token] || style, '');
     },
 
-    emitCardPress: withLock(function () {
+    handleCardTap: withLock(function () {
       this.triggerEvent('onCardPress', {
         destination: this.properties.destination,
       }, {
@@ -122,11 +118,7 @@ Component({
       });
     }, 500),
 
-    handleCardTap() {
-      this.emitCardPress();
-    },
-
-    handleLikeTap() {
+    handleLikeTap: withLock(function () {
       const nextLiked = !this.data.isLiked;
       this.setData({
         isLiked: nextLiked,
@@ -139,10 +131,6 @@ Component({
         bubbles: true,
         composed: true,
       });
-    },
-
-    handleSubmit() {
-      this.emitCardPress();
-    },
+    }, 300),
   },
 });

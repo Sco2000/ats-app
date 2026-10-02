@@ -48,7 +48,7 @@
                         buttonClass="destination-details-button"
                         type="primary"
                         loading="{{ destination.loading }}"
-                        bind:onPress="handleSubmit"
+                        bind:onPress="handleCardTap"
                     >
                         {{ destination.buttonLabel || 'Details' }}
                     </app-button>

@@ -63,32 +63,22 @@ Component({
 
   observers: {
     'columns, gridItemWidth': function () {
-      if (this.properties.gridItemWidth) {
-        this.setData({ computedGridItemWidth: this.properties.gridItemWidth });
-        return;
-      }
-
-      const value = this.properties.columns;
-      const columnsCount = Math.max(1, Number(value) || 1);
-      const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
-      this.setData({ computedGridItemWidth: width });
-    }
-  },
-
-  lifetimes: {
-    attached() {
-      if (this.properties.gridItemWidth) {
-        this.setData({ computedGridItemWidth: this.properties.gridItemWidth });
-        return;
-      }
-
-      const columnsCount = Math.max(1, Number(this.data.columns) || 1);
-      const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
-      this.setData({ computedGridItemWidth: width });
+      this.updateComputedGridItemWidth();
     }
   },
 
   methods: {
+    updateComputedGridItemWidth() {
+      if (this.properties.gridItemWidth) {
+        this.setData({ computedGridItemWidth: this.properties.gridItemWidth });
+        return;
+      }
+
+      const columnsCount = Math.max(1, Number(this.properties.columns) || 1);
+      const width = columnsCount > 1 ? `${100 / columnsCount}%` : '100%';
+      this.setData({ computedGridItemWidth: width });
+    },
+
     handleCardPress(e) {
       this.triggerEvent('onCardPress', e.detail, {
         bubbles: true,
