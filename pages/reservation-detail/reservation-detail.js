@@ -170,6 +170,8 @@ Page({
             'reservation.isUpcoming': false,
           });
 
+          wx.hideLoading();
+
           wx.showToast({
             title: 'Annulation demandée',
             icon: 'success',
