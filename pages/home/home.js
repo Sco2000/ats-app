@@ -3,6 +3,7 @@ import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
+import { storage } from '../../utils/storage.js';
 import {
   DEFAULT_FILTERS,
   getCatalogRecommendedDestinations,
@@ -126,8 +127,12 @@ Page({
       }, 500);
     };
 
+    const app = getApp();
     if (app && destination) {
       app.globalData.CURRENT_DESTINATION = destination;
+    }
+    if (destination) {
+      storage.set('CURRENT_DESTINATION', destination);
     }
 
     navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)

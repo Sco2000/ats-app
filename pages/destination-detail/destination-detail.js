@@ -2,8 +2,8 @@ import { toggleFavoriteId } from '../../utils/helpers/favorites';
 import { prepareDestinationDetail } from '../../utils/helpers/destinations.js';
 import { loadDestination } from '../../utils/helpers/catalog';
 import { withLock } from '../../utils/helpers/interaction.js';
-
-const app = getApp();
+import { storage } from '../../utils/storage.js';
+import { getDestinations, getRecommendedDestinations } from '../../utils/stores/catalog-store.js';
 
 Page({
   data: {
@@ -33,15 +33,26 @@ Page({
       return;
     }
 
-    // 1. Récupération instantanée depuis la mémoire pour un affichage immédiat et naturel
-    const currentDest = app && app.globalData && app.globalData.CURRENT_DESTINATION;
-    const isCurrentMatch = currentDest && String(currentDest.id) === String(options.id);
+    const app = getApp();
+    const targetId = String(options.id);
+
+    // 1. Récupération instantanée multi-sources (ZÉRO ÉCRAN BLANC)
+    const currentDest = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || storage.get('CURRENT_DESTINATION', null);
+    const isCurrentMatch = currentDest && String(currentDest.id) === targetId;
+
     const catalogDestinations = (app && app.globalData && Array.isArray(app.globalData.DESTINATIONS))
       ? app.globalData.DESTINATIONS
       : [];
-    const matchedDest = isCurrentMatch
-      ? currentDest
-      : catalogDestinations.find((d) => String(d.id) === String(options.id));
+    const storeDestinations = [...getDestinations(), ...getRecommendedDestinations()];
+
+    const allSources = [
+      isCurrentMatch ? currentDest : null,
+      ...catalogDestinations,
+      ...storeDestinations,
+      currentDest,
+    ].filter(Boolean);
+
+    const matchedDest = allSources.find((item) => String(item.id) === targetId);
 
     if (matchedDest) {
       const normalizedDestination = prepareDestinationDetail(matchedDest);

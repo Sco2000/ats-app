@@ -4,6 +4,7 @@ import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { waitForAppInit } from '../../utils/helpers/app-init';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
 import { loadDestinations } from '../../utils/helpers/catalog';
+import { storage } from '../../utils/storage.js';
 
 const app = getApp();
 
@@ -114,6 +115,9 @@ Page({
     const app = getApp();
     if (app && destination) {
       app.globalData.CURRENT_DESTINATION = destination;
+    }
+    if (destination) {
+      storage.set('CURRENT_DESTINATION', destination);
     }
 
     navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
