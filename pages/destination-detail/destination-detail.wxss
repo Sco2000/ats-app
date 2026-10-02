@@ -73,9 +73,30 @@ page {
 }
 
 .detail-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1c1c1c;
+  line-height: 58rpx;
   letter-spacing: 0;
-
   padding: 0.88rpx 0.88rpx 0.88rpx 0rpx;
+}
+
+.detail-hero-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 40rpx;
+  display: block;
+}
+
+.detail-gallery-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 28rpx;
+  display: block;
+}
+
+.detail-gallery__grid-item .detail-gallery-image {
+  border-radius: 24rpx;
 }
 
 .detail-rating-row {
@@ -105,10 +126,18 @@ page {
 }
 
 .detail-rating-score {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1c1c1c;
+  line-height: 38rpx;
   margin-left: 14rpx;
 }
 
 .detail-rating-count {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 40rpx;
   margin-left: 12rpx;
 }
 
@@ -127,6 +156,10 @@ page {
 }
 
 .detail-meta-text {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 40rpx;
   display: block;
 }
 
@@ -135,10 +168,18 @@ page {
 }
 
 .detail-section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1c1c1c;
+  line-height: 48rpx;
   letter-spacing: 0;
 }
 
 .detail-description {
+  font-size: 34rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 52rpx;
   margin-top: 18rpx;
   letter-spacing: 0;
 }
@@ -151,6 +192,13 @@ page {
   padding: 16rpx 32rpx;
   border-radius: 999rpx;
   background: #f5eadb;
+}
+
+.detail-category-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1c1c1c;
+  line-height: 40rpx;
 }
 
 .detail-section--gallery {
@@ -224,6 +272,10 @@ page {
 }
 
 .detail-booking-label {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 34rpx;
   display: block;
 }
 
@@ -236,10 +288,18 @@ page {
 }
 
 .detail-booking-amount {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1c1c1c;
+  line-height: 58rpx;
   letter-spacing: 0;
 }
 
 .detail-booking-unit {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 32rpx;
   margin-left: 2rpx;
 }
 
@@ -251,28 +311,35 @@ page {
 }
 
 .detail-booking-reserve-btn {
-  height: 112rpx !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 32rpx !important;
-  background: #01953e !important;
-  font-size: 32rpx !important;
-  font-weight: 600 !important;
-  line-height: 48rpx !important;
-  box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1) !important;
-}
-
-.detail-booking-button-label {
-  width: 140rpx;
-  height: 48rpx;
+  width: 100%;
+  height: 112rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  letter-spacing: 0;
+  border-radius: 32rpx;
+  background: #01953e;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 48rpx;
+  box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
-.destination-detail-page--empty {
+.detail-booking-reserve-btn:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+.destination-detail-page--empty,
+.destination-detail-page--empty-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -293,11 +360,19 @@ page {
 
 .detail-empty-title {
   display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1c1c1c;
+  line-height: 48rpx;
 }
 
 .detail-empty-text {
   display: block;
   margin-top: 16rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #667085;
+  line-height: 40rpx;
 }
 
 .detail-empty-button {
@@ -308,6 +383,7 @@ page {
   align-items: center;
   justify-content: center;
   border-radius: 40rpx;
+  background: #01953e;
 }
 
 .custom-preview-overlay {

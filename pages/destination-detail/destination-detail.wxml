@@ -1,4 +1,4 @@
-<view class="destination-detail-page" wx:if="{{ hasDestination }}">
+<view class="destination-detail-page">
   <scroll-view
     class="destination-detail-page__scroll"
     scroll-y="{{true}}"
@@ -8,11 +8,10 @@
     <view class="destination-detail-page__inner" style="padding-top: {{ pageTopOffset }}px;">
       <view class="detail-hero-container">
         <view class="detail-hero">
-          <osn-image
-            src="{{ destination.heroImage }}"
+          <image
+            class="detail-hero-image"
+            src="{{ destination.heroImage || destination.image }}"
             mode="aspectFill"
-            containerStyle="width: 100%; height: 100%; display: block;"
-            imageStyle="width: 100%; height: 100%; border-radius: 40rpx;"
           />
 
           <view class="detail-floating-button detail-floating-button--back" catchtap="handleBack">
@@ -49,11 +48,11 @@
       </view>
 
       <view class="detail-content">
-        <app-typography containerClass="detail-title" fontSize="48rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
-          {{ destination.title }}
-        </app-typography>
+        <view class="detail-title">
+          {{ destination.title || '' }}
+        </view>
 
-        <view class="detail-rating-row">
+        <view class="detail-rating-row" wx:if="{{ destination }}">
           <view class="detail-stars">
             <text
               wx:for="{{ destination.stars }}"
@@ -61,16 +60,16 @@
               class="detail-star {{ item.active ? 'detail-star--active' : 'detail-star--inactive' }}"
             >{{ item.icon }}</text>
           </view>
-          <app-typography containerClass="detail-rating-score" fontSize="30rpx" weight="700" color="#1C1C1C" lineHeight="38rpx">
+          <text class="detail-rating-score">
             {{ destination.ratingLabel }}
-          </app-typography>
+          </text>
 
-          <app-typography containerClass="detail-rating-count" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+          <text class="detail-rating-count">
             {{ destination.reviewLabel }}
-          </app-typography>
+          </text>
         </view>
 
-        <view class="detail-meta-row">
+        <view class="detail-meta-row" wx:if="{{ destination }}">
           <view class="detail-meta-item">
             <app-icon
               icon="localisation"
@@ -79,12 +78,12 @@
               enableBg="{{false}}"
               containerStyle="padding: 0 !important;"
             />
-            <app-typography containerClass="detail-meta-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+            <text class="detail-meta-text">
               {{ destination.subtitle }}
-            </app-typography>
+            </text>
           </view>
 
-          <view class="detail-meta-item">
+          <view class="detail-meta-item" wx:if="{{ destination.duration }}">
             <app-icon
               icon="calendrier"
               width="{{28}}"
@@ -92,32 +91,32 @@
               enableBg="{{false}}"
               containerStyle="padding: 0 !important;"
             />
-            <app-typography containerClass="detail-meta-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+            <text class="detail-meta-text">
               {{ destination.duration }}
-            </app-typography>
+            </text>
           </view>
         </view>
 
-        <view class="detail-section">
-          <app-typography containerClass="detail-section-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+        <view class="detail-section" wx:if="{{ destination.description }}">
+          <view class="detail-section-title">
             À Propos de Cette Expérience
-          </app-typography>
+          </view>
 
-          <app-typography containerClass="detail-description" fontSize="34rpx" weight="400" color="#667085" lineHeight="52rpx">
+          <view class="detail-description">
             {{ destination.description }}
-          </app-typography>
+          </view>
         </view>
 
-        <view class="detail-category-pill">
-          <app-typography containerClass="detail-category-text" fontSize="28rpx" weight="500" color="#1C1C1C" lineHeight="40rpx">
+        <view class="detail-category-pill" wx:if="{{ destination.category }}">
+          <text class="detail-category-text">
             Catégorie: {{ destination.category }}
-          </app-typography>
+          </text>
         </view>
 
-        <view class="detail-section detail-section--gallery">
-          <app-typography containerClass="detail-section-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+        <view class="detail-section detail-section--gallery" wx:if="{{ destination.gallery && destination.gallery.length }}">
+          <view class="detail-section-title">
             Galerie Photos
-          </app-typography>
+          </view>
 
           <view wx:if="{{ destination.galleryMode === 'single' }}" class="detail-gallery detail-gallery--single">
             <view
@@ -125,33 +124,28 @@
               data-index="{{0}}"
               catchtap="handlePreviewGallery"
             >
-              <osn-image
+              <image
+                class="detail-gallery-image"
                 src="{{ destination.mainGalleryImage }}"
                 mode="aspectFill"
-                data-index="{{0}}"
-                containerStyle="width: 100%; height: 100%; display: block;"
-                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
               />
             </view>
           </view>
 
           <view wx:elif="{{ destination.galleryMode === 'double' }}" class="detail-gallery detail-gallery--double">
-          
             <view
-  wx:for="{{ destination.gallery }}"
-  wx:key="*this"
-  wx:for-item="item"
-  wx:for-index="index"
-  class="detail-gallery__full"
-  data-index="{{index}}"
-  catchtap="handlePreviewGallery"
->
-              <osn-image
+              wx:for="{{ destination.gallery }}"
+              wx:key="*this"
+              wx:for-item="item"
+              wx:for-index="index"
+              class="detail-gallery__full"
+              data-index="{{index}}"
+              catchtap="handlePreviewGallery"
+            >
+              <image
+                class="detail-gallery-image"
                 src="{{ item }}"
                 mode="aspectFill"
-                data-index="{{index}}"
-                containerStyle="width: 100%; height: 100%; display: block;"
-                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
               />
             </view>
           </view>
@@ -162,12 +156,10 @@
               data-index="{{0}}"
               catchtap="handlePreviewGallery"
             >
-              <osn-image
+              <image
+                class="detail-gallery-image"
                 src="{{ destination.mainGalleryImage }}"
                 mode="aspectFill"
-                data-index="{{0}}"
-                containerStyle="width: 100%; height: 100%; display: block;"
-                imageStyle="width: 100%; height: 100%; border-radius: 28rpx;"
               />
             </view>
 
@@ -179,12 +171,10 @@
                 data-index="{{item.index}}"
                 catchtap="handlePreviewGallery"
               >
-                <osn-image
+                <image
+                  class="detail-gallery-image"
                   src="{{ item.src }}"
                   mode="aspectFill"
-                  data-index="{{item.index}}"
-                  containerStyle="width: 100%; height: 100%; display: block;"
-                  imageStyle="width: 100%; height: 100%; border-radius: 24rpx;"
                 />
               </view>
             </view>
@@ -196,69 +186,51 @@
 
   <view class="detail-booking-bar">
     <view class="detail-booking-price">
-      <app-typography containerClass="detail-booking-label" fontSize="28rpx" weight="400" color="#667085" lineHeight="34rpx">
+      <text class="detail-booking-label">
         À partir de
-      </app-typography>
+      </text>
 
       <view class="detail-booking-price-line">
-        <app-typography containerClass="detail-booking-amount" fontSize="48rpx" weight="700" color="#1C1C1C" lineHeight="58rpx">
-          {{ destination.price }}
-        </app-typography>
-        <app-typography containerClass="detail-booking-unit" fontSize="24rpx" weight="400" color="#667085" lineHeight="32rpx">
+        <text class="detail-booking-amount">
+          {{ destination.price || '0 FCFA' }}
+        </text>
+        <text class="detail-booking-unit">
           /pers
-        </app-typography>
+        </text>
       </view>
     </view>
 
     <view class="detail-booking-button">
-      <app-button
-        type="primary"
-        buttonClass="detail-booking-reserve-btn"
-        bind:onPress="handleReserve"
+      <view
+        class="detail-booking-reserve-btn"
+        bindtap="handleReserve"
       >
-        <app-typography containerClass="detail-booking-button-label" fontSize="32rpx" weight="600" color="#FFFFFF" lineHeight="48rpx" align="center">
-          Réserver
-        </app-typography>
-      </app-button>
-    </view>
-  </view>
-</view>
-
-<view class="destination-detail-page destination-detail-page--skeleton" wx:elif="{{ isLoading }}">
-  <view class="destination-detail-page__inner" style="padding-top: {{ pageTopOffset }}px;">
-    <view class="detail-hero-container">
-      <view class="detail-hero skeleton-shimmer">
-        <view class="detail-floating-button detail-floating-button--back" catchtap="handleBack">
-          <app-icon icon="arrow-left" width="{{40}}" height="{{40}}" enableBg="{{false}}" containerStyle="padding: 0 !important;" />
-        </view>
+        Réserver
       </view>
     </view>
-    <view class="detail-content" style="padding: 32rpx;">
-      <view class="skeleton-shimmer" style="width: 65%; height: 52rpx; border-radius: 16rpx; margin-bottom: 24rpx;"></view>
-      <view class="skeleton-shimmer" style="width: 40%; height: 36rpx; border-radius: 12rpx; margin-bottom: 32rpx;"></view>
-      <view class="skeleton-shimmer" style="width: 100%; height: 180rpx; border-radius: 24rpx;"></view>
-    </view>
   </view>
 </view>
 
-<view wx:else class="destination-detail-page destination-detail-page--empty">
+<!-- Fallback introuvable uniquement si aucune donnée après tentative -->
+<view wx:if="{{ !hasDestination && !isLoading }}" class="destination-detail-page--empty-overlay">
   <view class="detail-empty-card">
-    <app-typography containerClass="detail-empty-title" fontSize="36rpx" weight="700" color="#1C1C1C" lineHeight="48rpx">
+    <view class="detail-empty-title">
       Destination introuvable
-    </app-typography>
+    </view>
 
-    <app-typography containerClass="detail-empty-text" fontSize="28rpx" weight="400" color="#667085" lineHeight="40rpx">
+    <view class="detail-empty-text">
       Retournez à l'accueil pour choisir une destination disponible.
-    </app-typography>
+    </view>
 
     <view class="detail-empty-button" bindtap="handleBack">
-      <app-typography fontSize="28rpx" weight="700" color="#FFFFFF" lineHeight="40rpx">
+      <text style="color: #ffffff; font-weight: 700; font-size: 28rpx;">
         Retour
-      </app-typography>
+      </text>
     </view>
   </view>
 </view>
 
+<!-- Preview Overlay Modal -->
 <view wx:if="{{ showPreview }}" class="custom-preview-overlay">
   <view class="custom-preview-header">
     <view class="custom-preview-counter">
@@ -268,16 +240,16 @@
       <text class="close-text">✕</text>
     </view>
   </view>
-<swiper 
-  class="custom-preview-swiper"
-  current="{{ previewIndex }}"
-  circular="true"
-  bindchange="onPreviewChange"
->
-  <swiper-item wx:for="{{ previewGallery }}" wx:key="*this">
-    <image src="{{ item }}" mode="aspectFill" class="custom-preview-image" />
-  </swiper-item>
-</swiper>
+  <swiper 
+    class="custom-preview-swiper"
+    current="{{ previewIndex }}"
+    circular="true"
+    bindchange="onPreviewChange"
+  >
+    <swiper-item wx:for="{{ previewGallery }}" wx:key="*this">
+      <image src="{{ item }}" mode="aspectFill" class="custom-preview-image" />
+    </swiper-item>
+  </swiper>
 
   <view class="custom-preview-arrow custom-preview-arrow--left" catchtap="prevPreviewImage">
     <text class="arrow-text">❮</text>
