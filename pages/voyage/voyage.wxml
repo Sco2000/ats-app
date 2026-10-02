@@ -28,6 +28,18 @@
       />
     </view>
 
+    <view wx:elif="{{ error }}" class="voyages-page__empty">
+      <app-typography size="18" weight="600" color="#1C1C1C">
+        Impossible de charger vos voyages
+      </app-typography>
+      <app-typography size="14" color="#7A8094">
+        Vérifiez votre connexion internet
+      </app-typography>
+      <app-typography size="14" weight="600" color="#01953E" bindtap="retryReservations" containerStyle="margin-top: 24rpx; padding: 12rpx 32rpx; border: 2rpx solid #01953E; border-radius: 40rpx;">
+        Réessayer
+      </app-typography>
+    </view>
+
     <view wx:elif="{{ !loading }}" class="voyages-page__empty">
       <app-typography size="18" weight="600" color="#1C1C1C">
         Aucune réservation pour le moment

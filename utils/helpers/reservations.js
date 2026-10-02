@@ -2,18 +2,25 @@ import { backendAPI } from '../apis/index.js';
 import { reservationStorage } from '../storage/reservations.js';
 import { Bus } from '../event/index.js';
 import { STATE_KEYS } from '../constants/index.js';
-import { AppError, ExternalServiceError } from '../errors/index.js';
+import { AppError, ExternalServiceError, ValidationError } from '../errors/index.js';
 
 export function createReservation(payload, packageInfo = {}) {
   const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
-  const phone = payload.phone || userData.msisdn || '770000000';
-  const bookingPayload = {
-    ...payload,
-    phone,
-  };
+  // Phone doit être fourni par l'appelant (paiement/index.js vérifie l'initPromise).
+  // Fallback sur userData.msisdn uniquement, jamais sur un numéro hardcodé.
+  const phone = payload.phone || userData.msisdn;
+  if (!phone) throw new ValidationError('Numéro de téléphone introuvable. Vérifiez votre compte Orange.');
+
+  const bookingPayload = { ...payload, phone };
 
   return backendAPI.createBooking(bookingPayload).then((apiResult) => {
     if (!apiResult.bookingRef) throw new ExternalServiceError('La référence de réservation est absente de la réponse API');
+
+    // travelersAdulte/travelersEnfant : l'API les retourne sur la réponse POST /bookings.
+    // On priorise la valeur de l'API, puis celle passée dans le payload (booking.js), puis 0.
+    const travelersAdulte = apiResult.travelersAdulte ?? payload.travelersAdulte ?? 0;
+    const travelersEnfant = apiResult.travelersEnfant ?? payload.travelersEnfant ?? 0;
+
     const reservation = {
       bookingRef: apiResult.bookingRef,
       package: {
@@ -25,9 +32,12 @@ export function createReservation(payload, packageInfo = {}) {
       },
       date: payload.date,
       travelers: payload.travelers,
+      travelersAdulte,
+      travelersEnfant,
       total: apiResult.total,
       currency: apiResult.currency,
       status: apiResult.status,
+      phone,
       createdAt: new Date().toISOString(),
     };
     if (!reservationStorage.save(reservation)) throw new AppError('Impossible de sauvegarder la réservation sur cet appareil');

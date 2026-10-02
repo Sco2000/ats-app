@@ -26,6 +26,8 @@ Page({
     isPaying: false,
     packageId: '',
     date: '',
+    adults: 1,
+    children: 0,
     travelers: 0,
     total: 0,
     packageInfo: null,
@@ -51,6 +53,8 @@ Page({
       },
       packageId: String(options.packageId || destination.id || ''),
       date: options.dateIso || '',
+      adults,
+      children,
       travelers: Math.max(0, Number(options.travelers) || adults + children),
       total,
       packageInfo: {
@@ -64,7 +68,7 @@ Page({
   },
 
   handlePay: withLock(async function () {
-    const { packageId, date, travelers, total, packageInfo } = this.data;
+    const { packageId, date, adults, children, travelers, total, packageInfo } = this.data;
     if (!packageId || !date || !travelers || !total) {
       wx.showToast({ title: 'Informations de réservation incomplètes', icon: 'none' });
       return;
@@ -74,14 +78,29 @@ Page({
     let bookingRef = '';
 
     try {
+      // Attendre que l'app soit initialisée pour avoir le vrai msisdn
+      if (app.globalData.initPromise) await app.globalData.initPromise;
+
       // ── Étape 1 : Créer la réservation (POST /bookings) ──────────────────
       const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
-      const phone = userData.msisdn || '770000000';
+      const phone = userData.msisdn;
+      if (!phone) {
+        wx.showModal({
+          title: 'Connexion requise',
+          content: 'Votre numéro de téléphone Orange est introuvable. Fermez et rouvrez l\'application.',
+          showCancel: false,
+          confirmText: 'Compris',
+          confirmColor: '#0AA347',
+        });
+        return;
+      }
 
       const created = await createReservation({
         package_id: Number(packageId),
         date,
         travelers,
+        travelersAdulte: adults,      // ← propagation du split adultes/enfants
+        travelersEnfant: children,
         total,
         phone,
       }, packageInfo);
@@ -89,9 +108,8 @@ Page({
       bookingRef = created.bookingRef;
 
       // ── Étape 2 : Confirmer le paiement (POST /bookings/{ref}/payment) ────
-      // En production, Orange Max It fournit un vrai transaction_id.
-      // Pour l'instant on utilise un ID fictif en test — à remplacer par l'ID
-      // réel retourné par le SDK Orange Money lors du paiement.
+      // En production, Orange Max It fournit un vrai transaction_id via le SDK.
+      // Pour l'instant on génère un ID horodaté — à remplacer par le vrai.
       const transactionId = userData.transactionId || `OM-${Date.now()}`;
 
       try {

@@ -188,9 +188,11 @@ App({
 
     updateManager.onUpdateReady(() => {
       wx.showModal({
-        title: 'Update Available',
-        content: 'A new version is ready. Restart to apply the update.',
+        title: 'Mise à jour disponible',
+        content: 'Une nouvelle version est prête. Redémarrez l\'application pour l\'appliquer.',
         showCancel: false,
+        confirmText: 'Redémarrer',
+        confirmColor: '#0AA347',
         success: () => {
           updateManager.applyUpdate();
         },

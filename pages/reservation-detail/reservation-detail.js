@@ -7,6 +7,8 @@ import { calculateCancellationRefund } from '../../utils/helpers/booking-policy.
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError } from '../../utils/helpers/error-handler.js';
 
+const app = getApp();
+
 function decodeBookingRef(value) {
   if (!value) return '';
   try { return decodeURIComponent(value); } catch (error) { return value; }
@@ -134,8 +136,21 @@ Page({
         wx.showLoading({ title: 'Annulation en cours…', mask: true });
 
         try {
+          if (app.globalData.initPromise) await app.globalData.initPromise;
           const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
-          const phone = userData.msisdn || '770000000';
+          const phone = userData.msisdn;
+
+          if (!phone) {
+            wx.hideLoading();
+            wx.showModal({
+              title: 'Action impossible',
+              content: 'Votre numéro de téléphone est introuvable. Fermez et rouvrez l\'application.',
+              showCancel: false,
+              confirmText: 'Compris',
+              confirmColor: '#0AA347',
+            });
+            return;
+          }
 
           // Appel API DELETE /bookings/{ref}?phone={num}
           const result = await backendAPI.cancelBooking(reservation.bookingRef, phone);
