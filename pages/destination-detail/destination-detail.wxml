@@ -239,6 +239,7 @@
     <view class="detail-empty-button" bindtap="handleBack">
       <app-typography fontSize="28rpx" weight="700" color="#FFFFFF" lineHeight="40rpx">
         Retour
+      </app-typography>
     </view>
   </view>
 </view>
