@@ -32,12 +32,12 @@ const getPreviewTopOffset = () => {
   try {
     const menu = wx.getMenuButtonBoundingClientRect();
     if (menu && menu.bottom) {
-      return menu.bottom + 32;
+      return menu.bottom + 52;
     }
     const sysInfo = wx.getSystemInfoSync();
-    return (sysInfo.statusBarHeight || 20) + 64;
+    return (sysInfo.statusBarHeight || 20) + 84;
   } catch (e) {
-    return 112;
+    return 132;
   }
 };
 
