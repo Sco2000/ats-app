@@ -135,7 +135,8 @@ class BackendAPI {
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
     const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
-    return sculpt.data({ data: body.data, to: ReservationDetailSchema });
+    const targetData = body.data || body;
+    return sculpt.data({ data: targetData, to: ReservationDetailSchema });
   }
 
   async getBookings(phone) {
@@ -151,7 +152,8 @@ class BackendAPI {
     await authenticate();
     const res = await this.#client.post(ENDPOINTS.BOOKINGS, payload);
     const body = assertSuccessResponse(res, 'Impossible de créer la réservation');
-    return sculpt.data({ data: body, to: ReservationSchema });
+    const targetData = body.data || body;
+    return sculpt.data({ data: targetData, to: ReservationSchema });
   }
 
   resetSession() {

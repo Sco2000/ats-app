@@ -80,7 +80,7 @@ export function getLocalReservationCards() {
 
 export function mapRemoteReservationToCard(item) {
   const upcoming = isUpcomingReservation(item);
-  const title = (item.package && (typeof item.package === 'string' ? item.package : item.package.title)) || item.title || '';
+  const title = item.packageTitle || (item.package && (typeof item.package === 'string' ? item.package : item.package.title)) || item.title || '';
   const currency = item.currency || 'XOF';
   const characters = Array.from(String(title));
   const cardTitle = characters.length > 15 ? `${characters.slice(0, 14).join('')}…` : title;
