@@ -51,7 +51,7 @@
  * @method reload - Force reload the image from source
  * @method getImageInfo - Returns { id, src, loading, error }
  */
-import { storage } from '../../utils/storage.js';
+import { storage } from '../../../utils/storage.js';
 
 Component({
   options: {
