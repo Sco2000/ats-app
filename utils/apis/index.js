@@ -10,6 +10,15 @@ import { CategorySchema } from '../mappers/category.sculpt.js';
 import { PackageSchema } from '../mappers/package.sculpt.js';
 import { ReservationDetailSchema, ReservationSchema } from '../mappers/reservation.sculpt.js';
 
+import {
+  AppError,
+  NetworkError,
+  AuthorizationError,
+  ValidationError,
+  NotFoundError,
+  ExternalServiceError,
+} from '../errors/index.js';
+
 const ENDPOINTS = {
   CATEGORIES: '/categories',
   PACKAGES: '/packages',
@@ -17,9 +26,31 @@ const ENDPOINTS = {
   BOOKINGS: '/bookings',
 };
 
+function createTypedError(res, fallbackMessage) {
+  const status = res?.status || res?.error?.code || 0;
+  const message = res?.error?.message || fallbackMessage;
+
+  if (status === 401 || status === 403) {
+    return new AuthorizationError(message, { status });
+  }
+  if (status === 400) {
+    return new ValidationError(message, { status });
+  }
+  if (status === 404) {
+    return new NotFoundError(message, { status });
+  }
+  if (status >= 500) {
+    return new ExternalServiceError(message, { status });
+  }
+  if (status === 0) {
+    return new NetworkError(message, { status });
+  }
+  return new AppError(message, { statusCode: status });
+}
+
 function getResponseBody(response, fallbackMessage) {
   if (!response || !response.success) {
-    throw new Error(response?.error?.message || fallbackMessage);
+    throw createTypedError(response, fallbackMessage);
   }
 
   return response.data || {};
@@ -29,7 +60,7 @@ function assertSuccessResponse(res, message) {
   const body = res && res.data ? res.data : null;
 
   if (!body || body.success !== true) {
-    throw new Error(message);
+    throw createTypedError(res, message);
   }
 
   return body;
@@ -66,7 +97,7 @@ class BackendAPI {
   }
   async getPackage(id) {
     if (!id) {
-      throw new Error('Package id manquant');
+      throw new ValidationError('Package id manquant');
     }
 
     await authenticate();
@@ -80,7 +111,7 @@ class BackendAPI {
     const destination = sculpt.data({ data: item, to: PackageSchema });
 
     if (!destination.id) {
-      throw new Error('Detail du package incomplet');
+      throw new NotFoundError('Detail du package incomplet');
     }
 
     return destination;
@@ -100,7 +131,7 @@ class BackendAPI {
   }
 
   async getBooking(reference) {
-    if (!reference) throw new Error('Référence de réservation manquante');
+    if (!reference) throw new ValidationError('Référence de réservation manquante');
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.BOOKINGS}/${reference}`);
     const body = assertSuccessResponse(res, 'Impossible de récupérer la réservation');
@@ -108,12 +139,12 @@ class BackendAPI {
   }
 
   async getBookings(phone) {
-    if (!phone) throw new Error('Numéro de téléphone manquant');
+    if (!phone) throw new ValidationError('Numéro de téléphone manquant');
     await authenticate();
     const res = await this.#client.get(ENDPOINTS.BOOKINGS, { query: { phone } });
     const body = getResponseBody(res, 'Impossible de récupérer les réservations');
     const items = Array.isArray(body) ? body : (Array.isArray(body.data) ? body.data : []);
-    return items;
+    return sculpt.data({ data: items, to: ReservationDetailSchema });
   }
 
   async createBooking(payload) {

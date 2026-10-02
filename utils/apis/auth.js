@@ -6,6 +6,7 @@
 import { httpClient } from './http.js';
 import { config } from '../config.js';
 import { STORAGE_KEYS, AUTH_CONFIG } from '../constants/index.js';
+import { AuthorizationError, NetworkError } from '../errors/index.js';
 
 let runtimeToken = null;
 let runtimeTokenExpiry = 0;
@@ -57,10 +58,10 @@ export async function authenticate() {
           resolve(data);
         } else {
           const serverMessage = data?.message || data?.error || data?.detail || data?.errors;
-          reject(new Error(serverMessage || `Auth failed with status ${statusCode}`));
+          reject(new AuthorizationError(serverMessage || `Auth failed with status ${statusCode}`, { status: statusCode }));
         }
       },
-      fail: (err) => reject(new Error(err.errMsg || 'Network auth failure')),
+      fail: (err) => reject(new NetworkError(err.errMsg || 'Network auth failure')),
     });
   });
 
@@ -68,7 +69,7 @@ export async function authenticate() {
   const expiresIn = res.expires_in || res.data?.expires_in || AUTH_CONFIG.DEFAULT_EXPIRY_SEC;
 
   if (!accessToken) {
-    throw new Error('Access token missing from auth response');
+    throw new AuthorizationError('Access token missing from auth response');
   }
 
   const expiry = now + (Number(expiresIn) * 1000) - AUTH_CONFIG.REFRESH_BUFFER_MS;

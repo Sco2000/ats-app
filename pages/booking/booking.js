@@ -1,9 +1,6 @@
-const app = getApp();
+import { withLock } from '../../utils/helpers/interaction.js';
 
-const DISABLED_BUTTON_STYLE = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #95CFA5 !important; background-color: #95CFA5 !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.12) !important;';
-const ACTIVE_BUTTON_STYLE = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #16A34A !important; background-color: #16A34A !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.18) !important;';
-const TRAVELER_CARD_STYLE = 'width: 100% !important; min-height: 154rpx !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; margin-bottom: 24rpx !important; padding: 0 32rpx !important; border: 2rpx solid #E5E7EB !important; border-radius: 32rpx !important; background: #FFFFFF !important; background-color: #FFFFFF !important; box-sizing: border-box !important; gap: 0 !important;';
-const PRICE_CARD_STYLE = 'width: 100% !important; min-height: 296rpx !important; display: flex !important; flex-direction: column !important; padding: 38rpx 42rpx 34rpx !important; border: 0 !important; border-radius: 28rpx !important; background: #F5E9DA !important; background-color: #F5E9DA !important; box-sizing: border-box !important; margin-bottom: 38rpx !important; gap: 0 !important;';
+const app = getApp();
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -45,9 +42,6 @@ Page({
     selectedDateIso: '',
     minDate: tomorrowIso(),
     canContinue: false,
-    continueButtonStyle: DISABLED_BUTTON_STYLE,
-    travelerCardStyle: TRAVELER_CARD_STYLE,
-    priceCardStyle: PRICE_CARD_STYLE,
     adults: 1,
     children: 0,
     dates: createFutureDates(),
@@ -105,7 +99,6 @@ Page({
       selectedDate: index,
       selectedDateIso: selected.isoDate,
       canContinue: true,
-      continueButtonStyle: ACTIVE_BUTTON_STYLE,
     });
   },
 
@@ -116,7 +109,7 @@ Page({
     const dates = this.data.dates;
     const existing = dates.findIndex((item) => item.isoDate === isoDate);
     if (existing >= 0) {
-      this.setData({ selectedDate: existing, selectedDateIso: isoDate, canContinue: true, continueButtonStyle: ACTIVE_BUTTON_STYLE, showDatePicker: false });
+      this.setData({ selectedDate: existing, selectedDateIso: isoDate, canContinue: true, showDatePicker: false });
       return;
     }
     this.setData({
@@ -124,7 +117,6 @@ Page({
       selectedDate: dates.length,
       selectedDateIso: isoDate,
       canContinue: true,
-      continueButtonStyle: ACTIVE_BUTTON_STYLE,
       showDatePicker: false,
     });
   },
@@ -179,7 +171,7 @@ Page({
     });
   },
 
-  handleReserve() {
+  handleReserve: withLock(function () {
     if (!this.data.canContinue) {
       return;
     }
@@ -208,5 +200,5 @@ Page({
     wx.navigateTo({
       url: `/pages/paiement/index?${params}`,
     });
-  }
+  }, 500),
 });

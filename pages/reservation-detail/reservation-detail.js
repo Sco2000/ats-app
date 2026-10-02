@@ -1,4 +1,6 @@
 import { buildReservationDetail, getReservationByReference } from '../../utils/helpers/reservations.js';
+import { reservationStorage } from '../../utils/storage/reservations.js';
+import { withLock } from '../../utils/helpers/interaction.js';
 
 function decodeBookingRef(value) {
   if (!value) return '';
@@ -36,7 +38,7 @@ Page({
 
   retry() { this.loadReservation(); },
 
-  callSupport() {
+  callSupport: withLock(function () {
     wx.showActionSheet({
       itemList: ['Appeler le service client (+221 33 824 00 00)', 'Copier le numéro de support'],
       success: (res) => {
@@ -53,9 +55,9 @@ Page({
         }
       },
     });
-  },
+  }, 1000),
 
-  sendEmail() {
+  sendEmail: withLock(function () {
     const email = 'support@africatourismsolutions.com';
     const ref = this.data.reservation?.bookingRef || '';
     wx.setClipboardData({
@@ -70,9 +72,9 @@ Page({
         });
       },
     });
-  },
+  }, 1000),
 
-  downloadTicket() {
+  downloadTicket: withLock(function () {
     const { reservation } = this.data;
     if (!reservation) return;
 
@@ -93,9 +95,9 @@ Page({
         }
       },
     });
-  },
+  }, 1000),
 
-  cancelReservation() {
+  cancelReservation: withLock(function () {
     const { reservation } = this.data;
     if (!reservation) return;
 
@@ -113,7 +115,15 @@ Page({
             duration: 3000,
           });
 
+          if (reservation.bookingRef) {
+            reservationStorage.update({
+              ...reservation,
+              status: 'cancellation_requested',
+            });
+          }
+
           this.setData({
+            'reservation.status': 'cancellation_requested',
             'reservation.statusLabel': 'Annulation demandée',
             'reservation.statusClass': 'pending',
             'reservation.isUpcoming': false,
@@ -121,6 +131,9 @@ Page({
         }
       },
     });
-  },
-  rebook() { wx.navigateTo({ url: '/pages/booking/booking' }); },
+  }, 1000),
+
+  rebook: withLock(function () {
+    wx.navigateTo({ url: '/pages/booking/booking' });
+  }, 500),
 });

@@ -333,6 +333,24 @@
 
 .booking-reserve-button {
   width: 100% !important;
+  height: 112rpx !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 32rpx !important;
+  color: #ffffff !important;
+}
+
+.booking-reserve-button--disabled {
+  background: #95CFA5 !important;
+  background-color: #95CFA5 !important;
+  box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.12) !important;
+}
+
+.booking-reserve-button--active {
+  background: #16A34A !important;
+  background-color: #16A34A !important;
+  box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.18) !important;
 }
 
 .booking-payment-footer {

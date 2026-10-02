@@ -2,6 +2,7 @@ import { backendAPI } from '../apis/index.js';
 import { reservationStorage } from '../storage/reservations.js';
 import { Bus } from '../event/index.js';
 import { STATE_KEYS } from '../constants/index.js';
+import { AppError, ExternalServiceError } from '../errors/index.js';
 
 export function createReservation(payload, packageInfo = {}) {
   const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
@@ -12,7 +13,7 @@ export function createReservation(payload, packageInfo = {}) {
   };
 
   return backendAPI.createBooking(bookingPayload).then((apiResult) => {
-    if (!apiResult.bookingRef) throw new Error('La référence de réservation est absente de la réponse API');
+    if (!apiResult.bookingRef) throw new ExternalServiceError('La référence de réservation est absente de la réponse API');
     const reservation = {
       bookingRef: apiResult.bookingRef,
       package: {
@@ -29,7 +30,7 @@ export function createReservation(payload, packageInfo = {}) {
       status: apiResult.status,
       createdAt: new Date().toISOString(),
     };
-    if (!reservationStorage.save(reservation)) throw new Error('Impossible de sauvegarder la réservation sur cet appareil');
+    if (!reservationStorage.save(reservation)) throw new AppError('Impossible de sauvegarder la réservation sur cet appareil');
     return reservation;
   });
 }

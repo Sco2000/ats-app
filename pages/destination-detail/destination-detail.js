@@ -1,6 +1,7 @@
 import { toggleFavoriteId } from '../../utils/helpers/favorites';
 import { prepareDestinationDetail } from '../../utils/helpers/destinations.js';
 import { loadDestination } from '../../utils/helpers/catalog';
+import { withLock } from '../../utils/helpers/interaction.js';
 
 const app = getApp();
 
@@ -70,18 +71,8 @@ Page({
     });
   },
 
-  handleBack() {
-    if (this._backLocked) {
-      return;
-    }
-
-    this._backLocked = true;
-    setTimeout(() => {
-      this._backLocked = false;
-    }, 500);
-
+  handleBack: withLock(function () {
     const pages = getCurrentPages();
-
     if (pages.length > 1) {
       wx.navigateBack({ delta: 1 });
       return;
@@ -90,19 +81,11 @@ Page({
     wx.switchTab({
       url: '/pages/home/home',
     });
-  },
+  }, 500),
 
-  handleToggleLike() {
+  handleToggleLike: withLock(function () {
     const { destination, isLiked } = this.data;
-
-    if (!destination || this._likeLocked) {
-      return;
-    }
-
-    this._likeLocked = true;
-    setTimeout(() => {
-      this._likeLocked = false;
-    }, 300);
+    if (!destination) return;
 
     const nextLiked = !isLiked;
 
@@ -125,24 +108,16 @@ Page({
         like: nextLiked,
       },
     });
-  },
+  }, 300),
 
-  handleReserve() {
+  handleReserve: withLock(function () {
     const { destination } = this.data;
-
-    if (!destination || !destination.id || this._bookingLocked) {
-      return;
-    }
-
-    this._bookingLocked = true;
-    setTimeout(() => {
-      this._bookingLocked = false;
-    }, 500);
+    if (!destination || !destination.id) return;
 
     wx.navigateTo({
       url: `/pages/booking/booking?destinationId=${destination.id}`,
     });
-  },
+  }, 500),
 
   handlePreviewGallery(event) {
     const destination = this.data.destination;

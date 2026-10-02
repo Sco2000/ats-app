@@ -61,7 +61,7 @@
           </app-typography>
         </view>
 
-        <app-card containerClass="traveler-card" containerStyle="{{ travelerCardStyle }}">
+        <app-card containerClass="traveler-card">
           <view class="traveler-copy" style="display: flex; flex-direction: column; min-width: 0; flex: 1;">
             <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
               Adultes
@@ -91,7 +91,7 @@
           </view>
         </app-card>
 
-        <app-card containerClass="traveler-card" containerStyle="{{ travelerCardStyle }}">
+        <app-card containerClass="traveler-card">
           <view class="traveler-copy" style="display: flex; flex-direction: column; min-width: 0; flex: 1;">
             <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
               Enfants
@@ -122,7 +122,7 @@
         </app-card>
       </view>
 
-      <app-card containerClass="price-card" containerStyle="{{ priceCardStyle }}">
+      <app-card containerClass="price-card">
         <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="40rpx">
           Détail du Prix
         </app-typography>
@@ -160,8 +160,7 @@
   <view class="booking-payment-footer">
     <app-button
       type="primary"
-      buttonClass="booking-reserve-button"
-      buttonStyle="{{ continueButtonStyle }}"
+      buttonClass="booking-reserve-button {{ canContinue ? 'booking-reserve-button--active' : 'booking-reserve-button--disabled' }}"
       bind:onPress="handleReserve"
     >
       <app-typography fontSize="32rpx" weight="700" color="#FFFFFF" lineHeight="40rpx" align="center">

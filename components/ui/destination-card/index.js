@@ -1,4 +1,6 @@
 // js
+import { withLock } from '../../../utils/helpers/interaction.js';
+
 Component({
   properties: {
     destination: {
@@ -111,23 +113,14 @@ Component({
       return tokens.reduce((style, token) => paddingMap[token] || style, '');
     },
 
-    emitCardPress() {
-      if (this._pressLocked) {
-        return;
-      }
-
-      this._pressLocked = true;
-      setTimeout(() => {
-        this._pressLocked = false;
-      }, 500);
-
+    emitCardPress: withLock(function () {
       this.triggerEvent('onCardPress', {
         destination: this.properties.destination,
       }, {
         bubbles: true,
         composed: true,
       });
-    },
+    }, 500),
 
     handleCardTap() {
       this.emitCardPress();

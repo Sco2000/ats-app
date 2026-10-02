@@ -2,6 +2,8 @@ const app = getApp();
 import { createReservation } from '../../utils/helpers/reservations.js';
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
+import { withLock } from '../../utils/helpers/interaction.js';
+import { handleAppError } from '../../utils/helpers/error-handler.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -60,15 +62,13 @@ Page({
     });
   },
 
-  async handlePay() {
-    if (this._payLocked) return;
+  handlePay: withLock(async function () {
     const { packageId, date, travelers, total, packageInfo } = this.data;
     if (!packageId || !date || !travelers || !total) {
       wx.showToast({ title: 'Informations de réservation incomplètes', icon: 'none' });
       return;
     }
 
-    this._payLocked = true;
     this.setData({ isPaying: true });
     try {
       const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
@@ -84,11 +84,9 @@ Page({
         url: `/pages/booking-confirmation/booking-confirmation?reference=${encodeURIComponent(created.bookingRef)}`,
       });
     } catch (error) {
-      const message = error.message || (error.error && error.error.message) || 'Échec de la réservation. Réessayez.';
-      wx.showToast({ title: message, icon: 'none', duration: 3000 });
+      handleAppError(error, 'Échec de la réservation. Réessayez.');
     } finally {
-      this._payLocked = false;
       this.setData({ isPaying: false });
     }
-  },
+  }, 1000),
 });
