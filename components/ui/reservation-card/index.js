@@ -4,7 +4,9 @@ Component({
   },
   methods: {
     handleTap() {
-      this.triggerEvent('select', { bookingRef: this.properties.reservation.bookingRef });
+      const res = this.properties.reservation || {};
+      const ref = res.bookingRef || res.id || res.reference || res.booking_ref || '';
+      this.triggerEvent('select', { bookingRef: ref, id: ref });
     },
   },
 });

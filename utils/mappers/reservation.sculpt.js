@@ -1,6 +1,7 @@
 // Booking API response schemas, using the keys documented for each endpoint.
 export const ReservationSchema = {
-  bookingRef: ['@link.booking_ref', '@link.bookingRef'],
+  id: ['@link.id', '@link.booking_ref', '@link.bookingRef', '@link.reference'],
+  bookingRef: ['@link.booking_ref', '@link.bookingRef', '@link.reference', '@link.id'],
   status: '@link.status',
   total: '@link.total',
   currency: '@link.currency',
@@ -8,7 +9,8 @@ export const ReservationSchema = {
 };
 
 export const ReservationDetailSchema = {
-  bookingRef: ['@link.booking_ref', '@link.bookingRef'],
+  id: ['@link.id', '@link.booking_ref', '@link.bookingRef', '@link.reference'],
+  bookingRef: ['@link.booking_ref', '@link.bookingRef', '@link.reference', '@link.id'],
   status: '@link.status',
   date: '@link.date',
   travelers: '@link.travelers',

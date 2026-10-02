@@ -8,20 +8,48 @@ export const reservationStorage = {
     return Array.isArray(entries) ? entries : [];
   },
   getByReference(bookingRef) {
-    return this.getAll().find((item) => item.bookingRef === bookingRef) || null;
+    if (!bookingRef) return null;
+    return this.getAll().find((item) => (
+      item.bookingRef === bookingRef ||
+      item.id === bookingRef ||
+      item.reference === bookingRef
+    )) || null;
   },
   save(reservation) {
     const entries = this.getAll();
-    const existingIndex = entries.findIndex((item) => item.bookingRef === reservation.bookingRef);
-    if (existingIndex >= 0) entries[existingIndex] = reservation;
-    else entries.unshift(reservation);
+    const ref = reservation.bookingRef || reservation.id || reservation.reference || `res_${Date.now()}`;
+    const normalized = {
+      ...reservation,
+      bookingRef: ref,
+      id: ref,
+      reference: ref,
+    };
+    const existingIndex = entries.findIndex((item) => (
+      item.bookingRef === ref ||
+      item.id === ref ||
+      item.reference === ref
+    ));
+    if (existingIndex >= 0) entries[existingIndex] = normalized;
+    else entries.unshift(normalized);
     return storage.set(KEY, entries);
   },
   update(reservation) {
     const entries = this.getAll();
-    const index = entries.findIndex((item) => item.bookingRef === reservation.bookingRef);
+    const ref = reservation.bookingRef || reservation.id || reservation.reference;
+    if (!ref) return false;
+    const index = entries.findIndex((item) => (
+      item.bookingRef === ref ||
+      item.id === ref ||
+      item.reference === ref
+    ));
     if (index < 0) return false;
-    entries[index] = reservation;
+    entries[index] = {
+      ...entries[index],
+      ...reservation,
+      bookingRef: ref,
+      id: ref,
+      reference: ref,
+    };
     return storage.set(KEY, entries);
   },
 };

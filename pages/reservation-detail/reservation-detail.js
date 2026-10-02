@@ -11,7 +11,8 @@ Page({
   data: { bookingRef: '', reservation: null, loading: true, error: false, localFallback: false },
 
   onLoad(options = {}) {
-    const bookingRef = decodeBookingRef(options.bookingRef);
+    const rawRef = options.bookingRef || options.id || options.reference;
+    const bookingRef = decodeBookingRef(rawRef);
     this.setData({ bookingRef });
     this.loadReservation();
   },

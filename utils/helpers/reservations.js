@@ -53,15 +53,18 @@ function isUpcomingReservation(reservation) {
 }
 
 export function getLocalReservationCards() {
-  return getLocalReservations().map((item) => {
+  return getLocalReservations().map((item, index) => {
     const upcoming = isUpcomingReservation(item);
     const title = item.package && item.package.title || '';
     const currency = item.package && item.package.currency;
     const characters = Array.from(String(title));
     const cardTitle = characters.length > 15 ? `${characters.slice(0, 14).join('')}…` : title;
+    const ref = item.bookingRef || item.id || item.reference || `local_res_${index}_${Date.now()}`;
     return {
       ...item,
-      id: item.bookingRef,
+      id: ref,
+      bookingRef: ref,
+      reference: ref,
       image: item.package && item.package.image || '',
       title,
       cardTitle,
@@ -69,7 +72,6 @@ export function getLocalReservationCards() {
       dateLabel: formatDate(item.date),
       travelersLabel: `${item.travelers || 0} voyageur${item.travelers > 1 ? 's' : ''}`,
       price: `${Number(item.total || 0).toLocaleString('fr-FR')}${currency ? ` ${currency}` : ''}`,
-      reference: item.bookingRef,
       status: upcoming ? 'upcoming' : 'done',
       statusLabel: upcoming ? 'À venir' : 'Terminé',
       showAction: upcoming,
@@ -78,7 +80,7 @@ export function getLocalReservationCards() {
   });
 }
 
-export function mapRemoteReservationToCard(item) {
+export function mapRemoteReservationToCard(item, index = 0) {
   const upcoming = isUpcomingReservation(item);
   const title = item.packageTitle || (item.package && (typeof item.package === 'string' ? item.package : item.package.title)) || item.title || '';
   const currency = item.currency || 'XOF';
@@ -94,7 +96,7 @@ export function mapRemoteReservationToCard(item) {
   };
   const statusLabel = statusLabels[item.status] || (upcoming ? 'À venir' : 'Terminé');
 
-  const ref = item.booking_ref || item.bookingRef || '';
+  const ref = item.booking_ref || item.bookingRef || item.reference || item.id || `remote_res_${index}_${Date.now()}`;
   const image = item.image || (item.package && item.package.image) || '';
   const subtitle = item.location || (item.package && item.package.location) || '';
 

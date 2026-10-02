@@ -52,7 +52,8 @@ Page({
   },
 
   openReservationDetails(event) {
-    const bookingRef = event.detail.bookingRef;
+    const detail = event.detail || {};
+    const bookingRef = detail.bookingRef || detail.id || detail.reference;
     if (!bookingRef) return;
     wx.navigateTo({ url: `/pages/reservation-detail/reservation-detail?bookingRef=${encodeURIComponent(bookingRef)}` });
   },
