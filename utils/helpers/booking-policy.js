@@ -28,6 +28,12 @@ export function formatDate(date) {
  */
 export function getMinimumLeadDays(destination) {
   if (!destination) return 2;
+
+  // Priorité 1 : champ `min_days` renvoyé directement par l'API (mappé en `minDays`)
+  const apiMinDays = Number(destination.minDays || destination.min_days);
+  if (apiMinDays > 0) return apiMinDays;
+
+  // Priorité 2 : détection textuelle (fallback si l'API ne retourne pas min_days)
   const title = String(destination.title || destination.name || '').toLowerCase();
   const slug = String(destination.slug || destination.id || '').toLowerCase();
   const location = String(destination.location || destination.city || destination.subtitle || destination.category || '').toLowerCase();

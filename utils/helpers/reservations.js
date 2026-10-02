@@ -144,17 +144,50 @@ export async function getUserReservationCards(phone) {
 
 export function buildReservationDetail(reservation) {
   const upcoming = isUpcomingReservation(reservation);
-  const currency = reservation.package && reservation.package.currency;
+  const currency = (reservation.package && reservation.package.currency) || reservation.currency || 'XOF';
   const total = Number(reservation.total || 0).toLocaleString('fr-FR');
+
+  const adultes = Number(reservation.travelersAdulte || 0);
+  const enfants = Number(reservation.travelersEnfant || 0);
+  const totalTravelers = reservation.travelers || (adultes + enfants) || 0;
+  let travelersLabel;
+  if (adultes > 0 || enfants > 0) {
+    const parts = [];
+    if (adultes > 0) parts.push(`${adultes} adulte${adultes > 1 ? 's' : ''}`);
+    if (enfants > 0) parts.push(`${enfants} enfant${enfants > 1 ? 's' : ''}`);
+    travelersLabel = parts.join(' + ');
+  } else {
+    travelersLabel = `${totalTravelers} voyageur${totalTravelers > 1 ? 's' : ''}`;
+  }
+
+  const statusLabels = {
+    pending_payment: 'En attente de paiement',
+    confirmed: 'Confirmé',
+    completed: 'Terminé',
+    cancellation_requested: 'Annulation demandée',
+    cancelled: 'Annulé',
+    on_hold: 'En attente',
+    refunded: 'Remboursé',
+    failed: 'Échoué',
+  };
+  const statusLabel = statusLabels[reservation.status] || (upcoming ? 'À venir' : 'Terminé');
+  const statusClass = (() => {
+    if (['confirmed'].includes(reservation.status)) return 'upcoming';
+    if (['completed'].includes(reservation.status)) return 'done';
+    if (['cancelled', 'failed', 'refunded'].includes(reservation.status)) return 'cancelled';
+    if (['cancellation_requested', 'pending_payment', 'on_hold'].includes(reservation.status)) return 'pending';
+    return upcoming ? 'upcoming' : 'done';
+  })();
+
   return {
     ...reservation,
     package: reservation.package || {},
     dateLabel: formatDate(reservation.date),
-    travelersLabel: `${reservation.travelers || 0} voyageur${reservation.travelers > 1 ? 's' : ''}`,
-    totalLabel: `${total}${currency ? ` ${currency}` : ''}`,
-    statusLabel: upcoming ? 'À venir' : 'Terminé',
-    statusClass: upcoming ? 'upcoming' : 'done',
-    isUpcoming: upcoming,
+    travelersLabel,
+    totalLabel: `${total} ${currency}`,
+    statusLabel,
+    statusClass,
+    isUpcoming: upcoming && !['cancelled', 'cancellation_requested', 'failed'].includes(reservation.status),
   };
 }
 
@@ -176,8 +209,12 @@ export function getReservationByReference(reference) {
       },
       date: remote.date || (local && local.date),
       travelers: remote.travelers !== undefined ? remote.travelers : local && local.travelers,
+      travelersAdulte: remote.travelersAdulte !== undefined ? remote.travelersAdulte : (local && local.travelersAdulte),
+      travelersEnfant: remote.travelersEnfant !== undefined ? remote.travelersEnfant : (local && local.travelersEnfant),
       total: local ? local.total : remote.total,
+      currency: remote.currency || (local && local.currency) || 'XOF',
       status: remote.status || (local && local.status),
+      transactionId: remote.transactionId || '',
       note: remote.note,
     };
     reservationStorage.update(merged);

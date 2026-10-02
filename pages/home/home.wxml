@@ -51,9 +51,9 @@
       </view>
       <view class="destination-list-body">
         <app-list-destination
-          wx:if="{{ destinationsLoading || destinations.length }}"
-          destinations="{{ destinations }}"
-          loading="{{ destinationsLoading }}"
+          wx:if="{{ featuredLoading || destinationsFeatured.length }}"
+          destinations="{{ destinationsFeatured }}"
+          loading="{{ featuredLoading }}"
           layout="scroll"
           cardWidth="500rpx"
           imageHeight="287.98rpx"
@@ -63,12 +63,12 @@
           showDetailsButton="{{ true }}"
           bind:toggleLike="handleDestinationLike"
           bind:onCardPress="handleCardPress" />
-        <view wx:elif="{{ destinationsError }}" class="catalog-state">
-          <app-typography size="14" color="#667085">Impossible de charger les destinations.</app-typography>
-          <app-typography size="14" weight="600" color="#01953E" bindtap="retryPackages">Réessayer</app-typography>
+        <view wx:elif="{{ featuredError }}" class="catalog-state">
+          <app-typography size="14" color="#667085">Impossible de charger les destinations à la une.</app-typography>
+          <app-typography size="14" weight="600" color="#01953E" bindtap="retryRecommendations">Réessayer</app-typography>
         </view>
         <view wx:else class="catalog-state">
-          <app-typography size="14" color="#667085">Aucune destination disponible.</app-typography>
+          <app-typography size="14" color="#667085">Aucune destination à la une disponible.</app-typography>
         </view>
       </view>
     </view>

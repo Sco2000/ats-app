@@ -20,7 +20,11 @@ export const PackageSchema = {
   rating: '@link.rating',
   reviewCount: '@link.review_count',
   description: '@link.description',
+  descriptionHtml: '@link.description_html',
   gallery: '@link.gallery',
   available: '@link.available',
   recommended: '@link.recommended',
+  featured: '@link.featured',
+  minDays: '@link.min_days',
+  pricing: '@link.pricing',
 };
