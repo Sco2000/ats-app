@@ -156,13 +156,30 @@ class BackendAPI {
     return sculpt.data({ data: targetData, to: ReservationSchema });
   }
 
+  async confirmBookingPayment(reference, transactionId) {
+    if (!reference) throw new ValidationError('Référence de réservation manquante');
+    if (!transactionId) throw new ValidationError('Identifiant de transaction manquant');
+    await authenticate();
+    const res = await this.#client.post(`${ENDPOINTS.BOOKINGS}/${reference}/payment`, { transaction_id: transactionId });
+    const body = assertSuccessResponse(res, 'Impossible de confirmer le paiement');
+    return body.data || body;
+  }
+
   async cancelBooking(reference, phone) {
     if (!reference) throw new ValidationError('Référence de réservation manquante');
     if (!phone) throw new ValidationError('Numéro de téléphone manquant');
     await authenticate();
     const res = await this.#client.delete(`${ENDPOINTS.BOOKINGS}/${reference}`, { query: { phone } });
     const body = getResponseBody(res, 'Impossible d\'annuler la réservation');
-    return body.data || body;
+    return body.data ? { ...body.data, refund: body.refund, message: body.message } : body;
+  }
+
+  async getFeaturedPackages() {
+    await authenticate();
+    const res = await this.#client.get(`${ENDPOINTS.PACKAGES}?featured=true`);
+    const body = getResponseBody(res, 'Impossible de récupérer les packages à la une');
+    const items = Array.isArray(body) ? body : (Array.isArray(body.data) ? body.data : []);
+    return sculpt.data({ data: items, to: PackageSchema });
   }
 
   resetSession() {

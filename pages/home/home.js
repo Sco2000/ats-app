@@ -8,7 +8,9 @@ import { storage } from '../../utils/storage.js';
 import {
   DEFAULT_FILTERS,
   getCatalogRecommendedDestinations,
+  getCatalogFeaturedDestinations,
   loadRecommendedDestinations,
+  loadFeaturedDestinations,
   loadDestinations,
 } from '../../utils/helpers/catalog';
 
@@ -56,9 +58,12 @@ Page({
     allDestinations: [],
     destinations: [],
     destinationsRecommended: [],
+    destinationsFeatured: [],
     destinationsLoading: true,
     recommendedLoading: true,
+    featuredLoading: true,
     recommendedError: false,
+    featuredError: false,
     destinationsError: false,
     filters: DEFAULT_FILTERS,
     activeFilter: 'all',
@@ -70,6 +75,7 @@ Page({
       : [];
       
     const destinationsRecommended = getCatalogRecommendedDestinations();
+    const destinationsFeatured = getCatalogFeaturedDestinations();
 
     const destinations = filterDestinations(
       allDestinations,
@@ -77,7 +83,7 @@ Page({
       this.data.activeFilter
     );
 
-    this.setData({ destinations, destinationsRecommended });
+    this.setData({ destinations, destinationsRecommended, destinationsFeatured });
   },
 
   async refreshDestinations() {
@@ -91,6 +97,18 @@ Page({
       this.setData({ recommendedError: true });
     } finally {
       this.setData({ recommendedLoading: false });
+    }
+    // Charger les destinations À la Une en parallèle
+    this.setData({ featuredLoading: true, featuredError: false });
+    try {
+      await loadFeaturedDestinations({
+        onError: () => this.setData({ featuredError: true }),
+      });
+      this.setData({ destinationsFeatured: getCatalogFeaturedDestinations() });
+    } catch (error) {
+      this.setData({ featuredError: true });
+    } finally {
+      this.setData({ featuredLoading: false });
     }
   },
 

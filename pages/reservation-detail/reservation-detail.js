@@ -1,6 +1,11 @@
 import { buildReservationDetail, getReservationByReference } from '../../utils/helpers/reservations.js';
 import { reservationStorage } from '../../utils/storage/reservations.js';
+import { backendAPI } from '../../utils/apis/index.js';
+import { Bus } from '../../utils/event/index.js';
+import { STATE_KEYS } from '../../utils/constants/index.js';
+import { calculateCancellationRefund } from '../../utils/helpers/booking-policy.js';
 import { withLock } from '../../utils/helpers/interaction.js';
+import { handleAppError } from '../../utils/helpers/error-handler.js';
 
 function decodeBookingRef(value) {
   if (!value) return '';
@@ -44,10 +49,7 @@ Page({
       itemList: ['Appeler le service client (+221 33 824 00 00)', 'Copier le numéro de support'],
       success: (res) => {
         if (res.tapIndex === 0) {
-          wx.makePhoneCall({
-            phoneNumber: '+221338240000',
-            fail: () => {},
-          });
+          wx.makePhoneCall({ phoneNumber: '+221338240000', fail: () => {} });
         } else if (res.tapIndex === 1) {
           wx.setClipboardData({
             data: '+221338240000',
@@ -89,52 +91,110 @@ Page({
         if (res.confirm && reservation.bookingRef) {
           wx.setClipboardData({
             data: reservation.bookingRef,
-            success: () => {
-              wx.showToast({ title: 'Référence copiée !', icon: 'success' });
-            },
+            success: () => wx.showToast({ title: 'Référence copiée !', icon: 'success' }),
           });
         }
       },
     });
   }, 1000),
 
-  cancelReservation: withLock(function () {
+  // ── Annulation avec barème API ─────────────────────────────────────────────
+  cancelReservation: withLock(async function () {
     const { reservation } = this.data;
     if (!reservation) return;
 
+    // Calcul local préliminaire (booking-policy) pour afficher le barème
+    // avant l'appel API, puis le résultat réel de l'API prend la priorité.
+    const localRefund = calculateCancellationRefund(reservation.date, reservation.total);
+    const daysText = localRefund.daysBeforeDeparture > 0
+      ? `${localRefund.daysBeforeDeparture} jours avant le départ`
+      : 'moins d\'1 jour avant le départ';
+
+    const content = [
+      `Référence : ${reservation.bookingRef}`,
+      `Départ : ${reservation.dateLabel || '—'}`,
+      ``,
+      `Barème d'annulation (${daysText}) :`,
+      `  • Montant payé : ${localRefund.formattedTotal}`,
+      `  • Frais retenus : ${localRefund.retainedPercent}% (${localRefund.formattedRetainedAmount})`,
+      `  • Remboursement estimé : ${localRefund.formattedEstimatedRefund}`,
+      ``,
+      `Le remboursement sera traité manuellement par ATS.`,
+    ].join('\n');
+
     wx.showModal({
-      title: 'Demande d\'annulation',
-      content: 'Souhaitez-vous demander l\'annulation de cette réservation auprès du partenaire ATS ?',
-      confirmText: 'Confirmer',
+      title: 'Confirmer l\'annulation ?',
+      content,
+      confirmText: 'Annuler la résa.',
       cancelText: 'Retour',
       confirmColor: '#DC2626',
-      success: (res) => {
-        if (res.confirm) {
-          wx.showToast({
-            title: 'Demande d\'annulation prise en compte. Un conseiller vous contactera.',
-            icon: 'none',
-            duration: 3000,
+      success: async (modal) => {
+        if (!modal.confirm) return;
+
+        wx.showLoading({ title: 'Annulation en cours…', mask: true });
+
+        try {
+          const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
+          const phone = userData.msisdn || '770000000';
+
+          // Appel API DELETE /bookings/{ref}?phone={num}
+          const result = await backendAPI.cancelBooking(reservation.bookingRef, phone);
+          const apiRefund = result.refund;
+
+          // Mise à jour stockage local
+          reservationStorage.update({
+            ...reservation,
+            status: 'cancellation_requested',
           });
 
-          if (reservation.bookingRef) {
-            reservationStorage.update({
-              ...reservation,
-              status: 'cancellation_requested',
-            });
-          }
-
+          // Mise à jour UI
           this.setData({
             'reservation.status': 'cancellation_requested',
             'reservation.statusLabel': 'Annulation demandée',
             'reservation.statusClass': 'pending',
             'reservation.isUpcoming': false,
           });
+
+          wx.hideLoading();
+
+          // Modale de confirmation avec le barème réel retourné par l'API
+          const refundAmountFormatted = apiRefund
+            ? `${Number(apiRefund.refund_amount || 0).toLocaleString('fr-FR')} ${apiRefund.currency || 'XOF'}`
+            : localRefund.formattedEstimatedRefund;
+          const retainedPct = apiRefund ? `${apiRefund.retained_percent}%` : `${localRefund.retainedPercent}%`;
+
+          wx.showModal({
+            title: 'Demande envoyée ✓',
+            content: `Votre demande d'annulation a été enregistrée.\n\nRemboursement estimé : ${refundAmountFormatted} (${retainedPct} retenus).\n\nUn conseiller ATS vous contactera pour finaliser le remboursement.`,
+            showCancel: false,
+            confirmText: 'Compris',
+            confirmColor: '#0AA347',
+          });
+        } catch (error) {
+          wx.hideLoading();
+
+          // Fallback local si l'API est inaccessible
+          reservationStorage.update({ ...reservation, status: 'cancellation_requested' });
+          this.setData({
+            'reservation.status': 'cancellation_requested',
+            'reservation.statusLabel': 'Annulation demandée',
+            'reservation.statusClass': 'pending',
+            'reservation.isUpcoming': false,
+          });
+
+          handleAppError(error, 'Demande enregistrée localement. Contactez le support si besoin.');
         }
       },
     });
   }, 1000),
 
+  // ── Rebooking ──────────────────────────────────────────────────────────────
   rebook: withLock(function () {
-    wx.navigateTo({ url: '/pages/booking/booking' });
+    const { reservation } = this.data;
+    const destinationId = reservation?.package?.id || '';
+    const ref = reservation?.bookingRef || '';
+    wx.navigateTo({
+      url: `/pages/booking/booking?destinationId=${destinationId}&rebookingRef=${encodeURIComponent(ref)}&rebookingEligibility=free`,
+    });
   }, 500),
 });

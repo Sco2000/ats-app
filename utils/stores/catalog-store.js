@@ -2,6 +2,7 @@ import { applyFavoritesToPackages, toggleFavoriteId } from '../helpers/favorites
 
 let destinations = [];
 let recommendedDestinations = [];
+let featuredDestinations = [];
 let filters = [];
 
 function normalizeList(value) {
@@ -34,6 +35,15 @@ export function getRecommendedDestinations() {
   return applyFavoritesToPackages(recommendedDestinations);
 }
 
+export function setFeaturedDestinations(nextDestinations) {
+  featuredDestinations = applyFavoritesToPackages(normalizeList(nextDestinations));
+  return featuredDestinations;
+}
+
+export function getFeaturedDestinations() {
+  return applyFavoritesToPackages(featuredDestinations);
+}
+
 export function setFilters(nextFilters) {
   filters = normalizeList(nextFilters);
   return filters;
@@ -46,5 +56,6 @@ export function getFilters() {
 export function resetCatalogStore() {
   destinations = [];
   recommendedDestinations = [];
+  featuredDestinations = [];
   filters = [];
 }

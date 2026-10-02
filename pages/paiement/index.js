@@ -1,5 +1,6 @@
 const app = getApp();
 import { createReservation } from '../../utils/helpers/reservations.js';
+import { backendAPI } from '../../utils/apis/index.js';
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
 import { withLock } from '../../utils/helpers/interaction.js';
@@ -70,9 +71,13 @@ Page({
     }
 
     this.setData({ isPaying: true });
+    let bookingRef = '';
+
     try {
+      // ── Étape 1 : Créer la réservation (POST /bookings) ──────────────────
       const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
       const phone = userData.msisdn || '770000000';
+
       const created = await createReservation({
         package_id: Number(packageId),
         date,
@@ -80,8 +85,26 @@ Page({
         total,
         phone,
       }, packageInfo);
+
+      bookingRef = created.bookingRef;
+
+      // ── Étape 2 : Confirmer le paiement (POST /bookings/{ref}/payment) ────
+      // En production, Orange Max It fournit un vrai transaction_id.
+      // Pour l'instant on utilise un ID fictif en test — à remplacer par l'ID
+      // réel retourné par le SDK Orange Money lors du paiement.
+      const transactionId = userData.transactionId || `OM-${Date.now()}`;
+
+      try {
+        await backendAPI.confirmBookingPayment(bookingRef, transactionId);
+      } catch (paymentError) {
+        // La confirmation échoue (réseau, env. test) : on continue quand même,
+        // le statut restera pending_payment côté serveur, ATS le verra.
+        console.warn('[Paiement] confirmBookingPayment failed (non bloquant):', paymentError);
+      }
+
+      // ── Étape 3 : Rediriger vers la confirmation ──────────────────────────
       wx.redirectTo({
-        url: `/pages/booking-confirmation/booking-confirmation?reference=${encodeURIComponent(created.bookingRef)}`,
+        url: `/pages/booking-confirmation/booking-confirmation?reference=${encodeURIComponent(bookingRef)}`,
       });
     } catch (error) {
       handleAppError(error, 'Échec de la réservation. Réessayez.');

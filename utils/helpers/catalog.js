@@ -2,9 +2,11 @@ import { backendAPI } from '../apis/index.js';
 import {
   getDestinations,
   getRecommendedDestinations,
+  getFeaturedDestinations,
   getFilters,
   setDestinations,
   setRecommendedDestinations,
+  setFeaturedDestinations,
   setFilters,
   updateDestinationLike as updateStoredDestinationLike,
 } from '../stores/catalog-store.js';
@@ -13,10 +15,13 @@ const DEFAULT_FILTERS = [
   { id: 'all', label: 'Tous' },
   { id: 'dakar', label: 'Dakar' },
   { id: 'saly', label: 'Saly' },
-  { id: 'sine-saloum', label: 'Sine Saloum' },
+  { id: 'saloum', label: 'Saloum' },
+  { id: 'somone', label: 'Somone' },
   { id: 'saint-louis', label: 'Saint Louis' },
   { id: 'lompoul', label: 'Lompoul' },
-  { id: 'experience-locale', label: 'Experience Locale' },
+  { id: 'casamance', label: 'Casamance' },
+  { id: 'kedougou', label: 'Kédougou' },
+  { id: 'experiences-locales', label: 'Expériences locales' },
 ];
 
 export async function loadDestinations({ fallback = [], onError, throwOnError = false } = {}) {
@@ -46,6 +51,17 @@ export async function loadRecommendedDestinations({ fallback = [], onError } = {
   }
 }
 
+export async function loadFeaturedDestinations({ fallback = [], onError } = {}) {
+  try {
+    const destinations = await backendAPI.getFeaturedPackages();
+    return setFeaturedDestinations(destinations);
+  } catch (error) {
+    console.warn('[Catalog] Featured packages API failed:', error);
+    if (typeof onError === 'function') onError(error);
+    return setFeaturedDestinations(fallback);
+  }
+}
+
 export async function loadCategoryFilters({ force = false } = {}) {
   const cachedFilters = getFilters();
   if (!force && cachedFilters.length > 0) return cachedFilters;
@@ -65,6 +81,10 @@ export function getCatalogDestinations() {
 
 export function getCatalogRecommendedDestinations() {
   return getRecommendedDestinations();
+}
+
+export function getCatalogFeaturedDestinations() {
+  return getFeaturedDestinations();
 }
 
 export function updateDestinationLike(id, like) {
