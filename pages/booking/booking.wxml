@@ -62,7 +62,7 @@
         </view>
 
         <app-card containerClass="traveler-card">
-          <view class="traveler-copy" style="display: flex; flex-direction: column; min-width: 0; flex: 1;">
+          <view class="traveler-copy">
             <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
               Adultes
             </app-typography>
@@ -70,7 +70,7 @@
               13 ans et +
             </app-typography>
           </view>
-          <view class="traveler-controls" style="display: flex; align-items: center; justify-content: space-between; flex: 0 0 206rpx; width: 206rpx; max-width: 45%;">
+          <view class="traveler-controls">
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--minus {{ adults <= 1 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseAdult">
                 <app-typography fontSize="36rpx" weight="500" color="#667085" lineHeight="40rpx" align="center">
@@ -92,7 +92,7 @@
         </app-card>
 
         <app-card containerClass="traveler-card">
-          <view class="traveler-copy" style="display: flex; flex-direction: column; min-width: 0; flex: 1;">
+          <view class="traveler-copy">
             <app-typography fontSize="29rpx" weight="600" color="#111827" lineHeight="38rpx">
               Enfants
             </app-typography>
@@ -100,7 +100,7 @@
               2-12 ans (-50%)
             </app-typography>
           </view>
-          <view class="traveler-controls" style="display: flex; align-items: center; justify-content: space-between; flex: 0 0 206rpx; width: 206rpx; max-width: 45%;">
+          <view class="traveler-controls">
             <view class="counter-btn-wrap">
               <view class="counter-btn counter-btn--minus {{ children <= 0 ? 'counter-btn--disabled' : '' }}" bindtap="decreaseChild">
                 <app-typography fontSize="36rpx" weight="500" color="#667085" lineHeight="40rpx" align="center">

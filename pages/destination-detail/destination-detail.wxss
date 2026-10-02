@@ -250,6 +250,19 @@ page {
   flex: 0 0 267rpx;
 }
 
+.detail-booking-reserve-btn {
+  height: 112rpx !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 32rpx !important;
+  background: #01953e !important;
+  font-size: 32rpx !important;
+  font-weight: 600 !important;
+  line-height: 48rpx !important;
+  box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1) !important;
+}
+
 .detail-booking-button-label {
   width: 140rpx;
   height: 48rpx;
