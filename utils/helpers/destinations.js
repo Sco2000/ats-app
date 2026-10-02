@@ -70,3 +70,20 @@ function normalizeDestination(destination) {
 export function prepareDestinationDetail(destination) {
   return normalizeDestination({ ...destination, like: isFavorite(destination.id) });
 }
+
+let destinationPreloaderFn = null;
+
+export function registerDestinationPreloader(fn) {
+  destinationPreloaderFn = fn;
+}
+
+export function preloadDestinationDetail(destination) {
+  if (typeof destinationPreloaderFn === 'function' && destination) {
+    try {
+      destinationPreloaderFn(destination);
+    } catch (e) {
+      console.warn('[Preload] Failed to preload destination:', e);
+    }
+  }
+}
+

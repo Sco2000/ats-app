@@ -3,6 +3,7 @@ import { filterDestinations } from '../../utils/helpers/destination-filter';
 import { navigateTo } from '../../utils/helpers/navigation';
 import { setCustomTabBarActive } from '../../utils/helpers/tab-bar';
 import { applyFavoritesToPackages, toggleFavoriteId } from '../../utils/helpers/favorites';
+import { preloadDestinationDetail } from '../../utils/helpers/destinations.js';
 import { storage } from '../../utils/storage.js';
 import {
   DEFAULT_FILTERS,
@@ -134,6 +135,8 @@ Page({
     if (destination) {
       storage.set('CURRENT_DESTINATION', destination);
     }
+
+    preloadDestinationDetail(destination);
 
     navigateTo(`/pages/destination-detail/destination-detail?id=${destination.id}`)
       .then(releaseNavigation, releaseNavigation);

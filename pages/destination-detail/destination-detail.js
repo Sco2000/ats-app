@@ -1,26 +1,36 @@
 import { toggleFavoriteId } from '../../utils/helpers/favorites';
-import { prepareDestinationDetail } from '../../utils/helpers/destinations.js';
+import {
+  prepareDestinationDetail,
+  registerDestinationPreloader,
+} from '../../utils/helpers/destinations.js';
 import { loadDestination } from '../../utils/helpers/catalog';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { storage } from '../../utils/storage.js';
 import { getDestinations, getRecommendedDestinations } from '../../utils/stores/catalog-store.js';
 
-Page({
+const getInitialPageTopOffset = () => {
+  try {
+    const sysInfo = wx.getSystemInfoSync();
+    return (sysInfo.statusBarHeight || 20) + 16;
+  } catch (e) {
+    return 36;
+  }
+};
+
+const pageConfig = {
   data: {
     destination: null,
     isLiked: false,
     hasDestination: false,
-    isLoading: true,
-    pageTopOffset: 36,
+    isLoading: false,
+    pageTopOffset: getInitialPageTopOffset(),
     showPreview: false,
     previewIndex: 0,
     previewGallery: [],
   },
 
-  async onLoad(options = {}) {
-    const sysInfo = wx.getSystemInfoSync();
-    const statusBarHeight = sysInfo.statusBarHeight || 20;
-    const pageTopOffset = statusBarHeight + 16;
+  onLoad(options = {}) {
+    const pageTopOffset = getInitialPageTopOffset();
 
     if (!options.id) {
       this.setData({
@@ -38,7 +48,16 @@ Page({
     const app = getApp();
     const targetId = String(options.id);
 
-    // 1. Récupération instantanée multi-sources (ZÉRO ÉCRAN BLANC)
+    // 1. Si la page a déjà été pré-hydratée lors de sa création via preloadDestinationDetail :
+    if (this.data.destination && String(this.data.destination.id) === targetId) {
+      if (this.data.pageTopOffset !== pageTopOffset) {
+        this.setData({ pageTopOffset });
+      }
+      this.fetchFullDetails(options.id);
+      return;
+    }
+
+    // 2. Récupération instantanée multi-sources (ZÉRO ÉCRAN BLANC)
     const currentDest = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || storage.get('CURRENT_DESTINATION', null);
     const isCurrentMatch = currentDest && String(currentDest.id) === targetId;
 
@@ -74,9 +93,13 @@ Page({
       });
     }
 
-    // 2. Charger les détails complets (galerie, description) en arrière-plan
+    // 3. Charger les détails complets (galerie, description) en arrière-plan
+    this.fetchFullDetails(options.id);
+  },
+
+  async fetchFullDetails(id) {
     try {
-      const destination = await loadDestination(options.id);
+      const destination = await loadDestination(id);
       if (destination) {
         const normalizedDestination = prepareDestinationDetail(destination);
         this.setData({
@@ -211,4 +234,17 @@ Page({
       previewIndex: e.detail.current,
     });
   },
+};
+
+// Enregistrer la fonction de pré-hydratation instantanée
+registerDestinationPreloader((destination) => {
+  if (destination) {
+    const normalized = prepareDestinationDetail(destination);
+    pageConfig.data.destination = normalized;
+    pageConfig.data.hasDestination = true;
+    pageConfig.data.isLiked = Boolean(normalized.like);
+    pageConfig.data.isLoading = false;
+  }
 });
+
+Page(pageConfig);
