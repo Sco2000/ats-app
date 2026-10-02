@@ -316,13 +316,13 @@ page {
 
 .custom-preview-header {
   position: absolute;
-  top: calc(120rpx + env(safe-area-inset-top));
+  top: calc(180rpx + env(safe-area-inset-top));
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 29rpx 0 31rpx;
+  padding: 0 32rpx;
   z-index: 10000;
 }
 

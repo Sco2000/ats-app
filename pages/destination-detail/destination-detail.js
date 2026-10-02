@@ -28,6 +28,19 @@ const getInitialDestination = () => {
   return null;
 };
 
+const getPreviewTopOffset = () => {
+  try {
+    const menu = wx.getMenuButtonBoundingClientRect();
+    if (menu && menu.bottom) {
+      return menu.bottom + 14;
+    }
+    const sysInfo = wx.getSystemInfoSync();
+    return (sysInfo.statusBarHeight || 20) + 48;
+  } catch (e) {
+    return 96;
+  }
+};
+
 const initialDest = getInitialDestination();
 
 const pageConfig = {
@@ -37,6 +50,7 @@ const pageConfig = {
     hasDestination: Boolean(initialDest),
     isLoading: false,
     pageTopOffset: getInitialPageTopOffset(),
+    previewTopOffset: getPreviewTopOffset(),
     showPreview: false,
     previewIndex: 0,
     previewGallery: [],
@@ -44,6 +58,7 @@ const pageConfig = {
 
   onLoad(options = {}) {
     const pageTopOffset = getInitialPageTopOffset();
+    const previewTopOffset = getPreviewTopOffset();
     const targetId = options.id ? String(options.id) : '';
 
     if (!targetId) {
@@ -63,8 +78,8 @@ const pageConfig = {
 
     // 1. Si la page a déjà été pré-hydratée lors de sa création via preloadDestinationDetail :
     if (this.data.destination && String(this.data.destination.id) === targetId) {
-      if (this.data.pageTopOffset !== pageTopOffset) {
-        this.setData({ pageTopOffset });
+      if (this.data.pageTopOffset !== pageTopOffset || this.data.previewTopOffset !== previewTopOffset) {
+        this.setData({ pageTopOffset, previewTopOffset });
       }
       this.fetchFullDetails(targetId);
       return;
@@ -93,6 +108,7 @@ const pageConfig = {
       const normalizedDestination = prepareDestinationDetail(matchedDest);
       this.setData({
         pageTopOffset,
+        previewTopOffset,
         destination: normalizedDestination,
         isLiked: Boolean(normalizedDestination.like),
         hasDestination: true,
@@ -101,6 +117,7 @@ const pageConfig = {
     } else {
       this.setData({
         pageTopOffset,
+        previewTopOffset,
         isLoading: true,
         hasDestination: false,
       });

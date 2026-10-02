@@ -246,7 +246,7 @@
 </view>
 
 <view wx:if="{{ showPreview }}" class="custom-preview-overlay">
-  <view class="custom-preview-header">
+  <view class="custom-preview-header" style="{{ previewTopOffset ? 'top: ' + previewTopOffset + 'px;' : '' }}">
     <view class="custom-preview-counter">
       {{ previewIndex + 1 }} / {{ previewGallery.length }}
     </view>
