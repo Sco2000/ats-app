@@ -107,7 +107,7 @@ const pageConfig = {
     }
 
     // 3. Charger les détails complets (galerie, description) en arrière-plan
-    this.fetchFullDetails(options.id);
+    this.fetchFullDetails(targetId);
   },
 
   async fetchFullDetails(id) {
@@ -140,7 +140,7 @@ const pageConfig = {
       return;
     }
 
-    wx.redirectTo({
+    wx.switchTab({
       url: '/pages/home/home',
     });
   }, 500),
