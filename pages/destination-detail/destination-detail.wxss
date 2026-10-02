@@ -20,7 +20,7 @@ page {
 
 .destination-detail-page__inner {
   padding-top: 32rpx;
-  padding-bottom: 180rpx;
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -258,72 +258,71 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20rpx;
-  min-height: 180rpx;
-  padding: 34rpx 32rpx;
+  padding: 24rpx 36rpx calc(24rpx + env(safe-area-inset-bottom)) 36rpx;
   box-sizing: border-box;
   background: #ffffff;
-  border-top: 1rpx solid #f3f4f6;
+  border-top: 1rpx solid #f2f4f7;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.04);
 }
 
 .detail-booking-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
   min-width: 0;
 }
 
 .detail-booking-label {
-  font-size: 28rpx;
+  font-size: 24rpx;
   font-weight: 400;
-  color: #667085;
-  line-height: 34rpx;
+  color: #7b889b;
+  line-height: 32rpx;
+  margin-bottom: 6rpx;
   display: block;
 }
 
 .detail-booking-price-line {
   display: flex;
   align-items: baseline;
-  margin-top: 4rpx;
   white-space: nowrap;
-  width: 100%;
 }
 
 .detail-booking-amount {
-  font-size: 48rpx;
-  font-weight: 700;
+  font-size: 40rpx;
+  font-weight: 800;
   color: #1c1c1c;
-  line-height: 58rpx;
-  letter-spacing: 0;
+  line-height: 48rpx;
+  letter-spacing: -0.5rpx;
 }
 
 .detail-booking-unit {
   font-size: 24rpx;
   font-weight: 400;
-  color: #667085;
+  color: #7b889b;
   line-height: 32rpx;
-  margin-left: 2rpx;
+  margin-left: 6rpx;
 }
 
 .detail-booking-button {
-  width: 267rpx;
-  max-width: 42%;
-  height: 112rpx;
-  flex: 0 0 267rpx;
+  flex-shrink: 0;
 }
 
 .detail-booking-reserve-btn {
-  width: 100%;
-  height: 112rpx;
+  min-width: 220rpx;
+  height: 92rpx;
+  padding: 0 44rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 32rpx;
+  border-radius: 28rpx;
   background: #01953e;
   color: #ffffff;
   font-size: 32rpx;
   font-weight: 600;
   line-height: 48rpx;
-  box-shadow: 0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  box-shadow: 0 6rpx 16rpx rgba(1, 149, 62, 0.28);
 }
 
 .detail-booking-reserve-btn:active {
