@@ -1,6 +1,18 @@
 import { withLock } from '../../utils/helpers/interaction.js';
+import {
+  getMinimumLeadDays,
+  getMinBookingDateIso,
+  createFutureDates,
+} from '../../utils/helpers/booking-policy.js';
+import { reservationStorage } from '../../utils/storage/reservations.js';
 
 const app = getApp();
+
+// ─── Styles injectés via binding (identiques à mp-ats-app) ───────────────────
+const DISABLED_BUTTON_STYLE = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #95CFA5 !important; background-color: #95CFA5 !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.12) !important;';
+const ACTIVE_BUTTON_STYLE   = 'height: 112rpx !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; border-radius: 32rpx !important; background: #16A34A !important; background-color: #16A34A !important; color: #FFFFFF !important; font-size: 32rpx !important; font-weight: 700 !important; line-height: 40rpx !important; box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.18) !important;';
+const TRAVELER_CARD_STYLE   = 'width: 100% !important; min-height: 154rpx !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; margin-bottom: 24rpx !important; padding: 0 32rpx !important; border: 2rpx solid #E5E7EB !important; border-radius: 32rpx !important; background: #FFFFFF !important; background-color: #FFFFFF !important; box-sizing: border-box !important; gap: 0 !important;';
+const PRICE_CARD_STYLE      = 'width: 100% !important; min-height: 296rpx !important; display: flex !important; flex-direction: column !important; padding: 38rpx 42rpx 34rpx !important; border: 0 !important; border-radius: 28rpx !important; background: #F5E9DA !important; background-color: #F5E9DA !important; box-sizing: border-box !important; margin-bottom: 38rpx !important; gap: 0 !important;';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -11,28 +23,7 @@ function parsePrice(price) {
 }
 
 const MONTHS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
-const DAYS = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-function tomorrowIso() {
-  const tomorrow = new Date();
-  tomorrow.setHours(0, 0, 0, 0);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  return formatDate(tomorrow);
-}
-function createFutureDates(count = 12) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return Array.from({ length: count }, (_, index) => {
-    const date = new Date(today);
-    date.setDate(date.getDate() + index + 1);
-    return { day: DAYS[date.getDay()], date: String(date.getDate()), month: MONTHS[date.getMonth()], isoDate: formatDate(date) };
-  });
-}
+const DAYS   = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 
 Page({
   data: {
@@ -40,21 +31,34 @@ Page({
     basePrice: 15000,
     selectedDate: -1,
     selectedDateIso: '',
-    minDate: tomorrowIso(),
+    minDate: getMinBookingDateIso(2),
+    leadDays: 2,
+    isCarRapide: false,
+    leadNotice: 'Réservations au plus tôt à J+2 pour préparer la prestation.',
     canContinue: false,
+    continueButtonStyle: DISABLED_BUTTON_STYLE,
+    travelerCardStyle: TRAVELER_CARD_STYLE,
+    priceCardStyle: PRICE_CARD_STYLE,
     adults: 1,
     children: 0,
-    dates: createFutureDates(),
-    adultLine: '2 Adultes x 15 000 FCFA',
-    adultSubtotal: '30 000 FCFA',
+    dates: createFutureDates(2, 14),
+    adultLine: '1 Adulte x 15 000 FCFA',
+    adultSubtotal: '15 000 FCFA',
     childrenLine: '',
     childrenSubtotal: '',
-    totalPrice: '30 000 FCFA',
+    totalPrice: '15 000 FCFA',
+    isRebooking: false,
+    rebookingRef: '',
+    rebookingEligibility: 'free',
   },
 
   onLoad(options = {}) {
-    const rawId = options.destinationId ? String(options.destinationId) : '';
-    const currentDest = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || null;
+    const rawId              = options.destinationId ? String(options.destinationId) : '';
+    const rebookingRef       = options.rebookingRef ? String(options.rebookingRef) : '';
+    const rebookingEligibility = options.rebookingEligibility || 'free';
+    const isRebooking        = Boolean(rebookingRef);
+
+    const currentDest  = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || null;
     const destinations = Array.isArray(app && app.globalData && app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
@@ -68,61 +72,97 @@ Page({
       destination = currentDest;
     }
 
+    // Fallback depuis le stockage local si on arrive d'un rebooking
+    if (!destination && rebookingRef) {
+      const savedRes = reservationStorage.getByReference(rebookingRef);
+      if (savedRes && savedRes.package) {
+        destination = {
+          id:       savedRes.package.id || rawId,
+          title:    savedRes.package.title || 'Tour',
+          image:    savedRes.package.image || '',
+          price:    savedRes.total || 15000,
+          location: savedRes.package.location || '',
+        };
+      }
+    }
+
     if (!destination) {
-      wx.showToast({
-        title: 'Destination non trouvée',
-        icon: 'none',
-        duration: 2000,
-      });
+      wx.showToast({ title: 'Destination non trouvée', icon: 'none', duration: 2000 });
       setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
       return;
     }
 
-    const basePrice = parsePrice(destination.price);
+    const basePrice    = parsePrice(destination.price);
+    const leadDays     = getMinimumLeadDays(destination);
+    const minDate      = getMinBookingDateIso(leadDays);
+    const dates        = createFutureDates(leadDays, 14);
+    const isCarRapide  = leadDays === 5;
+    const leadNotice   = isCarRapide
+      ? 'Tour de Dakar en car rapide : réservation au plus tôt à J+5 pour préparer la prestation.'
+      : 'Réservations au plus tôt à J+2 pour préparer la prestation.';
 
     this.setData({
       destination,
       basePrice,
+      leadDays,
+      minDate,
+      dates,
+      isCarRapide,
+      leadNotice,
+      isRebooking,
+      rebookingRef,
+      rebookingEligibility,
     }, () => {
       this.updatePrice();
     });
   },
 
   selectDate(event) {
-    const index = Number(event.currentTarget.dataset.index);
+    const index    = Number(event.currentTarget.dataset.index);
     const selected = this.data.dates[index];
-    if (!selected || selected.isoDate <= formatDate(new Date())) return;
+    if (!selected || selected.isoDate < this.data.minDate) return;
     this.setData({
       selectedDate: index,
       selectedDateIso: selected.isoDate,
       canContinue: true,
+      continueButtonStyle: ACTIVE_BUTTON_STYLE,
     });
   },
 
   onDatePickerChange(event) {
     const isoDate = event.detail.value;
-    const date = new Date(`${isoDate}T00:00:00`);
-    if (!isoDate || isoDate < tomorrowIso()) return;
-    const dates = this.data.dates;
+    if (!isoDate || isoDate < this.data.minDate) {
+      wx.showToast({ title: `Réservation possible à partir du ${this.data.minDate}`, icon: 'none' });
+      return;
+    }
+    const date     = new Date(`${isoDate}T00:00:00`);
+    const dates    = this.data.dates;
     const existing = dates.findIndex((item) => item.isoDate === isoDate);
     if (existing >= 0) {
-      this.setData({ selectedDate: existing, selectedDateIso: isoDate, canContinue: true, showDatePicker: false });
+      this.setData({
+        selectedDate: existing,
+        selectedDateIso: isoDate,
+        canContinue: true,
+        continueButtonStyle: ACTIVE_BUTTON_STYLE,
+      });
       return;
     }
     this.setData({
-      dates: [...dates, { day: DAYS[date.getDay()], date: String(date.getDate()), month: MONTHS[date.getMonth()], isoDate }],
+      dates: [...dates, {
+        day: DAYS[date.getDay()],
+        date: String(date.getDate()),
+        month: MONTHS[date.getMonth()],
+        isoDate,
+      }],
       selectedDate: dates.length,
       selectedDateIso: isoDate,
       canContinue: true,
-      showDatePicker: false,
+      continueButtonStyle: ACTIVE_BUTTON_STYLE,
     });
   },
 
   decreaseAdult() {
-    if (this.data.adults <= 1) {
-      return;
-    }
-
+    if (this.data.adults <= 1) return;
     this.setData({ adults: this.data.adults - 1 }, () => {
       this.updatePrice();
     });
@@ -135,10 +175,7 @@ Page({
   },
 
   decreaseChild() {
-    if (this.data.children <= 0) {
-      return;
-    }
-
+    if (this.data.children <= 0) return;
     this.setData({ children: this.data.children - 1 }, () => {
       this.updatePrice();
     });
@@ -152,37 +189,33 @@ Page({
 
   updatePrice() {
     const { adults, children, basePrice } = this.data;
-    const childPrice = Math.round(basePrice * 0.5);
-    const adultSubtotal = adults * basePrice;
+    const childPrice       = Math.round(basePrice * 0.5);
+    const adultSubtotal    = adults * basePrice;
     const childrenSubtotal = children * childPrice;
-    const total = adultSubtotal + childrenSubtotal;
+    const total            = adultSubtotal + childrenSubtotal;
 
     this.setData({
-      adultLine: `${adults} Adulte${adults > 1 ? 's' : ''} x ${formatPrice(basePrice)}`,
-      adultSubtotal: formatPrice(adultSubtotal),
-      childrenLine: children > 0
-        ? `${children} Enfant${children > 1 ? 's' : ''} x ${formatPrice(childPrice)}`
-        : '',
+      adultLine:      `${adults} Adulte${adults > 1 ? 's' : ''} x ${formatPrice(basePrice)}`,
+      adultSubtotal:  formatPrice(adultSubtotal),
+      childrenLine:   children > 0 ? `${children} Enfant${children > 1 ? 's' : ''} x ${formatPrice(childPrice)}` : '',
       childrenSubtotal: children > 0 ? formatPrice(childrenSubtotal) : '',
-      totalPrice: formatPrice(total),
+      totalPrice:     formatPrice(total),
     });
   },
 
   handleReserve: withLock(function () {
-    if (!this.data.canContinue) {
-      return;
-    }
+    if (!this.data.canContinue) return;
 
     const {
-      adults,
-      children,
-      destination,
-      selectedDate,
-      selectedDateIso,
-      totalPrice,
+      adults, children, destination,
+      selectedDate, selectedDateIso, totalPrice,
+      isRebooking, rebookingRef,
     } = this.data;
     const selectedDateItem = this.data.dates[selectedDate] || null;
-    const dateLabel = selectedDateItem ? `${selectedDateItem.day} ${selectedDateItem.date} ${selectedDateItem.month}` : '';
+    const dateLabel = selectedDateItem
+      ? `${selectedDateItem.day} ${selectedDateItem.date} ${selectedDateItem.month}`
+      : '';
+
     const params = [
       `destinationId=${encodeURIComponent(destination && destination.id || '')}`,
       `adults=${adults}`,
@@ -192,10 +225,12 @@ Page({
       `dateIso=${encodeURIComponent(selectedDateIso)}`,
       `packageId=${encodeURIComponent(destination && destination.id || '')}`,
       `travelers=${adults + children}`,
-    ].join('&');
+    ];
 
-    wx.navigateTo({
-      url: `/pages/paiement/index?${params}`,
-    });
+    if (isRebooking && rebookingRef) {
+      params.push(`rebookingRef=${encodeURIComponent(rebookingRef)}`);
+    }
+
+    wx.navigateTo({ url: `/pages/paiement/index?${params.join('&')}` });
   }, 500),
 });

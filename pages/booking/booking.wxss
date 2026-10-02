@@ -41,6 +41,69 @@
   margin-bottom: 28rpx;
 }
 
+/* ─── Bannière délai minimum ─────────────────────────────────────────────── */
+
+.booking-lead-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 40rpx;
+  border-radius: 20rpx;
+  background: #fffbeb;
+  border: 2rpx solid #fde68a;
+  box-sizing: border-box;
+}
+
+.booking-lead-notice--special {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.booking-lead-notice__icon {
+  font-size: 32rpx;
+  line-height: 40rpx;
+  flex: 0 0 auto;
+}
+
+.booking-lead-notice__text {
+  flex: 1;
+  color: #92400e;
+  font-size: 26rpx;
+  font-weight: 500;
+  line-height: 38rpx;
+}
+
+/* ─── Bannière rebooking ─────────────────────────────────────────────────── */
+
+.booking-rebooking-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 40rpx;
+  border-radius: 20rpx;
+  background: #eff6ff;
+  border: 2rpx solid #bfdbfe;
+  box-sizing: border-box;
+}
+
+.booking-rebooking-notice__icon {
+  font-size: 32rpx;
+  line-height: 40rpx;
+  flex: 0 0 auto;
+}
+
+.booking-rebooking-notice__text {
+  flex: 1;
+  color: #1e40af;
+  font-size: 26rpx;
+  font-weight: 500;
+  line-height: 38rpx;
+}
+
+/* ─── Icône calendrier ───────────────────────────────────────────────────── */
+
 .booking-title-icon {
   position: relative;
   width: 31rpx;
@@ -64,6 +127,8 @@
   height: 3rpx;
   background: #facc15;
 }
+
+/* ─── Icône voyageurs ────────────────────────────────────────────────────── */
 
 .travelers-section-title {
   margin-bottom: 31rpx;
@@ -125,6 +190,8 @@
   height: 13rpx;
 }
 
+/* ─── Grille de dates ────────────────────────────────────────────────────── */
+
 .date-grid {
   width: 100%;
   display: flex;
@@ -179,6 +246,8 @@
   line-height: 38rpx;
   text-align: center;
 }
+
+/* ─── Carte voyageur ─────────────────────────────────────────────────────── */
 
 .traveler-card {
   width: 100%;
@@ -274,6 +343,8 @@
   text-align: center;
 }
 
+/* ─── Carte prix (beige) ─────────────────────────────────────────────────── */
+
 .price-card {
   width: 100%;
   min-height: 296rpx;
@@ -331,26 +402,10 @@
   white-space: nowrap;
 }
 
+/* ─── Footer bouton paiement ─────────────────────────────────────────────── */
+
 .booking-reserve-button {
   width: 100% !important;
-  height: 112rpx !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 32rpx !important;
-  color: #ffffff !important;
-}
-
-.booking-reserve-button--disabled {
-  background: #95CFA5 !important;
-  background-color: #95CFA5 !important;
-  box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.12) !important;
-}
-
-.booking-reserve-button--active {
-  background: #16A34A !important;
-  background-color: #16A34A !important;
-  box-shadow: 0 18rpx 32rpx rgba(22, 163, 74, 0.18) !important;
 }
 
 .booking-payment-footer {

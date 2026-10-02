@@ -156,6 +156,15 @@ class BackendAPI {
     return sculpt.data({ data: targetData, to: ReservationSchema });
   }
 
+  async cancelBooking(reference, phone) {
+    if (!reference) throw new ValidationError('Référence de réservation manquante');
+    if (!phone) throw new ValidationError('Numéro de téléphone manquant');
+    await authenticate();
+    const res = await this.#client.delete(`${ENDPOINTS.BOOKINGS}/${reference}`, { query: { phone } });
+    const body = getResponseBody(res, 'Impossible d\'annuler la réservation');
+    return body.data || body;
+  }
+
   resetSession() {
     this.#client.resetSession();
   }
