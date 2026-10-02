@@ -176,7 +176,7 @@ Page({
       }
     }
 
-    wx.switchTab({
+    wx.redirectTo({
       url: '/pages/explorer/explorer',
     });
   },

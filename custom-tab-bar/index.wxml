@@ -1,4 +1,0 @@
-<app-custom-tab-bar
-  activeTab="{{ activeTab }}"
-  bind:change="handleChange"
-/>

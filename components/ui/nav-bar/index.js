@@ -72,9 +72,9 @@ Component({
         const previousTabUrl = navHistory && navHistory.pop();
 
         if (isTabBarUrl(previousTabUrl) && previousTabUrl !== currentUrl) {
-          wx.switchTab({ url: previousTabUrl.split('?')[0] });
+          wx.redirectTo({ url: previousTabUrl.split('?')[0] });
         } else {
-          wx.switchTab({ url: '/pages/home/home' });
+          wx.redirectTo({ url: '/pages/home/home' });
         }
         return;
       }
@@ -89,14 +89,14 @@ Component({
         const prevUrl = app.globalData.navHistory.pop();
 
         if (isTabBarUrl(prevUrl)) {
-          wx.switchTab({ url: prevUrl.split('?')[0] });
+          wx.redirectTo({ url: prevUrl.split('?')[0] });
         } else {
           wx.redirectTo({ url: prevUrl });
         }
         return;
       }
 
-      wx.switchTab({
+      wx.redirectTo({
         url: '/pages/home/home',
       });
     },

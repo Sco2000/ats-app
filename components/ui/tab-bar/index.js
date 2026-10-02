@@ -33,7 +33,7 @@ Component({
 
     navigationType: {
       type: String,
-      value: 'switchTab',
+      value: 'redirectTo',
     },
 
     containerClass: {

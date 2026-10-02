@@ -74,7 +74,13 @@ export const redirectTo = (url) => {
  */
 export const switchTab = (url) => {
   return new Promise((resolve, reject) => {
-    wx.switchTab({ url, success: resolve, fail: reject });
+    wx.redirectTo({
+      url,
+      success: resolve,
+      fail: () => {
+        wx.reLaunch({ url, success: resolve, fail: reject });
+      },
+    });
   });
 };
 

@@ -163,7 +163,7 @@ App({
    */
   onPageNotFound(res) {
     console.warn('[App] Page not found:', res.path);
-    wx.switchTab({ url: '/pages/home/home' });
+    wx.reLaunch({ url: '/pages/home/home' });
   },
 
   // ==========================================================================

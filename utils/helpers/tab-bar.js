@@ -1,4 +1,8 @@
 export const setCustomTabBarActive = (page, activeTab) => {
+  if (page && typeof page.setData === 'function' && page.data && page.data.activeTab !== activeTab) {
+    page.setData({ activeTab });
+  }
+
   const tabBar = page && typeof page.getTabBar === 'function'
     ? page.getTabBar()
     : null;

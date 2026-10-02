@@ -78,7 +78,7 @@ Page({
       return;
     }
 
-    wx.switchTab({
+    wx.redirectTo({
       url: '/pages/home/home',
     });
   }, 500),
