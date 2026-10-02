@@ -53,23 +53,20 @@ Page({
   },
 
   onLoad(options = {}) {
-    const rawId = options.destinationId;
-    const destinationId = rawId ? Number(rawId) : null;
-
-    if (!destinationId || Number.isNaN(destinationId)) {
-      wx.showToast({
-        title: 'Destination invalide',
-        icon: 'none',
-        duration: 2000,
-      });
-      setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
-      return;
-    }
-
-    const destinations = Array.isArray(app.globalData.DESTINATIONS)
+    const rawId = options.destinationId ? String(options.destinationId) : '';
+    const currentDest = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || null;
+    const destinations = Array.isArray(app && app.globalData && app.globalData.DESTINATIONS)
       ? app.globalData.DESTINATIONS
       : [];
-    const destination = destinations.find((item) => Number(item.id) === destinationId) || null;
+
+    let destination = null;
+    if (rawId && currentDest && String(currentDest.id) === rawId) {
+      destination = currentDest;
+    } else if (rawId) {
+      destination = destinations.find((item) => String(item.id) === rawId) || null;
+    } else if (currentDest) {
+      destination = currentDest;
+    }
 
     if (!destination) {
       wx.showToast({

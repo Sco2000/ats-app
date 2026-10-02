@@ -17,11 +17,24 @@ const getInitialPageTopOffset = () => {
   }
 };
 
+const getInitialDestination = () => {
+  try {
+    const app = getApp();
+    const dest = (app && app.globalData && app.globalData.CURRENT_DESTINATION) || storage.get('CURRENT_DESTINATION', null);
+    if (dest) {
+      return prepareDestinationDetail(dest);
+    }
+  } catch (e) {}
+  return null;
+};
+
+const initialDest = getInitialDestination();
+
 const pageConfig = {
   data: {
-    destination: null,
-    isLiked: false,
-    hasDestination: false,
+    destination: initialDest,
+    isLiked: Boolean(initialDest && initialDest.like),
+    hasDestination: Boolean(initialDest),
     isLoading: false,
     pageTopOffset: getInitialPageTopOffset(),
     showPreview: false,
@@ -31,8 +44,9 @@ const pageConfig = {
 
   onLoad(options = {}) {
     const pageTopOffset = getInitialPageTopOffset();
+    const targetId = options.id ? String(options.id) : '';
 
-    if (!options.id) {
+    if (!targetId) {
       this.setData({
         pageTopOffset,
         isLoading: false,
@@ -46,14 +60,13 @@ const pageConfig = {
     }
 
     const app = getApp();
-    const targetId = String(options.id);
 
     // 1. Si la page a déjà été pré-hydratée lors de sa création via preloadDestinationDetail :
     if (this.data.destination && String(this.data.destination.id) === targetId) {
       if (this.data.pageTopOffset !== pageTopOffset) {
         this.setData({ pageTopOffset });
       }
-      this.fetchFullDetails(options.id);
+      this.fetchFullDetails(targetId);
       return;
     }
 

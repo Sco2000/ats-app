@@ -15,34 +15,26 @@
           />
 
           <view class="detail-floating-button detail-floating-button--back" catchtap="handleBack">
-            <app-icon
-              icon="arrow-left"
-              width="{{40}}"
-              height="{{40}}"
-              enableBg="{{false}}"
-              containerStyle="padding: 0 !important;"
+            <image
+              class="detail-floating-icon"
+              src="/assets/icons/global/arrow-left.png"
+              mode="aspectFit"
             />
           </view>
 
           <view class="detail-floating-button detail-floating-button--favorite" catchtap="handleToggleLike">
-            <block wx:if="{{ isLiked }}">
-              <app-icon
-                icon="heartRed"
-                width="{{38}}"
-                height="{{36}}"
-                enableBg="{{false}}"
-                containerStyle="padding: 0 !important; transform: translateY(2rpx);"
-              />
-            </block>
-            <block wx:else>
-              <app-icon
-                icon="heart"
-                width="{{38}}"
-                height="{{36}}"
-                enableBg="{{false}}"
-                containerStyle="padding: 0 !important; transform: translateY(2rpx);"
-              />
-            </block>
+            <image
+              wx:if="{{ isLiked }}"
+              class="detail-floating-icon detail-floating-icon--heart"
+              src="/assets/icons/global/heartRed.png"
+              mode="aspectFit"
+            />
+            <image
+              wx:else
+              class="detail-floating-icon detail-floating-icon--heart"
+              src="/assets/icons/global/heart.png"
+              mode="aspectFit"
+            />
           </view>
         </view>
       </view>
@@ -71,12 +63,10 @@
 
         <view class="detail-meta-row" wx:if="{{ destination }}">
           <view class="detail-meta-item">
-            <app-icon
-              icon="localisation"
-              width="{{28}}"
-              height="{{28}}"
-              enableBg="{{false}}"
-              containerStyle="padding: 0 !important;"
+            <image
+              class="detail-meta-icon"
+              src="/assets/icons/global/localisation.png"
+              mode="aspectFit"
             />
             <text class="detail-meta-text">
               {{ destination.subtitle }}
@@ -84,12 +74,10 @@
           </view>
 
           <view class="detail-meta-item" wx:if="{{ destination.duration }}">
-            <app-icon
-              icon="calendrier"
-              width="{{28}}"
-              height="{{28}}"
-              enableBg="{{false}}"
-              containerStyle="padding: 0 !important;"
+            <image
+              class="detail-meta-icon"
+              src="/assets/icons/global/calendrier.png"
+              mode="aspectFit"
             />
             <text class="detail-meta-text">
               {{ destination.duration }}
