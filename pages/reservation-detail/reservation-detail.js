@@ -170,20 +170,10 @@ Page({
             'reservation.isUpcoming': false,
           });
 
-          wx.hideLoading();
-
-          // Modale de confirmation avec le barème réel retourné par l'API
-          const refundAmountFormatted = apiRefund
-            ? `${Number(apiRefund.refund_amount || 0).toLocaleString('fr-FR')} ${apiRefund.currency || 'XOF'}`
-            : localRefund.formattedEstimatedRefund;
-          const retainedPct = apiRefund ? `${apiRefund.retained_percent}%` : `${localRefund.retainedPercent}%`;
-
-          wx.showModal({
-            title: 'Demande envoyée ✓',
-            content: `Votre demande d'annulation a été enregistrée.\n\nRemboursement estimé : ${refundAmountFormatted} (${retainedPct} retenus).\n\nUn conseiller ATS vous contactera pour finaliser le remboursement.`,
-            showCancel: false,
-            confirmText: 'Compris',
-            confirmColor: '#0AA347',
+          wx.showToast({
+            title: 'Annulation demandée',
+            icon: 'success',
+            duration: 3000
           });
         } catch (error) {
           wx.hideLoading();
