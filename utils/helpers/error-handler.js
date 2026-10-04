@@ -12,54 +12,9 @@ import {
 // Chaque combinaison (type d'erreur × contexte) donne un message précis.
 // ============================================================================
 
-const ERROR_MESSAGES = {
-  // ── Réseau ────────────────────────────────────────────────────────────────
-  network: {
-    default:         'Connexion réseau perdue. Vérifiez votre connexion et réessayez.',
-    catalog:         'Impossible de charger le catalogue. Vérifiez votre connexion.',
-    booking:         'La réservation n\'a pas pu être envoyée. Vérifiez votre connexion et réessayez.',
-    payment:         'La confirmation du paiement a échoué (réseau). Votre réservation reste en attente — contactez le support si le problème persiste.',
-    cancel:          'Demande d\'annulation non envoyée. Vérifiez votre connexion. Réessayez ou contactez le support.',
-    reservations:    'Impossible de charger vos voyages. Vérifiez votre connexion.',
-  },
+import { i18n } from '../locales/fr/index.js';
 
-  // ── Auth / Token ──────────────────────────────────────────────────────────
-  auth: {
-    default:         'Session expirée. Ferme et réouvre l\'application.',
-    booking:         'Session expirée avant la réservation. Relance l\'app et réessaie.',
-    payment:         'Session expirée pendant le paiement. Contacte le support avec ta référence.',
-    cancel:          'Session expirée. Relance l\'app pour annuler.',
-  },
-
-  // ── Validation (données manquantes ou invalides) ───────────────────────────
-  validation: {
-    default:         'Informations manquantes ou invalides.',
-    booking:         'Informations de réservation incomplètes. Sélectionne une date et un nombre de voyageurs.',
-    payment:         'Identifiant de transaction invalide. La réservation existe — contacte le support.',
-    cancel:          'Référence ou téléphone manquant. Impossible d\'annuler.',
-    phone:           'Numéro de téléphone introuvable. Vérifiez votre compte Orange.',
-  },
-
-  // ── Ressource introuvable (404) ────────────────────────────────────────────
-  notFound: {
-    default:         'Élément introuvable.',
-    booking:         'Réservation introuvable avec cette référence.',
-    destination:     'Cette destination n\'est plus disponible.',
-  },
-
-  // ── Erreur serveur ATS / service externe (5xx) ────────────────────────────
-  server: {
-    default:         'Le service ATS est temporairement indisponible. Réessayez dans quelques instants.',
-    booking:         'Le serveur ATS n\'a pas pu créer la réservation. Réessayez ou contacte le support.',
-    payment:         'Erreur côté serveur lors de la confirmation du paiement. Contacte le support avec ta référence.',
-    cancel:          'Le serveur ATS n\'a pas pu traiter ton annulation. Réessayez ou contacte le support.',
-  },
-
-  // ── Erreur inconnue ───────────────────────────────────────────────────────
-  unknown: {
-    default:         'Une erreur inattendue est survenue. Réessayez.',
-  },
-};
+const ERROR_MESSAGES = i18n.errors;
 
 /**
  * Résout le message utilisateur selon le type d'erreur et le contexte.

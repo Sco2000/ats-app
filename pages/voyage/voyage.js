@@ -4,6 +4,7 @@ import { getLocalReservationCards, getUserReservationCards } from '../../utils/h
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
 import { handleAppError } from '../../utils/helpers/error-handler.js';
+import { i18n } from '../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -51,7 +52,7 @@ Page({
       this.setData({ loading: false, error: local.length === 0 });
       if (local.length === 0) {
         wx.showToast({
-          title: 'Connexion requise pour voir vos voyages',
+          title: i18n.errors.auth.login_required,
           icon: 'none',
           duration: 3000,
         });

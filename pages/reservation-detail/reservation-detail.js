@@ -6,6 +6,7 @@ import { STATE_KEYS } from '../../utils/constants/index.js';
 import { calculateCancellationRefund } from '../../utils/helpers/booking-policy.js';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError } from '../../utils/helpers/error-handler.js';
+import { i18n } from '../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -133,7 +134,7 @@ Page({
       success: async (modal) => {
         if (!modal.confirm) return;
 
-        wx.showLoading({ title: 'Annulation en cours…', mask: true });
+        wx.showLoading({ title: i18n.common.loading.cancellation, mask: true });
 
         try {
           if (app.globalData.initPromise) await app.globalData.initPromise;
@@ -143,8 +144,8 @@ Page({
           if (!phone) {
             wx.hideLoading();
             wx.showModal({
-              title: 'Action impossible',
-              content: 'Votre numéro de téléphone est introuvable. Fermez et rouvrez l\'application.',
+              title: i18n.errors.auth.phone_missing_title,
+              content: i18n.errors.auth.phone_missing_desc,
               showCancel: false,
               confirmText: 'Compris',
               confirmColor: '#0AA347',
@@ -173,7 +174,7 @@ Page({
           wx.hideLoading();
 
           wx.showToast({
-            title: 'Annulation demandée',
+            title: i18n.success.cancel.requested,
             icon: 'success',
             duration: 3000
           });

@@ -6,6 +6,7 @@ import { STATE_KEYS } from '../../utils/constants/index.js';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError, handleCriticalError } from '../../utils/helpers/error-handler.js';
 import { processOrangePaymentNative } from '../../utils/apis/native.js';
+import { i18n } from '../utils/locales/fr/index.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -72,7 +73,7 @@ Page({
   handlePay: withLock(async function () {
     const { packageId, date, adults, children, travelers, total, packageInfo, rebookingRef } = this.data;
     if (!packageId || !date || !travelers || !total) {
-      wx.showToast({ title: 'Informations de réservation incomplètes', icon: 'none' });
+      wx.showToast({ title: i18n.errors.validation.booking, icon: 'none' });
       return;
     }
 
@@ -86,8 +87,8 @@ Page({
       
       if (!phone) {
         wx.showModal({
-          title: 'Connexion requise',
-          content: 'Votre numéro de téléphone Orange est introuvable. Fermez et rouvrez l\'application.',
+          title: i18n.errors.auth.phone_missing_title,
+          content: i18n.errors.auth.phone_missing_desc,
           showCancel: false,
           confirmText: 'Compris',
           confirmColor: '#0AA347',
@@ -102,10 +103,8 @@ Page({
         const fee = res.reschedule?.fee_amount || 0;
         
         wx.showModal({
-          title: 'Demande envoyée ✓',
-          content: free 
-            ? 'Votre demande de modification de date a été enregistrée gratuitement.\n\nUn conseiller ATS vous contactera.'
-            : `Des frais de modification s'appliquent (${fee} FCFA).\n\nVotre demande est enregistrée, un conseiller ATS vous contactera pour le règlement.`,
+          title: i18n.success.reschedule.title,
+          content: free ? i18n.success.reschedule.free : i18n.success.reschedule.with_fee(fee),
           showCancel: false,
           confirmText: 'Fermer',
           confirmColor: '#0AA347',

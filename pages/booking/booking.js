@@ -5,6 +5,7 @@ import {
   createFutureDates,
 } from '../../utils/helpers/booking-policy.js';
 import { reservationStorage } from '../../utils/storage/reservations.js';
+import { i18n } from '../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -87,7 +88,7 @@ Page({
     }
 
     if (!destination) {
-      wx.showToast({ title: 'Destination non trouvée', icon: 'none', duration: 2000 });
+      wx.showToast({ title: i18n.errors.validation.destination_not_found, icon: 'none', duration: 2000 });
       setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
       return;
     }
@@ -132,7 +133,7 @@ Page({
   onDatePickerChange(event) {
     const isoDate = event.detail.value;
     if (!isoDate || isoDate < this.data.minDate) {
-      wx.showToast({ title: `Réservation possible à partir du ${this.data.minDate}`, icon: 'none' });
+      wx.showToast({ title: i18n.errors.validation.date_too_early(this.data.minDate), icon: 'none' });
       return;
     }
     const date     = new Date(`${isoDate}T00:00:00`);

@@ -9,6 +9,7 @@ import { sculpt } from '../json-sculpt/sculpt.js';
 import { CategorySchema } from '../mappers/category.sculpt.js';
 import { PackageSchema } from '../mappers/package.sculpt.js';
 import { ReservationDetailSchema, ReservationSchema } from '../mappers/reservation.sculpt.js';
+import { i18n } from '../utils/locales/fr/index.js';
 
 import {
   AppError,
@@ -170,21 +171,21 @@ class BackendAPI {
     if (!phone) throw new ValidationError('Numéro de téléphone manquant');
     await authenticate();
     const res = await this.#client.delete(`${ENDPOINTS.BOOKINGS}/${reference}`, { query: { phone } });
-    const body = getResponseBody(res, 'Impossible d\'annuler la réservation');
+    const body = getResponseBody(res, i18n.errors.api.cancel_failed);
     return body.data ? { ...body.data, refund: body.refund, message: body.message } : body;
   }
 
   async rescheduleBooking(reference, date, phone) {
-    if (!reference || !date || !phone) throw new ValidationError('Paramètres manquants');
+    if (!reference || !date || !phone) throw new ValidationError(i18n.errors.validation.api_missing_params);
     await authenticate();
     const res = await this.#client.post(`${ENDPOINTS.BOOKINGS}/${reference}/reschedule`, { date, phone });
-    return getResponseBody(res, 'Impossible de modifier la réservation');
+    return getResponseBody(res, i18n.errors.api.reschedule_failed);
   }
 
   async getFeaturedPackages() {
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.PACKAGES}?featured=true`);
-    const body = getResponseBody(res, 'Impossible de récupérer les packages à la une');
+    const body = getResponseBody(res, i18n.errors.api.featured_failed);
     const items = Array.isArray(body) ? body : (Array.isArray(body.data) ? body.data : []);
     return sculpt.data({ data: items, to: PackageSchema });
   }
