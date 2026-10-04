@@ -40,7 +40,6 @@ export const withRetry = async (fn, { maxAttempts = 3, baseDelay = 500, shouldRe
 
       if (attempt < maxAttempts && shouldRetry(error)) {
         const waitTime = baseDelay * Math.pow(2, attempt - 1);
-        console.log(`[Native] Retrying in ${waitTime}ms...`);
         await delay(waitTime);
       }
     }
@@ -129,7 +128,6 @@ export const getUserInfos = async () => {
     );
 
     const user = res?.data?.user;
-    console.log('[Native] getUserInfos parsed user:', JSON.stringify(user));
 
     return {
       msisdn: user?.msisdn || null,

@@ -44,7 +44,6 @@ App({
    * Pattern: non-blocking launch, no race conditions
    */
   onLaunch() {
-    console.log('[App] Launching...');
 
     // Bus.setDebug(true);
     Bus.setState(STATE_KEYS.APP_LOADING, true);
@@ -85,18 +84,15 @@ App({
     const { msisdn, fullName } = userInfos;
 
     if (!msisdn) {
-      console.log('[App] No user found, emitting user.not_found');
       Bus.emit(EVENTS.USER_NOT_FOUND);
       // On continue quand même pour charger le catalogue (navigation anonyme)
     } else {
       // Store user info in EventBus
       Bus.setState(STATE_KEYS.USER_DATA, { msisdn, fullName });
       Bus.setState(STATE_KEYS.USER_NAME, fullName);
-      console.log('[App] User:', fullName, '| ID:', msisdn);
     }
 
     // Step 2: Load catalog data before pages consume globalData.DESTINATIONS.
-    console.log('[App] Loading packages from API...');
     this.globalData.CATALOG_ERROR = false;
     const destinations = await loadDestinations({
       fallback: [],
@@ -104,13 +100,11 @@ App({
     });
     syncGlobalDestinations(this, destinations);
     Bus.emit(EVENTS.DATA_REFRESH, { key: 'destinations' });
-    console.log('[App] Packages loaded');
 
     // Mark app as initialized after user and catalog data are ready.
     Bus.setState(STATE_KEYS.APP_INITIALIZED, true);
     Bus.emit(EVENTS.USER_LOADED);
 
-    console.log('[App] Initialization complete');
   },
 
   /**
@@ -180,7 +174,6 @@ App({
 
     updateManager.onCheckForUpdate((res) => {
       if (res.hasUpdate) {
-        console.log('[App] New version available');
       }
     });
 
@@ -222,7 +215,6 @@ App({
 
     // Listen for changes
     wx.onNetworkStatusChange((res) => {
-      console.log('[App] Network changed:', res.networkType, '| connected:', res.isConnected);
       Bus.setState(STATE_KEYS.NETWORK_TYPE, res.networkType);
       Bus.setState(STATE_KEYS.NETWORK_CONNECTED, res.isConnected);
       Bus.emit(EVENTS.NETWORK_CHANGE, {

@@ -616,7 +616,6 @@ class EventBus {
    */
   _log(message, data) {
     if (this.debug) {
-      console.log(`[EventBus] ${message}`, data !== undefined ? data : '');
     }
   }
 }
