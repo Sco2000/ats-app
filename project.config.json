@@ -33,6 +33,22 @@
       {
         "type": "folder",
         "value": "typings"
+      },
+      {
+        "type": "folder",
+        "value": "mp-ats-app"
+      },
+      {
+        "type": "folder",
+        "value": "scratch"
+      },
+      {
+        "type": "folder",
+        "value": ".agents"
+      },
+      {
+        "type": "folder",
+        "value": ".github"
       }
     ]
   },
