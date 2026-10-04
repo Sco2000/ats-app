@@ -6,7 +6,7 @@ import { STATE_KEYS } from '../../utils/constants/index.js';
 import { calculateCancellationRefund } from '../../utils/helpers/booking-policy.js';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError } from '../../utils/helpers/error-handler.js';
-import { i18n } from '../utils/locales/fr/index.js';
+import { i18n } from '../../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -209,3 +209,4 @@ Page({
     });
   }, 500),
 });
+

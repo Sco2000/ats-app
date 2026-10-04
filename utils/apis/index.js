@@ -9,7 +9,7 @@ import { sculpt } from '../json-sculpt/sculpt.js';
 import { CategorySchema } from '../mappers/category.sculpt.js';
 import { PackageSchema } from '../mappers/package.sculpt.js';
 import { ReservationDetailSchema, ReservationSchema } from '../mappers/reservation.sculpt.js';
-import { i18n } from '../utils/locales/fr/index.js';
+import { i18n } from '../locales/fr/index.js';
 
 import {
   AppError,
@@ -198,3 +198,4 @@ class BackendAPI {
 export const backendAPI = new BackendAPI();
 
 export { BackendAPI };
+

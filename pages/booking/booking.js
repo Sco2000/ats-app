@@ -5,7 +5,7 @@ import {
   createFutureDates,
 } from '../../utils/helpers/booking-policy.js';
 import { reservationStorage } from '../../utils/storage/reservations.js';
-import { i18n } from '../utils/locales/fr/index.js';
+import { i18n } from '../../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -235,3 +235,4 @@ Page({
     wx.navigateTo({ url: `/pages/paiement/index?${params.join('&')}` });
   }, 500),
 });
+

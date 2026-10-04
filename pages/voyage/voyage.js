@@ -4,7 +4,7 @@ import { getLocalReservationCards, getUserReservationCards } from '../../utils/h
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
 import { handleAppError } from '../../utils/helpers/error-handler.js';
-import { i18n } from '../utils/locales/fr/index.js';
+import { i18n } from '../../utils/locales/fr/index.js';
 
 const app = getApp();
 
@@ -90,3 +90,4 @@ Page({
     wx.navigateTo({ url: `/pages/reservation-detail/reservation-detail?bookingRef=${encodeURIComponent(bookingRef)}` });
   },
 });
+

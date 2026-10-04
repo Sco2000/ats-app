@@ -6,7 +6,7 @@ import { STATE_KEYS } from '../../utils/constants/index.js';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError, handleCriticalError } from '../../utils/helpers/error-handler.js';
 import { processOrangePaymentNative } from '../../utils/apis/native.js';
-import { i18n } from '../utils/locales/fr/index.js';
+import { i18n } from '../../utils/locales/fr/index.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -159,3 +159,4 @@ Page({
     }
   }, 1000),
 });
+
