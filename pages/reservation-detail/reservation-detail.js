@@ -106,30 +106,34 @@ Page({
     const { reservation } = this.data;
     if (!reservation) return;
 
-    // Calcul local préliminaire (booking-policy) pour afficher le barème
-    // avant l'appel API, puis le résultat réel de l'API prend la priorité.
-    const localRefund = calculateCancellationRefund(reservation.date, reservation.total);
-    const daysText = localRefund.daysBeforeDeparture > 0
-      ? `${localRefund.daysBeforeDeparture} jours avant le départ`
-      : 'moins d\'1 jour avant le départ';
+    let content = '';
+    try {
+      const localRefund = calculateCancellationRefund(reservation.date, reservation.total);
+      const daysText = localRefund.daysBeforeDeparture > 0
+        ? `${localRefund.daysBeforeDeparture} jours avant le départ`
+        : "moins d'1 jour avant le départ";
 
-    const content = [
-      `Référence : ${reservation.bookingRef}`,
-      `Départ : ${reservation.dateLabel || '—'}`,
-      ``,
-      `Barème d'annulation (${daysText}) :`,
-      `  • Montant payé : ${localRefund.formattedTotal}`,
-      `  • Frais retenus : ${localRefund.retainedPercent}% (${localRefund.formattedRetainedAmount})`,
-      `  • Remboursement estimé : ${localRefund.formattedEstimatedRefund}`,
-      ``,
-      `Le remboursement sera traité manuellement par ATS.`,
-    ].join('\n');
+      content = [
+        `Référence : ${reservation.bookingRef}`,
+        `Départ : ${reservation.dateLabel || '—'}`,
+        ``,
+        `Barème d'annulation (${daysText}) :`,
+        `  • Montant payé : ${localRefund.formattedTotal}`,
+        `  • Frais retenus : ${localRefund.retainedPercent}% (${localRefund.formattedRetainedAmount})`,
+        `  • Remboursement estimé : ${localRefund.formattedEstimatedRefund}`,
+        ``,
+        `Le remboursement sera traité manuellement par ATS.`
+      ].join('\n');
+    } catch (e) {
+      console.error('Error calculating refund:', e);
+      content = 'Êtes-vous sûr de vouloir annuler la réservation ' + reservation.bookingRef + ' ?';
+    }
 
     wx.showModal({
       title: 'Confirmer l\'annulation ?',
       content,
-      confirmText: 'Annuler la résa.',
-      cancelText: 'Retour',
+      confirmText: 'Oui',
+      cancelText: 'Non',
       confirmColor: '#DC2626',
       success: async (modal) => {
         if (!modal.confirm) return;
