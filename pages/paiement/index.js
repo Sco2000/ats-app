@@ -5,6 +5,7 @@ import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
 import { withLock } from '../../utils/helpers/interaction.js';
 import { handleAppError, handleCriticalError } from '../../utils/helpers/error-handler.js';
+import { processOrangePaymentNative } from '../../utils/apis/native.js';
 
 function formatPrice(value) {
   return `${Number(value || 0).toLocaleString('fr-FR')} FCFA`;
@@ -107,10 +108,13 @@ Page({
 
       bookingRef = created.bookingRef;
 
-      // ── Étape 2 : Confirmer le paiement (POST /bookings/{ref}/payment) ────
-      // En production, Orange Max It fournit un vrai transaction_id via le SDK.
-      // Pour l'instant on génère un ID horodaté — à remplacer par le vrai.
-      const transactionId = userData.transactionId || `OM-${Date.now()}`;
+      // ── Étape 2 : Lancer le paiement Orange Money ────
+      
+      // 🔴 MODE TEST : Génère un faux paiement (À COMMENTER EN PRODUCTION)
+      const transactionId = `OM-TEST-${Date.now()}`;
+
+      // 🟢 MODE PRODUCTION : Lance le vrai SDK Orange (À DÉCOMMENTER EN PRODUCTION)
+      // const transactionId = await processOrangePaymentNative(total, bookingRef);
 
       try {
         await backendAPI.confirmBookingPayment(bookingRef, transactionId);

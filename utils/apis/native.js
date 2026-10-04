@@ -155,6 +155,28 @@ export const getUserInfos = async () => {
   }
 };
 
+/**
+ * LANCE LE VRAI PAIEMENT ORANGE MONEY (Natif Max It)
+ * @param {number} amount - Le montant à payer
+ * @param {string} reference - La référence de réservation (ex: TST123)
+ * @returns {Promise<string>} Le transaction_id retourné par Orange
+ */
+export const processOrangePaymentNative = async (amount, reference) => {
+  try {
+    // ⚠️ Remplacer 'pay' et les paramètres par la doc officielle du SDK Orange Max It
+    const res = await invokePlugin('pay', { amount, reference }, { strict: true });
+    
+    if (!res || !res.data || !res.data.transactionId) {
+      throw new Error('Paiement annulé ou échoué');
+    }
+    
+    return res.data.transactionId; // ex: OM-987654321
+  } catch (error) {
+    console.error('[Native] Paiement Orange échoué:', error);
+    throw error;
+  }
+};
+
 // ============================================================================
 // ADD YOUR NATIVE PLUGIN WRAPPERS HERE
 // ============================================================================
