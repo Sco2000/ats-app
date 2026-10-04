@@ -1,5 +1,5 @@
 const app = getApp();
-import { createReservation } from '../../utils/helpers/reservations.js';
+import { createReservation, rescheduleReservation } from '../../utils/helpers/reservations.js';
 import { backendAPI } from '../../utils/apis/index.js';
 import { Bus } from '../../utils/event/index.js';
 import { STATE_KEYS } from '../../utils/constants/index.js';
@@ -54,6 +54,7 @@ Page({
       },
       packageId: String(options.packageId || destination.id || ''),
       date: options.dateIso || '',
+      rebookingRef: options.rebookingRef || '',
       adults,
       children,
       travelers: Math.max(0, Number(options.travelers) || adults + children),
@@ -69,7 +70,7 @@ Page({
   },
 
   handlePay: withLock(async function () {
-    const { packageId, date, adults, children, travelers, total, packageInfo } = this.data;
+    const { packageId, date, adults, children, travelers, total, packageInfo, rebookingRef } = this.data;
     if (!packageId || !date || !travelers || !total) {
       wx.showToast({ title: 'Informations de réservation incomplètes', icon: 'none' });
       return;
@@ -79,12 +80,10 @@ Page({
     let bookingRef = '';
 
     try {
-      // Attendre que l'app soit initialisée pour avoir le vrai msisdn
       if (app.globalData.initPromise) await app.globalData.initPromise;
-
-      // ── Étape 1 : Créer la réservation (POST /bookings) ──────────────────
       const userData = Bus.getState(STATE_KEYS?.USER_DATA || 'user.data') || {};
       const phone = userData.msisdn;
+      
       if (!phone) {
         wx.showModal({
           title: 'Connexion requise',
@@ -96,6 +95,28 @@ Page({
         return;
       }
 
+      // --- BRANCHE REBOOKING (MODIFICATION DE DATE) ---
+      if (rebookingRef) {
+        const res = await rescheduleReservation(rebookingRef, date, phone);
+        const free = res.reschedule?.free;
+        const fee = res.reschedule?.fee_amount || 0;
+        
+        wx.showModal({
+          title: 'Demande envoyée ✓',
+          content: free 
+            ? 'Votre demande de modification de date a été enregistrée gratuitement.\n\nUn conseiller ATS vous contactera.'
+            : `Des frais de modification s'appliquent (${fee} FCFA).\n\nVotre demande est enregistrée, un conseiller ATS vous contactera pour le règlement.`,
+          showCancel: false,
+          confirmText: 'Fermer',
+          confirmColor: '#0AA347',
+          success: () => {
+            wx.reLaunch({ url: '/pages/voyage/voyage' });
+          }
+        });
+        return;
+      }
+
+      // --- BRANCHE CLASSIQUE (NOUVELLE RÉSERVATION) ---
       const created = await createReservation({
         package_id: Number(packageId),
         date,

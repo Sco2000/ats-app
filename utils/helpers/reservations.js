@@ -102,6 +102,7 @@ export function mapRemoteReservationToCard(item, index = 0) {
     confirmed: 'Confirmé',
     completed: 'Terminé',
     cancellation_requested: 'Annulation demandée',
+    reschedule_requested: 'Modification demandée',
     cancelled: 'Annulé',
   };
   const statusLabel = statusLabels[item.status] || (upcoming ? 'À venir' : 'Terminé');
@@ -175,6 +176,7 @@ export function buildReservationDetail(reservation) {
     confirmed: 'Confirmé',
     completed: 'Terminé',
     cancellation_requested: 'Annulation demandée',
+    reschedule_requested: 'Modification demandée',
     cancelled: 'Annulé',
     on_hold: 'En attente',
     refunded: 'Remboursé',
@@ -185,7 +187,7 @@ export function buildReservationDetail(reservation) {
     if (['confirmed'].includes(reservation.status)) return 'upcoming';
     if (['completed'].includes(reservation.status)) return 'done';
     if (['cancelled', 'failed', 'refunded'].includes(reservation.status)) return 'cancelled';
-    if (['cancellation_requested', 'pending_payment', 'on_hold'].includes(reservation.status)) return 'pending';
+    if (['cancellation_requested', 'reschedule_requested', 'pending_payment', 'on_hold'].includes(reservation.status)) return 'pending';
     return upcoming ? 'upcoming' : 'done';
   })();
 
@@ -233,4 +235,19 @@ export function getReservationByReference(reference) {
     if (!local) throw error;
     return { reservation: local, fromApi: false, error };
   });
+}
+
+export async function rescheduleReservation(reference, newDate, phone) {
+  if (!reference || !newDate || !phone) throw new Error('Paramètres manquants');
+  const res = await backendAPI.rescheduleBooking(reference, newDate, phone);
+  
+  const local = reservationStorage.getByReference(reference);
+  if (local) {
+    reservationStorage.update({
+      ...local,
+      date: res.data?.date || newDate,
+      status: res.data?.status || 'reschedule_requested',
+    });
+  }
+  return res;
 }

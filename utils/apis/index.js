@@ -174,6 +174,13 @@ class BackendAPI {
     return body.data ? { ...body.data, refund: body.refund, message: body.message } : body;
   }
 
+  async rescheduleBooking(reference, date, phone) {
+    if (!reference || !date || !phone) throw new ValidationError('Paramètres manquants');
+    await authenticate();
+    const res = await this.#client.post(`${ENDPOINTS.BOOKINGS}/${reference}/reschedule`, { date, phone });
+    return getResponseBody(res, 'Impossible de modifier la réservation');
+  }
+
   async getFeaturedPackages() {
     await authenticate();
     const res = await this.#client.get(`${ENDPOINTS.PACKAGES}?featured=true`);
